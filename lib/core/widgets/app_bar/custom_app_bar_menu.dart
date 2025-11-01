@@ -29,7 +29,7 @@ class CustomAppBarWithMenu extends StatelessWidget {
           bottomRight: Radius.circular(10),
         ),
         gradient: LinearGradient(
-          colors: [ConsColors.green2, ConsColors.green],
+          colors: [ConsColors.blueBg2, ConsColors.blueBg1],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),

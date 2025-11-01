@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_txt_one_icon.dart';
 
-class AcademyScreen extends StatefulWidget {
-  static const routePath = "/academy_screen";
+class ProfileScreen extends StatefulWidget {
+  static const routePath = "/profile_screen";
 
-  const AcademyScreen({super.key});
+  const ProfileScreen({super.key});
 
   @override
-  State<AcademyScreen> createState() => _AcademyScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _AcademyScreenState extends State<AcademyScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -21,7 +21,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
         body: Container(
           width: width,
           height: height,
-          color: ConsColors.yellowLight,
+          color: ConsColors.blueLight,
 
           child: Column(
             children: [

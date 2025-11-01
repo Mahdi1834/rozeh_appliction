@@ -18,7 +18,7 @@ class CustomBtn extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 10),
           foregroundColor: ConsColors.orange,
-          backgroundColor:isBg ? ConsColors.yellowLight : Colors.transparent,
+          backgroundColor:isBg ? ConsColors.blueLight : Colors.transparent,
           side: BorderSide(color: ConsColors.orange),
           elevation: 0,
           shape: RoundedRectangleBorder(

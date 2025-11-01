@@ -10,7 +10,7 @@ class TxtForQuran extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.toPersianDigit(),
-      textAlign: TextAlign.right,
+      textAlign: TextAlign.center,
       style: TextStyle(
         color: ConsColors.green,
         fontSize: 14,

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dart';
-import 'package:rozeh_project/features/feature_academy/presentation/screen/health_screen.dart';
-import 'package:rozeh_project/features/feature_calender/presentation/screen/calender_screen.dart';
 import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/widgets/drawer.dart';
+import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
+import 'package:rozeh_project/features/profile_academy/presentation/screen/profile_screen.dart';
 
 class MainWrapper extends StatefulWidget {
   static const routeName = "/main_wrapper";
@@ -40,8 +40,8 @@ class _MainWrapperState extends State<MainWrapper> {
 
     const allowedRouteNames = {
       HomeScreen.routePath,
-      CalenderScreen.routePath,
-      AcademyScreen.routePath,
+      ReservationScreen.routePath,
+      ProfileScreen.routePath,
       HelpScreen.routePath,
       // "/${StartDeterminationScreen.routePath}",
       // هر routeName دیگری که میخوای BottomNav داشته باشه اینجا اضافه کن
@@ -51,10 +51,10 @@ class _MainWrapperState extends State<MainWrapper> {
   }
 
   void _goBranch(int index) {
-    if (index == widget.navigationShell.currentIndex) {
-      // همان شاخه، کاری نکن
-      return;
-    }
+    // if (index == widget.navigationShell.currentIndex) {
+    //   // همان شاخه، کاری نکن
+    //   return;
+    // }
 
     if (kDebugMode) {
       print("Navigating to branch $index");
@@ -93,13 +93,13 @@ class _MainWrapperState extends State<MainWrapper> {
                   items: [
                     NavItem(svgPath: 'assets/images/Home.svg', title: 'خانه'),
                     NavItem(
-                      svgPath: 'assets/images/Calendar.svg',
-                      title: 'تقویم حفظ',
+                      svgPath: 'assets/images/Add.svg',
+                      title: 'رزرو روضه',
                     ),
 
                     NavItem(
-                      svgPath: 'assets/images/Group 222.svg',
-                      title: 'آکادمی',
+                      svgPath: 'assets/images/Profile 1.svg',
+                      title: 'پروفایل',
                     ),
                     NavItem(
                       svgPath: 'assets/images/Info square.svg',

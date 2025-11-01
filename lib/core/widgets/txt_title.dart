@@ -6,7 +6,7 @@ class TxtTitle extends StatelessWidget {
     super.key,
     required this.text,
     required this.color,
-    this.size = 14,
+    this.size = 15,
     this.isAlignCenter = false,
   });
 

@@ -61,7 +61,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     final bool isFocused = _focusNode.hasFocus;
     return TextField(
-      cursorColor: ConsColors.green,
+      cursorColor: ConsColors.blueBg1,
       controller: widget.controller,
       focusNode: _focusNode,
       maxLines: 1,
@@ -71,7 +71,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 14,
-        color: isFocused ? ConsColors.green : ConsColors.blue,
+        color: isFocused ? ConsColors.blueBg1 : ConsColors.blue,
         fontFamily: 'IRANSansX',
       ),
       onTap: () {
@@ -103,7 +103,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           child: Text(
             'سال',
             style: TextStyle(
-              color: isFocused ? ConsColors.green : ConsColors.blue,
+              color: isFocused ? ConsColors.blueBg1 : ConsColors.blue,
               fontWeight: FontWeight.bold,
               fontFamily: 'IRANSansX',
             ),

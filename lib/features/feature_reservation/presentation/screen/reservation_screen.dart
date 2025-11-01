@@ -7,16 +7,16 @@ import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_txt_searc
 
 
 
-class CalenderScreen extends StatefulWidget {
-  static const routePath = "/calender_screen";
+class ReservationScreen extends StatefulWidget {
+  static const routePath = "/reservation_screen";
 
-  const CalenderScreen({super.key});
+  const ReservationScreen({super.key});
 
   @override
-  State<CalenderScreen> createState() => _CalenderScreenState();
+  State<ReservationScreen> createState() => _ReservationScreenState();
 }
 
-class _CalenderScreenState extends State<CalenderScreen> {
+class _ReservationScreenState extends State<ReservationScreen> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -27,7 +27,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
         body: Container(
           width: width,
           height: height,
-          color: ConsColors.yellowLight,
+          color: ConsColors.blueLight,
 
           child: Column(
             children: [

@@ -20,7 +20,7 @@ class _HelpScreenState extends State<HelpScreen> {
         body: Container(
           width: width,
           height: height,
-          color: ConsColors.yellowLight,
+          color: ConsColors.blueLight,
 
           child: Column(
             children: [

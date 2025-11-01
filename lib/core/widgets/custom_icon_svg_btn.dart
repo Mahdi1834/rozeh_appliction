@@ -8,7 +8,8 @@ class CustomSvgIconBtn extends StatelessWidget {
     super.key,
     required this.onPressed,
     this.useGradient = true,
-    required this.title, required this.svgPicture,
+    required this.title,
+    required this.svgPicture,
   });
 
   final VoidCallback onPressed;
@@ -19,22 +20,29 @@ class CustomSvgIconBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40, // 👈 همانند دکمه گرادینت
+      height: 45,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          foregroundColor: ConsColors.orange,
-          backgroundColor: Colors.transparent,
-          side: BorderSide(color: ConsColors.orange),
+          foregroundColor: ConsColors.blue,
+          backgroundColor: ConsColors.greenBg,
+          // side: BorderSide(color: ConsColors.blue),
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SvgPicture.asset(
+              width: 15,
+              height: 15,
+              colorFilter: ColorFilter.mode(ConsColors.blue, BlendMode.srcIn),
+              svgPicture,
+            ),
+            SizedBox(width: 10),
 
             Text(
               title.toPersianDigit(),
@@ -43,7 +51,6 @@ class CustomSvgIconBtn extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SvgPicture.asset(svgPicture),
           ],
         ),
       ),

@@ -48,7 +48,7 @@ class NavCustomPainter extends CustomPainter {
     // canvas.drawShadow(path, Colors.black.withOpacity(0.3), 6.0, true);
     // 🔥 سایه‌ی نارنجی اطراف کل مسیر
     final glowPaint = Paint()
-      ..color = Colors.orange.withValues(alpha: 0.3)
+      ..color = Colors.blue.withValues(alpha: 0.1)
       ..style = PaintingStyle.fill
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, 10);
 

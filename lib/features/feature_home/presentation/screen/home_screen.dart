@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_icon_menu.dart';
+import 'package:rozeh_project/core/widgets/custom_icon_svg_btn.dart';
 import 'package:rozeh_project/core/widgets/txt_for_quran.dart';
 import 'package:rozeh_project/core/widgets/txt_header.dart';
 import 'package:rozeh_project/core/widgets/txt_medium.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';
+import 'package:rozeh_project/features/feature_home/data/info_reservation_model.dart';
+import 'package:rozeh_project/features/feature_home/presentation/widgets/expandable_reservation_card.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/fancy_card.dart';
-
-
 
 class HomeScreen extends StatefulWidget {
   static const routePath = "/Home_screen";
@@ -23,33 +24,36 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late ScrollController _scrollController;
   bool isFancyCardExpanded = true;
-
+  InfoReservationModel infoReservationModel = InfoReservationModel(
+    title: "مراسم رزرو شده",
+    date: "1404/09/10",
+    maddah: "مهدی ",
+    speaker: "مهران ",
+    type: "وفات",
+    gender: "بانوان",
+  );
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
+    // _scrollController.addListener(_scrollListener);
   }
 
-  void _scrollListener() {
-    if (_scrollController.offset > 50 && isFancyCardExpanded) {
-      setState(() {
-        isFancyCardExpanded = false;
-      });
-    } else if (_scrollController.offset <= 50 && !isFancyCardExpanded) {
-      setState(() {
-        isFancyCardExpanded = true;
-      });
-    }
-  }
+  // void _scrollListener() {
+  //   final offset = _scrollController.offset;
+  //   if (offset > 80 && isFancyCardExpanded) {
+  //     setState(() => isFancyCardExpanded = false);
+  //   } else if (offset < 20 && !isFancyCardExpanded) {
+  //     setState(() => isFancyCardExpanded = true);
+  //   }
+  // }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    // _scrollController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Container(
           width: width,
           height: height,
-          color: ConsColors.yellowLight,
+          color: ConsColors.blueLight,
           child: Column(
             children: [
               Container(
@@ -73,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     bottomRight: Radius.circular(10),
                   ),
                   gradient: LinearGradient(
-                    colors: [ConsColors.green2, ConsColors.green],
+                    colors: [ConsColors.blueBg2, ConsColors.blueBg1],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -136,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 child: Center(
                                   child: TxtHeader(
-                                    text: "دیجی حفظ، معلم هوشمند قرآنی",
+                                    text: "رزرو روضه و مجالس خانگی",
                                   ),
                                 ),
                               ),
@@ -161,61 +165,69 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: FancyCard(
                                 child:
-                                    isFancyCardExpanded
-                                        ? SingleChildScrollView(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(top: 20.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-
-                                                SizedBox(
-                                                  width: width,
-                                                  child: TxtMedium(
-                                                    text:
-                                                        "قال رسول الله (صلی الله علیه و آله و سلم)",
+                                   Column(
+                                          children: [
+                                            SizedBox(height: 10),
+                                            Expanded(
+                                              child: SingleChildScrollView(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        top: 5.0,
+                                                      ),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: width,
+                                                        child: TxtMedium(
+                                                          text:
+                                                              "قال رسول الله (صلی الله علیه و آله و سلم)",
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 10),
+                                                      TxtForQuran(
+                                                        text:
+                                                            "«حَمَلَةُ القُرْآنِ هُمُ المَحْفُوفونَ بِرَحمَةِ اللهِ، المُلَبِّسونَ نُورَ اللهِ، المُعَلِّمونَ كَلامَ اللهِ مَنْ عاداهُم فَقَدْ عادَی اللهَ و مَنْ والاهُم فَقَدْ والَی اللهَ»",
+                                                      ),
+                                                      SizedBox(height: 5),
+                                                      TxtMedium(
+                                                        isAlignCenter: true,
+                                                        text:
+                                                            "حافظان قرآن مشمول رحمت خدا، در بركنندگان نور خدا و آموزگاران كلام خدایند. كسی كه با آنان دوستی نماید باخدادوستی نموده است.",
+                                                      ),
+                                                      SizedBox(height: 10),
+                                                      SizedBox(
+                                                        width: width,
+                                                        child: Align(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: TxtTitleNotBold(
+                                                            size: 12,
+                                                            text:
+                                                                "(مستدرك الوسائل /ج۴/ص ۲۵۴)",
+                                                            color:
+                                                                ConsColors.blue,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      // TxtMedium(
+                                                      //   isAlignCenter: true,
+                                                      //   text: "(مستدرك الوسائل /ج۴/ص ۲۵۴)",
+                                                      // ),
+                                                    ],
                                                   ),
                                                 ),
-                                                SizedBox(height: 10),
-                                                TxtForQuran(
-                                                  text:
-                                                      "«حَمَلَةُ القُرْآنِ هُمُ المَحْفُوفونَ بِرَحمَةِ اللهِ، المُلَبِّسونَ نُورَ اللهِ، المُعَلِّمونَ كَلامَ اللهِ مَنْ عاداهُم فَقَدْ عادَی اللهَ و مَنْ والاهُم فَقَدْ والَی اللهَ»",
-                                                ),
-                                                SizedBox(height: 5),
-                                                TxtMedium(
-                                                  isAlignCenter: false,
-                                                  text:
-                                                      "حافظان قرآن مشمول رحمت خدا، در بركنندگان نور خدا و آموزگاران كلام خدایند. كسی كه با آنان دوستی نماید باخدادوستی نموده است.",
-                                                ),
-                                                SizedBox(height: 10),
-                                                SizedBox(
-                                                  width: width,
-                                                  child: Align(
-                                                    alignment: Alignment.centerLeft,
-                                                    child: TxtTitleNotBold(
-                                                      size: 12,
-                                                      text:
-                                                          "(مستدرك الوسائل /ج۴/ص ۲۵۴)",
-                                                      color: ConsColors.blue,
-                                                    ),
-                                                  ),
-                                                ),
-                                                // TxtMedium(
-                                                //   isAlignCenter: true,
-                                                //   text: "(مستدرك الوسائل /ج۴/ص ۲۵۴)",
-                                                // ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                          ],
                                         )
-                                        : SizedBox.shrink(),
+
                               ),
                             ),
                           ),
                           SizedBox(height: 10),
-
-
                         ],
                       ),
                     ),
@@ -229,33 +241,116 @@ class _HomeScreenState extends State<HomeScreen> {
                     clipBehavior: Clip.none,
                     children: [
                       Positioned(
-                        top: 0,
+                        top: 20,
                         left: 0,
                         child: SvgPicture.asset(
-                          height: height * 0.15,
+                          height: height * 0.35,
+
                           "assets/images/mandala.svg",
                         ),
                       ),
                       Positioned(
-                        top: 0,
+                        top: 20,
                         right: 0,
                         child: SvgPicture.asset(
-                          height: height * 0.15,
+                          height: height * 0.35,
                           "assets/images/mandala (1).svg",
                         ),
                       ),
                       Container(
                         width: width,
                         padding: EdgeInsets.all(10),
-                        child: SingleChildScrollView(
-                          controller: _scrollController,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                        child:
+                            false
+                                ? SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(height: height * 0.09),
+                                      TxtTitle(
+                                        isAlignCenter: true,
+                                        size: 18,
+                                        text:
+                                            "کاربر عزیز   \n برای رزرو مجالس و روضه های خانگی خود فرم ثبت درخواست را تکمیل نمایید",
+                                        color: ConsColors.blue,
+                                      ),
+                                      SizedBox(height: 20),
+                                      SizedBox(
+                                        width: width * 0.8,
+                                        child: CustomSvgIconBtn(
+                                          title: "رزرو",
+                                          onPressed: () {},
+                                          svgPicture: "assets/images/Add.svg",
+                                          useGradient: true,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                : Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 10),
+                                    TxtTitle(
+                                      size: 18,
+                                      text: "برنامه مراسم رزرو شده برای شما",
+                                      color: ConsColors.blue,
+                                    ),
+                                    SizedBox(height: 20),
+                                    Expanded(
+                                      child:NotificationListener<ScrollNotification>(
+                                        onNotification: (scrollInfo) {
+                                          if (scrollInfo is ScrollUpdateNotification) {
+                                            final offset = scrollInfo.metrics.pixels;
 
-                            ],
-                          ),
-                        ),
+                                            if (offset > 120 && isFancyCardExpanded) {
+                                              setState(() => isFancyCardExpanded = false);
+                                            } else if (offset < 10 && !isFancyCardExpanded) {
+                                              setState(() => isFancyCardExpanded = true);
+                                            }
+                                          }
+                                          return false;
+                                        },
+                                        child: SingleChildScrollView(
+                                          controller: _scrollController,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              ExpandableReservationCard(
+                                                infoReservationModel:
+                                                    infoReservationModel,
+                                              ),
+                                              ExpandableReservationCard(
+                                                infoReservationModel:
+                                                infoReservationModel,
+                                              ),
+                                              ExpandableReservationCard(
+                                                infoReservationModel:
+                                                infoReservationModel,
+                                              ),
+                                              ExpandableReservationCard(
+                                                infoReservationModel:
+                                                infoReservationModel,
+                                              ),
+                                              ExpandableReservationCard(
+                                                infoReservationModel:
+                                                infoReservationModel,
+                                              ),
+                                              ExpandableReservationCard(
+                                                infoReservationModel:
+                                                infoReservationModel,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                       ),
                     ],
                   ),

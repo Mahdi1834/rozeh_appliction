@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rozeh_project/features/feature_academy/presentation/screen/health_screen.dart';
-import 'package:rozeh_project/features/feature_calender/presentation/screen/calender_screen.dart';
 import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/screen/main_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
+import 'package:rozeh_project/features/profile_academy/presentation/screen/profile_screen.dart';
 
 
 class AppNavigation {
@@ -21,12 +21,12 @@ class AppNavigation {
     debugLabel: 'shellHome',
   );
 
-  static final _shellNavigatorCalender = GlobalKey<NavigatorState>(
-    debugLabel: 'shellCalender',
+  static final _shellNavigatorReservation = GlobalKey<NavigatorState>(
+    debugLabel: 'shellReservation',
   );
 
-  static final _shellNavigatorAcademy = GlobalKey<NavigatorState>(
-    debugLabel: 'shellAcademy',
+  static final _shellNavigatorProfile = GlobalKey<NavigatorState>(
+    debugLabel: 'shellProfile',
   );
   static final _shellNavigatorHelp = GlobalKey<NavigatorState>(
     debugLabel: 'shellHelp',
@@ -65,14 +65,14 @@ class AppNavigation {
 
           /// Brach Calender
           StatefulShellBranch(
-            navigatorKey: _shellNavigatorCalender,
+            navigatorKey: _shellNavigatorReservation,
             routes: <RouteBase>[
               GoRoute(
-                path: CalenderScreen.routePath,
-                name: "Calender",
+                path: ReservationScreen.routePath,
+                name: "Reservation",
                 builder:
                     (BuildContext context, GoRouterState state) =>
-                        const CalenderScreen(),
+                        const ReservationScreen(),
                 routes: [
 
 
@@ -86,14 +86,14 @@ class AppNavigation {
 
           /// Brach Academy
           StatefulShellBranch(
-            navigatorKey: _shellNavigatorAcademy,
+            navigatorKey: _shellNavigatorProfile,
             routes: <RouteBase>[
               GoRoute(
-                path: AcademyScreen.routePath,
-                name: "Academy",
+                path: ProfileScreen.routePath,
+                name: "profile",
                 builder:
                     (BuildContext context, GoRouterState state) =>
-                        AcademyScreen(),
+                        ProfileScreen(),
                 routes: [],
               ),
             ],
