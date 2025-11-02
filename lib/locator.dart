@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:rozeh_project/core/storage/user_session.dart';
+import 'package:rozeh_project/features/feature_home/data/api/home_api_provider.dart';
+import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
+import 'package:rozeh_project/features/feature_home/repositories/home_repository.dart';
 import 'package:rozeh_project/features/feature_login/data/api/login_api_provider.dart';
 import 'package:rozeh_project/features/feature_login/presentation/bloc/login_bloc.dart';
 import 'package:rozeh_project/features/feature_login/repositories/login_repository.dart';
@@ -18,12 +21,15 @@ Future<void> initLocator() async{
 
   ///api provider
   locator.registerSingleton<LoginApiProvider>(LoginApiProvider(locator()));
+  locator.registerSingleton<HomeApiProvider>(HomeApiProvider(locator()));
 
   ///repository
   locator.registerSingleton<LoginRepository>(LoginRepository(locator()));
+  locator.registerSingleton<HomeRepository>(HomeRepository(locator()));
 
   ///bloc
   locator.registerSingleton<LoginBloc>(LoginBloc(locator()));
+  locator.registerSingleton<HomeBloc>(HomeBloc(locator()));
 
   //
   // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

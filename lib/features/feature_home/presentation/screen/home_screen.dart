@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_icon_menu.dart';
 import 'package:rozeh_project/core/widgets/custom_icon_svg_btn.dart';
+import 'package:rozeh_project/core/widgets/dot_loading_widget.dart';
 import 'package:rozeh_project/core/widgets/txt_for_quran.dart';
 import 'package:rozeh_project/core/widgets/txt_header.dart';
 import 'package:rozeh_project/core/widgets/txt_medium.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';
 import 'package:rozeh_project/features/feature_home/data/info_reservation_model.dart';
+import 'package:rozeh_project/features/feature_home/data/model/current_hadith_model.dart';
+import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/expandable_reservation_card.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/fancy_card.dart';
 
@@ -36,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<HomeBloc>(context).add(GetCurrentHadithEvent());
     _scrollController = ScrollController();
     // _scrollController.addListener(_scrollListener);
   }
@@ -164,66 +169,99 @@ class _HomeScreenState extends State<HomeScreen> {
                                 maxWidth: width, // عرض همیشه پر
                               ),
                               child: FancyCard(
-                                child:
-                                   Column(
-                                          children: [
-                                            SizedBox(height: 10),
-                                            Expanded(
-                                              child: SingleChildScrollView(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                        top: 5.0,
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 10),
+                                    Expanded(
+                                      child: BlocConsumer<HomeBloc, HomeState>(
+                                        listener: (context, state) {
+                                          // TODO: implement listener
+                                        },
+                                        builder: (context, state) {
+                                          if (state.currentHadithStatus
+                                              is CurrentHadithStatusLoading) {
+                                            return DotLoadingWidget(size: 50);
+                                          }
+                                          if (state.currentHadithStatus
+                                              is CurrentHadithStatusCompleted) {
+                                            CurrentHadithStatusCompleted
+                                            currentHadithStatusCompleted =
+                                                state.currentHadithStatus
+                                                    as CurrentHadithStatusCompleted;
+
+                                            CurrentHadithModel
+                                            currentHadithModel =
+                                                currentHadithStatusCompleted
+                                                    .currentHadithModel;
+
+                                            return SingleChildScrollView(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 5.0,
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: width,
+                                                      child: TxtMedium(
+                                                        text:currentHadithModel.data?.currentHadith?.author ?? "",
                                                       ),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      SizedBox(
-                                                        width: width,
-                                                        child: TxtMedium(
-                                                          text:
-                                                              "قال رسول الله (صلی الله علیه و آله و سلم)",
+                                                    ),
+                                                    SizedBox(height: 10),
+                                                    TxtForQuran(
+                                                      text:currentHadithModel.data?.currentHadith?.contentAr ?? "",
+                                                    ),
+                                                    SizedBox(height: 5),
+                                                    TxtMedium(
+                                                      isAlignCenter: true,
+                                                      text:currentHadithModel.data?.currentHadith?.contentFa ?? "",
+                                                    ),
+                                                    SizedBox(height: 10),
+                                                    SizedBox(
+                                                      width: width,
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: TxtTitleNotBold(
+                                                          size: 12,
+                                                          text:currentHadithModel.data?.currentHadith?.source ?? "",
+
+                                                          color:
+                                                              ConsColors.blue,
                                                         ),
                                                       ),
-                                                      SizedBox(height: 10),
-                                                      TxtForQuran(
-                                                        text:
-                                                            "«حَمَلَةُ القُرْآنِ هُمُ المَحْفُوفونَ بِرَحمَةِ اللهِ، المُلَبِّسونَ نُورَ اللهِ، المُعَلِّمونَ كَلامَ اللهِ مَنْ عاداهُم فَقَدْ عادَی اللهَ و مَنْ والاهُم فَقَدْ والَی اللهَ»",
-                                                      ),
-                                                      SizedBox(height: 5),
-                                                      TxtMedium(
-                                                        isAlignCenter: true,
-                                                        text:
-                                                            "حافظان قرآن مشمول رحمت خدا، در بركنندگان نور خدا و آموزگاران كلام خدایند. كسی كه با آنان دوستی نماید باخدادوستی نموده است.",
-                                                      ),
-                                                      SizedBox(height: 10),
-                                                      SizedBox(
-                                                        width: width,
-                                                        child: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: TxtTitleNotBold(
-                                                            size: 12,
-                                                            text:
-                                                                "(مستدرك الوسائل /ج۴/ص ۲۵۴)",
-                                                            color:
-                                                                ConsColors.blue,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      // TxtMedium(
-                                                      //   isAlignCenter: true,
-                                                      //   text: "(مستدرك الوسائل /ج۴/ص ۲۵۴)",
-                                                      // ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                    // TxtMedium(
+                                                    //   isAlignCenter: true,
+                                                    //   text: "(مستدرك الوسائل /ج۴/ص ۲۵۴)",
+                                                    // ),
+                                                  ],
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        )
-
+                                            );
+                                          }
+                                          if (state.currentHadithStatus
+                                              is CurrentHadithStatusError) {
+                                            return IconButton(
+                                              onPressed: () {
+                                                BlocProvider.of<HomeBloc>(
+                                                  context,
+                                                ).add(GetCurrentHadithEvent());
+                                              },
+                                              icon: Icon(
+                                                Icons.refresh,
+                                                color: ConsColors.green,
+                                              ),
+                                            );
+                                          }
+                                          return SizedBox.shrink();
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -301,15 +339,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     SizedBox(height: 20),
                                     Expanded(
-                                      child:NotificationListener<ScrollNotification>(
+                                      child: NotificationListener<
+                                        ScrollNotification
+                                      >(
                                         onNotification: (scrollInfo) {
-                                          if (scrollInfo is ScrollUpdateNotification) {
-                                            final offset = scrollInfo.metrics.pixels;
+                                          if (scrollInfo
+                                              is ScrollUpdateNotification) {
+                                            final offset =
+                                                scrollInfo.metrics.pixels;
 
-                                            if (offset > 120 && isFancyCardExpanded) {
-                                              setState(() => isFancyCardExpanded = false);
-                                            } else if (offset < 10 && !isFancyCardExpanded) {
-                                              setState(() => isFancyCardExpanded = true);
+                                            if (offset > 120 &&
+                                                isFancyCardExpanded) {
+                                              setState(
+                                                () =>
+                                                    isFancyCardExpanded = false,
+                                              );
+                                            } else if (offset < 10 &&
+                                                !isFancyCardExpanded) {
+                                              setState(
+                                                () =>
+                                                    isFancyCardExpanded = true,
+                                              );
                                             }
                                           }
                                           return false;
@@ -326,23 +376,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               ExpandableReservationCard(
                                                 infoReservationModel:
-                                                infoReservationModel,
+                                                    infoReservationModel,
                                               ),
                                               ExpandableReservationCard(
                                                 infoReservationModel:
-                                                infoReservationModel,
+                                                    infoReservationModel,
                                               ),
                                               ExpandableReservationCard(
                                                 infoReservationModel:
-                                                infoReservationModel,
+                                                    infoReservationModel,
                                               ),
                                               ExpandableReservationCard(
                                                 infoReservationModel:
-                                                infoReservationModel,
+                                                    infoReservationModel,
                                               ),
                                               ExpandableReservationCard(
                                                 infoReservationModel:
-                                                infoReservationModel,
+                                                    infoReservationModel,
                                               ),
                                             ],
                                           ),

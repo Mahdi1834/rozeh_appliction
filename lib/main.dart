@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:rozeh_project/core/config/colors.dart';
+import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 import 'package:rozeh_project/features/feature_login/presentation/bloc/login_bloc.dart';
 import 'package:rozeh_project/locator.dart';
 import 'package:rozeh_project/core/config/app_navigation.dart';
@@ -28,6 +29,7 @@ Future<void> main() async {
   runApp(MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => locator<LoginBloc>()),
+        BlocProvider(create: (_) => locator<HomeBloc>()),
       ],
       child: const MyApp()),
   );
