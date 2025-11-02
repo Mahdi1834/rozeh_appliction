@@ -9,11 +9,13 @@ class CustomTextField extends StatefulWidget {
     required this.controller,
     this.textInputType = TextInputType.text,
     this.isShowText = false,
+    this.hintText,
   });
 
   final TextEditingController controller;
   final TextInputType textInputType;
   final bool isShowText;
+  final String? hintText;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -40,7 +42,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     final formatters = <TextInputFormatter>[];
 
     if (widget.textInputType == TextInputType.phone) {
-      formatters.add(LengthLimitingTextInputFormatter(11));
+      formatters.add(LengthLimitingTextInputFormatter(10));
     }
 
     formatters.add(TextInputFormatter.withFunction(
@@ -68,10 +70,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.textInputType,
       inputFormatters: _getInputFormatters(),
       textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+
       style: TextStyle(
+
         fontWeight: FontWeight.bold,
         fontSize: 14,
-        color: isFocused ? ConsColors.blueBg1 : ConsColors.blue,
+        color:  ConsColors.blue,
         fontFamily: 'IRANSansX',
       ),
       onTap: () {
@@ -81,19 +86,26 @@ class _CustomTextFieldState extends State<CustomTextField> {
         );
       },
       decoration: InputDecoration(
+        filled: true,
+        fillColor: ConsColors.blueLight,
+        hintText: widget.hintText?.toPersianDigit(),
+        hintStyle: TextStyle(
+          color: ConsColors.blue.withValues(alpha: 0.25),
+          fontFamily: 'IRANSansX',
+        ),
         isDense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: ConsColors.borderInactive,
+            color: Colors.transparent,
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: ConsColors.borderActive,
+            color: ConsColors.blue,
             width: 1.5,
           ),
         ),
@@ -101,9 +113,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ? Padding(
           padding: EdgeInsets.only(top: 15),
           child: Text(
-            'سال',
+            '98+'.toPersianDigit(),
             style: TextStyle(
-              color: isFocused ? ConsColors.blueBg1 : ConsColors.blue,
+              color:  ConsColors.blue,
               fontWeight: FontWeight.bold,
               fontFamily: 'IRANSansX',
             ),

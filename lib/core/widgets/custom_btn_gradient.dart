@@ -33,10 +33,10 @@ class CustomBtnGradient extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [ConsColors.orange2, ConsColors.orange],
+              colors: [ConsColors.greenBg, ConsColors.greenBg],
             ),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.orange),
+            border: Border.all(color: ConsColors.greenBg),
           ),
           child: Container(
             alignment: Alignment.center,
@@ -46,7 +46,7 @@ class CustomBtnGradient extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14, // 👈 برابر با دکمه‌ی معمولی
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: ConsColors.blue,
               ),
             ),
           ),

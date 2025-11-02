@@ -4,14 +4,18 @@ import 'package:rozeh_project/features/feature_help/presentation/screen/help_scr
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/screen/main_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:rozeh_project/features/feature_otp/presentation/screen/otp_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
 import 'package:rozeh_project/features/profile_academy/presentation/screen/profile_screen.dart';
+import 'package:rozeh_project/features/feature_splash/presentation/screen/splash_screen.dart';
+import 'package:rozeh_project/features/feature_login/presentation/screen/login_screen.dart';
 
 
 class AppNavigation {
   AppNavigation._();
 
-  static String initial = HomeScreen.routePath;
+  // static String initial = HomeScreen.routePath;
+  static String initial = SplashScreen.routePath;
 
   // Private navigators
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -41,6 +45,26 @@ class AppNavigation {
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     routes: [
+      GoRoute(
+        path: SplashScreen.routePath,
+        builder: (context, state) => const SplashScreen(),
+      ),
+
+      /// صفحه Login
+      GoRoute(
+        path: LoginScreen.routePath,
+        builder: (context, state) => const LoginScreen(),
+      ),
+
+      GoRoute(
+        path: OtpScreen.routePath,
+        builder: (context, state) {
+          final phone = state.extra as String;
+          return OtpScreen(phone: phone);
+        },
+      ),
+
+
       /// MainWrapper
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -116,19 +140,7 @@ class AppNavigation {
         ],
       ),
 
-      // GoRoute(
-      //   parentNavigatorKey: _rootNavigatorKey,
-      //   path: EditProfileScreen.routePath,
-      //   name: EditProfileScreen.routeName,
-      //   pageBuilder:
-      //       (context, state) => CustomTransitionPage<void>(
-      //         key: state.pageKey,
-      //         child: const EditProfileScreen(),
-      //         transitionsBuilder:
-      //             (context, animation, secondaryAnimation, child) =>
-      //                 FadeTransition(opacity: animation, child: child),
-      //       ),
-      // ),
+
     ],
   );
 }

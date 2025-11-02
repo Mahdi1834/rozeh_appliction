@@ -421,6 +421,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  pinput:
+    dependency: "direct main"
+    description:
+      name: pinput
+      sha256: c41f42ee301505ae2375ec32871c985d3717bf8aee845620465b286e0140aad2
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.2"
   platform:
     dependency: transitive
     description:
@@ -530,6 +538,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  smart_auth:
+    dependency: "direct main"
+    description:
+      name: smart_auth
+      sha256: a536423c50d71e9a311d16027346634d0deadd07dafc5b5606b46719cf6fb2b6
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   source_span:
     dependency: transitive
     description:
@@ -578,6 +594,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.4"
+  top_snackbar_flutter:
+    dependency: "direct main"
+    description:
+      name: top_snackbar_flutter
+      sha256: ad3f93062450e8c7db97b271d405c180536408cc2be4380a59da7022eb1d750c
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.0"
   typed_data:
     dependency: transitive
     description:
@@ -594,6 +618,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.2"
+  universal_platform:
+    dependency: transitive
+    description:
+      name: universal_platform
+      sha256: "64e16458a0ea9b99260ceb5467a214c1f298d647c659af1bff6d3bf82536b1ec"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   vector_graphics:
     dependency: transitive
     description:
