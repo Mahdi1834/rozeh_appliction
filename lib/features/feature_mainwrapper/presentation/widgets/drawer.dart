@@ -66,19 +66,19 @@ Drawer buildDrawer(double width, BuildContext context) {
                   },
                   title: "پروفایل",
                 ),
-                Divider(color: ConsColors.blueLight),
-                ItemForDrawer(
-                  svgPic: "assets/images/BookDr.svg",
-                  onTap: () {},
-                  isArrow: true,
-                  title: "برنامه حفظ",
-                ),
-                Divider(color: ConsColors.blueLight),
-                ItemForDrawer(
-                  svgPic: "assets/images/Bookmark.svg",
-                  onTap: () {},
-                  title: "نشان ها",
-                ),
+                // Divider(color: ConsColors.blueLight),
+                // ItemForDrawer(
+                //   svgPic: "assets/images/BookDr.svg",
+                //   onTap: () {},
+                //   isArrow: true,
+                //   title: "برنامه حفظ",
+                // ),
+                // Divider(color: ConsColors.blueLight),
+                // ItemForDrawer(
+                //   svgPic: "assets/images/Bookmark.svg",
+                //   onTap: () {},
+                //   title: "نشان ها",
+                // ),
                 Divider(color: ConsColors.blueLight),
                 ItemForDrawer(
                   svgPic: "assets/images/Settings.svg",

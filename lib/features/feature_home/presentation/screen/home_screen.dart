@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_icon_menu.dart';
@@ -577,7 +578,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         // ساخت مدل کارت از داده واقعی
                                         final info = InfoReservationModel(
                                           title: "مراسم رزرو شده",
-                                          date: req.date ?? "",
+                                          date: toJalaliDate(req.date),
                                           maddah: _joinNames(req.maddahs),
                                           speaker: _joinNames(req.speakers),
                                           type: req.rozeh?.title ?? "",
@@ -619,6 +620,23 @@ class _HomeScreenState extends State<HomeScreen> {
         .map((e) => e.fullName ?? "")
         .where((s) => s.trim().isNotEmpty)
         .join("، ");
+  }
+
+  String toJalaliDate(String? gregorianDate) {
+    if (gregorianDate == null || gregorianDate.isEmpty) return "";
+
+    try {
+      // تبدیل رشته به DateTime
+      final date = DateTime.parse(gregorianDate);
+
+      // تبدیل به شمسی
+      final jalali = Jalali.fromDateTime(date);
+
+      // برگردوندن به فرمت خوش‌خوان
+      return "${jalali.year}/${jalali.month.toString().padLeft(2, '0')}/${jalali.day.toString().padLeft(2, '0')}";
+    } catch (e) {
+      return "";
+    }
   }
 
   String _mapGender(String? g) {
