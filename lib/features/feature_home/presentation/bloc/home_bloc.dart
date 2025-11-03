@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rozeh_project/core/resources/data_state.dart';
 import 'package:rozeh_project/features/feature_home/data/model/current_hadith_model.dart';
+import 'package:rozeh_project/features/feature_home/data/model/rozeh_request_model.dart';
 import 'package:rozeh_project/features/feature_home/repositories/home_repository.dart';
 
 part 'home_event.dart';
@@ -9,12 +10,16 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 part 'current_hadith_status.dart';
+part 'rozeh_request_status.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeRepository homeRepository;
 
   HomeBloc(this.homeRepository)
-    : super(HomeState(currentHadithStatus: CurrentHadithStatusInit())) {
+    : super(HomeState(
+      rozehRequestStatus: RozehRequestStatusInit(),
+      currentHadithStatus: CurrentHadithStatusInit()
+  )) {
     
     
     on<GetCurrentHadithEvent>((event, emit) async {
@@ -41,6 +46,38 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(
           state.copyWith(
             newCurrentHadithStatus: CurrentHadithStatusError(
+              dataState.error!,
+            ),
+          ),
+        );
+      }
+    });
+
+    on<GetRozehRequestEvent>((event, emit) async {
+
+      emit(
+        state.copyWith(
+          newRozehRequestStatus: RozehRequestStatusLoading(),
+        ),
+      );
+      DataState dataState = await homeRepository.fetchRequestRozeh(
+        page: event.page,
+        query: event.query,
+      );
+
+      if (dataState is DataSuccess) {
+        emit(
+          state.copyWith(
+            newRozehRequestStatus: RozehRequestStatusCompleted(
+              dataState.data,
+            ),
+          ),
+        );
+      }
+      if (dataState is DataFailed) {
+        emit(
+          state.copyWith(
+            newRozehRequestStatus: RozehRequestStatusError(
               dataState.error!,
             ),
           ),

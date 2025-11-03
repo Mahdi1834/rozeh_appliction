@@ -11,9 +11,7 @@ String getMessage(DioException e) {
           : "درخواست نامعتبر بود.";
 
     case 401:
-      return data is Map<String, dynamic> && data['message'] != null
-          ? data['message'].toString()
-          : "توکن شما منقضی شده است، لطفاً دوباره وارد شوید.";
+      return "401";
 
     case 403:
       return data is Map<String, dynamic> && data['message'] != null

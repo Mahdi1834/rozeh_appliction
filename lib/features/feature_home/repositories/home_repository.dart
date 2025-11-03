@@ -3,6 +3,7 @@ import 'package:rozeh_project/core/error_handling/get_message.dart';
 import 'package:rozeh_project/core/resources/data_state.dart';
 import 'package:rozeh_project/features/feature_home/data/api/home_api_provider.dart';
 import 'package:rozeh_project/features/feature_home/data/model/current_hadith_model.dart';
+import 'package:rozeh_project/features/feature_home/data/model/rozeh_request_model.dart';
 
 
 class HomeRepository {
@@ -16,6 +17,21 @@ class HomeRepository {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final CurrentHadithModel currentHadithModel = CurrentHadithModel.fromJson(response.data);
         return DataSuccess(currentHadithModel);
+      } else {
+        return DataFailed("خطا در ارسال پیامک !!!");
+      }
+    } on DioException catch (e) {
+      return DataFailed(getMessage(e));
+    }
+  }
+
+
+  Future<DataState<RozehRequestModel>> fetchRequestRozeh({required String page , String? query}) async {
+    try {
+      Response response = await apiProvider.callGetRozehRequest(page: page,query:  query);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final RozehRequestModel rozehRequestModel = RozehRequestModel.fromJson(response.data);
+        return DataSuccess(rozehRequestModel);
       } else {
         return DataFailed("خطا در ارسال پیامک !!!");
       }
