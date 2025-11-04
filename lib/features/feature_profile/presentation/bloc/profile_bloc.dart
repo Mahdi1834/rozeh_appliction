@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rozeh_project/core/resources/data_state.dart';
 import 'package:rozeh_project/features/feature_profile/data/model/cities_model.dart';
+import 'package:rozeh_project/features/feature_profile/data/model/customer_info_model.dart';
 import 'package:rozeh_project/features/feature_profile/data/model/profile_model_for_send.dart';
 import 'package:rozeh_project/features/feature_profile/data/model/provinces_model.dart';
 import 'package:rozeh_project/features/feature_profile/data/model/update_profile_model.dart';
@@ -16,6 +17,7 @@ part 'provinces_status.dart';
 part 'cities_status.dart';
 
 part 'update_profile_status.dart';
+part 'customer_info_status.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileRepository profileRepository;
@@ -26,6 +28,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           provincesStatus: ProvincesStatusInit(),
           citiesStatus: CitiesStatusInit(),
           updateProfileStatus: UpdateProfileStatusInit(),
+          customerInfoStatus: CustomerInfoStatusInit()
         ),
       ) {
     on<GetProvincesEvent>((event, emit) async {
@@ -44,6 +47,27 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(
           state.copyWith(
             newProvincesStatus: ProvincesStatusError(dataState.error!),
+          ),
+        );
+      }
+    });
+
+    on<GetCustomerInfoEvent>((event, emit) async {
+      // TODO: implement event handler
+      emit(state.copyWith(newCustomerInfoStatus: CustomerInfoStatusLoading()));
+      DataState dataState = await profileRepository.fetchCustomer();
+
+      if (dataState is DataSuccess) {
+        emit(
+          state.copyWith(
+            newCustomerInfoStatus: CustomerInfoStatusCompleted(dataState.data),
+          ),
+        );
+      }
+      if (dataState is DataFailed) {
+        emit(
+          state.copyWith(
+            newCustomerInfoStatus: CustomerInfoStatusError(dataState.error!),
           ),
         );
       }

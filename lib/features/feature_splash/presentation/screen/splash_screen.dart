@@ -31,8 +31,10 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 1200),
     );
 
-    _fadeAnimation =
-        CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
 
     _controller.forward();
 
@@ -40,8 +42,8 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _checkAuth() async {
-    // تا انیمیشن تموم شه یه تاخیر کوچیک بده
-    await Future.delayed(const Duration(seconds: 2));
+
+    await Future.delayed(const Duration(seconds: 2)); // جلوه طبیعی‌تر
 
     final userSession = locator<UserSession>();
     final isLoggedIn = userSession.isLoggedIn();
@@ -66,48 +68,25 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    var width= MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: FadeTransition(
         opacity: _fadeAnimation,
         child: Center(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               // 🔹 لوگوی اپ (می‌تونی آیکن برندت رو بذاری)
-              // Image.asset(
-              //   'assets/images/logo.png',
-              //   width: 110,
-              //   height: 110,
-              // ),
+              Image.asset('assets/images/logo1.png', width: width * 0.7, height: width * 0.7),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
 
-          // 🔹 نام اپلیکیشن
-          // Text(
-          //   "Rozeh App",
-          //   style: theme.textTheme.titleLarge?.copyWith(
-          //     fontWeight: FontWeight.bold,
-          //     fontSize: 22,
-          //     color: Colors.blue.shade800,
-          //     letterSpacing: 1.2,
-          //   ),
-          // ),
-
-
-          // 🔹 نوشته زیر لوگو
-          Text(
-            "رزرو روضه و مجالس خانگی",
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: ConsColors.blue,
-            ),
+              DotLoadingWidget(size: 30),
+            ],
           ),
-          const SizedBox(height: 8),
-          DotLoadingWidget(size: 50),
-          ],
         ),
       ),
-    ),);
+    );
   }
 }

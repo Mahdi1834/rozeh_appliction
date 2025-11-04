@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:rozeh_project/core/error_handling/get_message.dart';
 import 'package:rozeh_project/core/resources/data_state.dart';
-
-
 import 'package:rozeh_project/features/feature_profile/data/api/profile_api_provider.dart';
 import 'package:rozeh_project/features/feature_profile/data/model/cities_model.dart';
+import 'package:rozeh_project/features/feature_profile/data/model/customer_info_model.dart';
 import 'package:rozeh_project/features/feature_profile/data/model/profile_model_for_send.dart';
 import 'package:rozeh_project/features/feature_profile/data/model/provinces_model.dart';
 import 'package:rozeh_project/features/feature_profile/data/model/update_profile_model.dart';
@@ -24,6 +23,21 @@ class ProfileRepository {
         return DataSuccess(provincesModel);
       } else {
         return DataFailed("خطا در  دریافت استان ها !!!");
+      }
+    } on DioException catch (e) {
+      return DataFailed(getMessage(e));
+    }
+  }
+
+  Future<DataState<CustomerInfoModel>> fetchCustomer() async {
+    try {
+      Response response = await apiProvider.callGetCustomer();
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final CustomerInfoModel customerInfoModel = CustomerInfoModel.fromJson(response.data);
+        return DataSuccess(customerInfoModel);
+      } else {
+        return DataFailed("خطا در  دریافت اطلاعات اکانت !!!");
       }
     } on DioException catch (e) {
       return DataFailed(getMessage(e));

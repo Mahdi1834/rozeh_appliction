@@ -32,6 +32,25 @@ class ProfileApiProvider {
     return response;
   }
 
+  dynamic callGetCustomer() async {
+    UserSession userSession = locator();
+
+    String? token = await userSession.getToken();
+
+    final response = await dio.get(
+      "${Constants.baseUrl}/customer/show",
+
+      options: Options(
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      ),
+    );
+
+    return response;
+  }
+
   dynamic callUpdateProfile({
     required ProfileModelForSend profileModelForSend,
   }) async {

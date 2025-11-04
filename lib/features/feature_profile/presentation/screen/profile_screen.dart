@@ -10,6 +10,7 @@ import 'package:rozeh_project/core/widgets/dropdown/custom_dropdown_field.dart';
 import 'package:rozeh_project/core/widgets/snackbar_helper.dart';
 import 'package:rozeh_project/core/widgets/text_field/custom_textfield.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
+import 'package:rozeh_project/features/feature_profile/data/model/customer_info_model.dart';
 import 'package:rozeh_project/features/feature_profile/data/model/profile_model_for_send.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/bloc/profile_bloc.dart';
 import 'package:rozeh_project/locator.dart';
@@ -37,6 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     setMobile();
+    BlocProvider.of<ProfileBloc>(context).add(GetCustomerInfoEvent());
     BlocProvider.of<ProfileBloc>(context).add(GetProvincesEvent());
   }
 
@@ -62,10 +64,59 @@ class _ProfileScreenState extends State<ProfileScreen> {
           color: ConsColors.blueLight,
           child: Column(
             children: [
-              CustomAppBarWithSearch(
-                mainContext: context,
-                title: "پروفایل کاربر",
-                onTapSearch: () {},
+              BlocListener<ProfileBloc, ProfileState>(
+                listenWhen:
+                    (previous, current) =>
+                        previous.customerInfoStatus !=
+                        current.customerInfoStatus,
+                listener: (context, state) {
+                  // TODO: implement listener
+
+                  if (state.customerInfoStatus is CustomerInfoStatusError) {
+                    CustomerInfoStatusError customerInfoStatusError =
+                        state.customerInfoStatus as CustomerInfoStatusError;
+                    SnackbarHelper.show(
+                      context: context,
+                      message: customerInfoStatusError.message!,
+                      status: SnackbarStatus.error,
+                    );
+                  }
+
+                  if (state.customerInfoStatus is CustomerInfoStatusCompleted) {
+                    CustomerInfoStatusCompleted customerInfoStatusCompleted =
+                        state.customerInfoStatus as CustomerInfoStatusCompleted;
+
+                    CustomerInfoModel customerInfoModel =
+                        customerInfoStatusCompleted.customerInfoModel;
+                    setState(() {
+                      fullNameController.text =
+                          customerInfoModel.data?.fullName ?? "";
+                      addressController.text =
+                          customerInfoModel.data?.address ?? "";
+                      nationalCodeController.text =
+                          customerInfoModel.data?.nationalCode ?? "";
+                      selectedProvince =
+                          (customerInfoModel.data?.provinceId ?? "").toString();
+                      selectedCity =
+                          (customerInfoModel.data?.cityId ?? "").toString();
+                      if (customerInfoModel.data?.provinceId != null ||
+                          (customerInfoModel.data?.provinceId ?? "")
+                              .toString()
+                              .isNotEmpty)
+                        BlocProvider.of<ProfileBloc>(context).add(
+                          GetCitiesEvent(
+                            provinceId:
+                                customerInfoModel.data!.provinceId.toString(),
+                          ),
+                        );
+                    });
+                  }
+                },
+                child: CustomAppBarWithSearch(
+                  mainContext: context,
+                  title: "پروفایل کاربر",
+                  onTapSearch: () {},
+                ),
               ),
               Expanded(
                 child: SizedBox(
@@ -370,13 +421,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       }
 
                                       if (state.updateProfileStatus
-                                      is UpdateProfileStatusCompleted) {
-
+                                          is UpdateProfileStatusCompleted) {
                                         SnackbarHelper.show(
                                           context: context,
                                           message:
-                                          "پروفایل با موفقیت بروزرسانی شد",
-                                          status: SnackbarStatus.success ,
+                                              "پروفایل با موفقیت بروزرسانی شد",
+                                          status: SnackbarStatus.success,
                                         );
                                       }
                                     },
@@ -392,17 +442,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                                           if (_formKey.currentState!
                                               .validate()) {
-
                                             if (selectedProvince == null ||
-                                              selectedProvince!.isEmpty) {
-                                            SnackbarHelper.show(
-                                              context: context,
-                                              message:
-                                              "لطفا استان را انتخاب کنید",
-                                              status: SnackbarStatus.error,
-                                            );
-                                            return;
-                                          }
+                                                selectedProvince!.isEmpty) {
+                                              SnackbarHelper.show(
+                                                context: context,
+                                                message:
+                                                    "لطفا استان را انتخاب کنید",
+                                                status: SnackbarStatus.error,
+                                              );
+                                              return;
+                                            }
                                             if (selectedCity == null ||
                                                 selectedCity!.isEmpty) {
                                               SnackbarHelper.show(
@@ -413,8 +462,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               );
                                               return;
                                             }
-
-
 
                                             ProfileModelForSend
                                             profileModelForSend =
@@ -444,8 +491,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     profileModelForSend,
                                               ),
                                             );
-
-
                                           }
                                         },
                                         title: "ثبت و ویرایش اطلاعات",

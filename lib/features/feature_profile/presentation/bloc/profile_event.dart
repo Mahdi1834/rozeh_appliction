@@ -5,6 +5,9 @@ sealed class ProfileEvent {}
 
 class GetProvincesEvent extends ProfileEvent {}
 
+class GetCustomerInfoEvent extends ProfileEvent{}
+
+
 class GetCitiesEvent extends ProfileEvent {
   final String provinceId;
 
