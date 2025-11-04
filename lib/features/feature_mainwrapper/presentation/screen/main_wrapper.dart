@@ -6,8 +6,9 @@ import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dar
 import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/widgets/drawer.dart';
+import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
-import 'package:rozeh_project/features/profile_academy/presentation/screen/profile_screen.dart';
+
 
 class MainWrapper extends StatefulWidget {
   static const routeName = "/main_wrapper";

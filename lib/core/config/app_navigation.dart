@@ -5,8 +5,9 @@ import 'package:rozeh_project/features/feature_home/presentation/screen/home_scr
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/screen/main_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/otp_screen.dart';
+import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
-import 'package:rozeh_project/features/profile_academy/presentation/screen/profile_screen.dart';
+
 import 'package:rozeh_project/features/feature_splash/presentation/screen/splash_screen.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/login_screen.dart';
 

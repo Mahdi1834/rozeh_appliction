@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 import 'package:rozeh_project/core/config/colors.dart';
+import 'package:rozeh_project/core/config/constants.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_icon_menu.dart';
 import 'package:rozeh_project/core/widgets/custom_icon_svg_btn.dart';
 import 'package:rozeh_project/core/widgets/dot_loading_widget.dart';
@@ -184,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 child: Center(
                                   child: TxtHeader(
-                                    text: "رزرو روضه و مجالس خانگی",
+                                    text: Constants.nameApp,
                                   ),
                                 ),
                               ),
