@@ -66,6 +66,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       inputFormatters: _getInputFormatters(),
       textDirection: TextDirection.rtl,
       textAlign: widget.isTextStart ? TextAlign.start : TextAlign.center,
+      minLines: 1,
+      maxLines: widget.textInputType == TextInputType.multiline ? 6 : 1,
       cursorColor: ConsColors.blueBg1,
       style: TextStyle(
         fontWeight: FontWeight.bold,

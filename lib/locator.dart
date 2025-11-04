@@ -7,6 +7,9 @@ import 'package:rozeh_project/features/feature_home/repositories/home_repository
 import 'package:rozeh_project/features/feature_login/data/api/login_api_provider.dart';
 import 'package:rozeh_project/features/feature_login/presentation/bloc/login_bloc.dart';
 import 'package:rozeh_project/features/feature_login/repositories/login_repository.dart';
+import 'package:rozeh_project/features/feature_profile/data/api/profile_api_provider.dart';
+import 'package:rozeh_project/features/feature_profile/presentation/bloc/profile_bloc.dart';
+import 'package:rozeh_project/features/feature_profile/repositories/profile_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -22,14 +25,17 @@ Future<void> initLocator() async{
   ///api provider
   locator.registerSingleton<LoginApiProvider>(LoginApiProvider(locator()));
   locator.registerSingleton<HomeApiProvider>(HomeApiProvider(locator()));
+  locator.registerSingleton<ProfileApiProvider>(ProfileApiProvider(locator()));
 
   ///repository
   locator.registerSingleton<LoginRepository>(LoginRepository(locator()));
   locator.registerSingleton<HomeRepository>(HomeRepository(locator()));
+  locator.registerSingleton<ProfileRepository>(ProfileRepository(locator()));
 
   ///bloc
   locator.registerSingleton<LoginBloc>(LoginBloc(locator()));
   locator.registerSingleton<HomeBloc>(HomeBloc(locator()));
+  locator.registerSingleton<ProfileBloc>(ProfileBloc(locator()));
 
   //
   // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

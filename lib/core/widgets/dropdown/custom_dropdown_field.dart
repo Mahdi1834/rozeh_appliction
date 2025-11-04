@@ -45,8 +45,10 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
           fontFamily: 'IRANSansX',
         ),
         isDense: true,
-        contentPadding:
-        const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 12,
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: Colors.transparent, width: 1),
@@ -73,38 +75,40 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
         color: ConsColors.blue,
         fontFamily: 'IRANSansX',
       ),
-      dropdownSearchData: widget.enableSearch
-          ? DropdownSearchData(
-        searchInnerWidgetHeight: 50,
-        searchController: _searchController,
-        searchInnerWidget: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: _searchController,
-            decoration: InputDecoration(
-              hintText: 'جستجو...',
-              hintStyle: TextStyle(
-                color: ConsColors.blue.withValues(alpha: 0.3),
-                fontFamily: 'IRANSansX',
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 12, vertical: 8),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
-                    color: ConsColors.blue.withValues(alpha: 0.2)),
-              ),
-            ),
-          ),
-        ),
-        searchMatchFn: (item, searchValue) {
-          return item.value
-              .toString()
-              .toLowerCase()
-              .contains(searchValue.toLowerCase());
-        },
-      )
-          : null,
+      dropdownSearchData:
+          widget.enableSearch
+              ? DropdownSearchData(
+                searchInnerWidgetHeight: 50,
+                searchController: _searchController,
+                searchInnerWidget: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: 'جستجو...',
+                      hintStyle: TextStyle(
+                        color: ConsColors.blue.withValues(alpha: 0.3),
+                        fontFamily: 'IRANSansX',
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: ConsColors.blue.withValues(alpha: 0.2),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                searchMatchFn: (item, searchValue) {
+                  final text = (item.child as Text).data ?? "";
+                  return text.toLowerCase().contains(searchValue.toLowerCase());
+                },
+              )
+              : null,
     );
   }
 }
