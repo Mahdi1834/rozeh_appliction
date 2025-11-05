@@ -584,6 +584,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           speaker: _joinNames(req.speakers),
                                           type: req.rozeh?.title ?? "",
                                           gender: _mapGender(req.gender),
+                                          address: req.address ?? ""
                                         );
 
                                         return Padding(

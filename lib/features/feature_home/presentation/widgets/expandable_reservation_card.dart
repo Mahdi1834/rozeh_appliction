@@ -104,6 +104,11 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
                           title: "مخاطبین :",
                           content: widget.infoReservationModel.gender,
                         ),
+                        SizedBox(height: 10),
+                        CustomTxtWithTitle(
+                          title: "ادرس :",
+                          content: widget.infoReservationModel.address,
+                        ),
                       ],
                     ),
                   ),

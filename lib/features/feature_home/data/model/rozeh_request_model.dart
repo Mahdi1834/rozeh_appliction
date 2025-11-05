@@ -224,6 +224,7 @@ class RozehRequest {
     this.ageGroupId,
     this.gender,
     this.description,
+    this.address,
     this.date,
     this.startTime,
     this.endTime,
@@ -243,6 +244,7 @@ class RozehRequest {
   int? ageGroupId;
   String? gender; // "family", "man", ...
   String? description;
+  String? address;
   String? date; // "YYYY-MM-DD"
   String? startTime; // "HH:mm:ss"
   String? endTime; // "HH:mm:ss"
@@ -262,6 +264,7 @@ class RozehRequest {
     int? ageGroupId,
     String? gender,
     String? description,
+    String? address,
     String? date,
     String? startTime,
     String? endTime,
@@ -280,6 +283,7 @@ class RozehRequest {
     ageGroupId: ageGroupId ?? this.ageGroupId,
     gender: gender ?? this.gender,
     description: description ?? this.description,
+    address: address ?? this.address,
     date: date ?? this.date,
     startTime: startTime ?? this.startTime,
     endTime: endTime ?? this.endTime,
@@ -300,6 +304,7 @@ class RozehRequest {
     ageGroupId = (json['age_group_id'] as num?)?.toInt();
     gender = json['gender'] as String?;
     description = json['description'] as String?;
+    address = json['address'] as String?;
     date = json['date'] as String?;
     startTime = json['start_time'] as String?;
     endTime = json['end_time'] as String?;
@@ -344,6 +349,7 @@ class RozehRequest {
     map['age_group_id'] = ageGroupId;
     map['gender'] = gender;
     map['description'] = description;
+    map['address'] = address;
     map['date'] = date;
     map['start_time'] = startTime;
     map['end_time'] = endTime;

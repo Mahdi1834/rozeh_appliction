@@ -6,6 +6,7 @@ class InfoReservationModel {
   final String speaker;
   final String type;
   final String gender;
+  final String address;
 
   InfoReservationModel({
     required this.title,
@@ -14,5 +15,6 @@ class InfoReservationModel {
     required this.speaker,
     required this.type,
     required this.gender,
+    required this.address,
   });
 }
