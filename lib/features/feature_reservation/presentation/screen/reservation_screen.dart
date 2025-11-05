@@ -45,6 +45,10 @@ class _ReservationScreenState extends State<ReservationScreen> {
   final TextEditingController addressController = TextEditingController();
   final PageController _pageController = PageController(initialPage: 0);
 
+  int _currentPage = 0;
+
+  final List<String> _titles = ["رزرو جلسه", "تایید اطلاعات", "تایید رزرو"];
+
   @override
   void initState() {
     super.initState();
@@ -86,7 +90,6 @@ class _ReservationScreenState extends State<ReservationScreen> {
     if (selectedMaddah != null) userIds.add(int.parse(selectedMaddah!));
     if (selectedSpeaker != null) userIds.add(int.parse(selectedSpeaker!));
 
-
     final rozehRequest = RozehRequestSendModel(
       rozehId: int.parse(selectedType!),
       ageGroupId: int.parse(selectedAgeGroup!),
@@ -100,12 +103,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           descriptionController.text.isEmpty
               ? null
               : descriptionController.text,
-      address:
-          addressController.text.isEmpty
-              ? null
-              : addressController.text,
-
-
+      address: addressController.text.isEmpty ? null : addressController.text,
     );
 
     BlocProvider.of<ReservationBloc>(
@@ -189,15 +187,122 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: PageView(
-                        controller: _pageController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        // غیر فعال کردن کشیدن دستی
+                      padding: const EdgeInsets.only(left: 10 , right: 10 , bottom: 10),
+                      child: Column(
                         children: [
-                          buildSingleChildScrollViewLevel1(context, width),
-                          buildSingleChildScrollViewLevel2(context, width),
-                          buildSingleChildScrollViewLevel3(context, width),
+                          // --- Progress Bar Header ---
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8.0,
+                              horizontal: 5,
+                            ),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: List.generate(
+                                    _titles.length * 2 - 1,
+                                    (index) {
+                                      if (index.isOdd) {
+                                        // Dotted line between steps
+                                        int realIndex = (index / 2).floor();
+                                        return Expanded(
+                                          flex: 3,
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(
+                                              top: 22,
+                                            ), // 👈 تنظیم ارتفاع خط
+                                            child: CustomPaint(
+                                              painter: DottedLinePainter(
+                                                color:
+                                                    realIndex < _currentPage
+                                                        ? const Color(
+                                                          0xFFFF6F42,
+                                                        )
+                                                        : Colors.grey.shade300,
+                                              ),
+                                              size: const Size(
+                                                double.infinity,
+                                                2,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+
+                                      // Step circle + title
+                                      int stepIndex = (index / 2).floor();
+                                      final isActive =
+                                          stepIndex <= _currentPage;
+                                      final isDone = stepIndex < _currentPage;
+
+                                      return Expanded(
+                                        flex: 3,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            TxtTitle(
+                                              text: _titles[stepIndex],
+                                              color:
+                                                  isActive
+                                                      ? ConsColors.orange
+                                                      : ConsColors.gray,
+                                              size: 12,
+                                            ),
+                                            const SizedBox(height: 6),
+                                            Container(
+                                              width: 25,
+                                              height: 25,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    isActive
+                                                        ? ConsColors.orange
+                                                        : isDone
+                                                        ? ConsColors.orange
+                                                            .withOpacity(0.3)
+                                                        : ConsColors.gray,
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: TxtTitleNotBold(
+                                                text: '${stepIndex + 1}',
+
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+
+                          Expanded(
+                            child: PageView(
+                              controller: _pageController,
+                              physics: const NeverScrollableScrollPhysics(),
+                              // غیر فعال کردن کشیدن دستی
+                              children: [
+                                buildSingleChildScrollViewLevel1(
+                                  context,
+                                  width,
+                                ),
+                                buildSingleChildScrollViewLevel2(
+                                  context,
+                                  width,
+                                ),
+                                buildSingleChildScrollViewLevel3(
+                                  context,
+                                  width,
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -297,13 +402,15 @@ class _ReservationScreenState extends State<ReservationScreen> {
             const SizedBox(height: 10),
             _buildGenderDropdown(context),
             const SizedBox(height: 20),
-            TxtTitle(text: "آدرس (پیش فرض آدرس پروفایل می باشد)", color: ConsColors.blue),
+            TxtTitle(
+              text: "آدرس (پیش فرض آدرس پروفایل می باشد)",
+              color: ConsColors.blue,
+            ),
             const SizedBox(height: 10),
             CustomTextField(
               isTextStart: true,
               controller: addressController,
               textInputType: TextInputType.multiline,
-
             ),
 
             const SizedBox(height: 30),
@@ -365,6 +472,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
                       );
+                      setState(() {
+                        _currentPage++;
+                      });
                     },
                     title: "ثبت و رزرو مراسم",
                   ),
@@ -628,6 +738,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                 );
+                setState(() {
+                  _currentPage++;
+                });
               }
             },
             builder: (context, state) {
@@ -653,6 +766,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                 );
+                setState(() {
+                  _currentPage--;
+                });
               },
             ),
           ),
@@ -709,6 +825,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 endTimeController.clear();
                 descriptionController.clear();
                 addressController.clear();
+                _currentPage = 0;
               });
               _pageController.animateToPage(
                 0, // شماره صفحه (0-indexed)
@@ -1029,4 +1146,31 @@ class _ReservationScreenState extends State<ReservationScreen> {
       },
     );
   }
+}
+
+class DottedLinePainter extends CustomPainter {
+  final Color color;
+
+  DottedLinePainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint =
+        Paint()
+          ..color = color
+          ..strokeWidth = 2
+          ..style = PaintingStyle.stroke;
+
+    const dashWidth = 5;
+    const dashSpace = 4;
+    double startX = 0;
+
+    while (startX < size.width) {
+      canvas.drawLine(Offset(startX, 0), Offset(startX + dashWidth, 0), paint);
+      startX += dashWidth + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
