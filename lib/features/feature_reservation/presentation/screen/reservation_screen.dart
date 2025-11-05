@@ -42,6 +42,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
   final TextEditingController startTimeController = TextEditingController();
   final TextEditingController endTimeController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
   final PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -99,6 +100,12 @@ class _ReservationScreenState extends State<ReservationScreen> {
           descriptionController.text.isEmpty
               ? null
               : descriptionController.text,
+      address:
+          addressController.text.isEmpty
+              ? null
+              : addressController.text,
+
+
     );
 
     BlocProvider.of<ReservationBloc>(
@@ -289,6 +296,15 @@ class _ReservationScreenState extends State<ReservationScreen> {
             TxtTitle(text: "جنسیت شرکت کنندگان", color: ConsColors.blue),
             const SizedBox(height: 10),
             _buildGenderDropdown(context),
+            const SizedBox(height: 20),
+            TxtTitle(text: "آدرس (پیش فرض آدرس پروفایل می باشد)", color: ConsColors.blue),
+            const SizedBox(height: 10),
+            CustomTextField(
+              isTextStart: true,
+              controller: addressController,
+              textInputType: TextInputType.multiline,
+
+            ),
 
             const SizedBox(height: 30),
             // ----------- دکمه ارسال -----------
@@ -525,7 +541,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         Expanded(
                           child: TxtTitle(
                             size: 16,
-                            text: "",
+                            text: addressController.text.trim(),
                             color: ConsColors.blue,
                           ),
                         ),
@@ -692,6 +708,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 startTimeController.clear();
                 endTimeController.clear();
                 descriptionController.clear();
+                addressController.clear();
               });
               _pageController.animateToPage(
                 0, // شماره صفحه (0-indexed)

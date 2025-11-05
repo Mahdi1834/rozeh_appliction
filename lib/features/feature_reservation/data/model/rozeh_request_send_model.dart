@@ -5,6 +5,7 @@ class RozehRequestSendModel {
   final String date;
   final List<int> userIds;
   final String? description;
+  final String? address;
   final String startTime;
   final String? endTime;
 
@@ -16,6 +17,7 @@ class RozehRequestSendModel {
     required this.userIds,
     required this.startTime,
     this.description,
+    this.address,
     this.endTime,
   });
 
@@ -27,6 +29,7 @@ class RozehRequestSendModel {
       'date': date,
       'user_ids': userIds,
       'description': description,
+      'address': address,
       'start_time': startTime,
       'end_time': endTime,
     };
