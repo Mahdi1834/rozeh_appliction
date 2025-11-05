@@ -10,6 +10,9 @@ import 'package:rozeh_project/features/feature_login/repositories/login_reposito
 import 'package:rozeh_project/features/feature_profile/data/api/profile_api_provider.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/bloc/profile_bloc.dart';
 import 'package:rozeh_project/features/feature_profile/repositories/profile_repository.dart';
+import 'package:rozeh_project/features/feature_reservation/data/api/reservation_api_provider.dart';
+import 'package:rozeh_project/features/feature_reservation/presentation/bloc/reservation_bloc.dart';
+import 'package:rozeh_project/features/feature_reservation/repositories/reservation_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -26,16 +29,19 @@ Future<void> initLocator() async{
   locator.registerSingleton<LoginApiProvider>(LoginApiProvider(locator()));
   locator.registerSingleton<HomeApiProvider>(HomeApiProvider(locator()));
   locator.registerSingleton<ProfileApiProvider>(ProfileApiProvider(locator()));
+  locator.registerSingleton<ReservationApiProvider>(ReservationApiProvider(locator()));
 
   ///repository
   locator.registerSingleton<LoginRepository>(LoginRepository(locator()));
   locator.registerSingleton<HomeRepository>(HomeRepository(locator()));
   locator.registerSingleton<ProfileRepository>(ProfileRepository(locator()));
+  locator.registerSingleton<ReservationRepository>(ReservationRepository(locator()));
 
   ///bloc
   locator.registerSingleton<LoginBloc>(LoginBloc(locator()));
   locator.registerSingleton<HomeBloc>(HomeBloc(locator()));
   locator.registerSingleton<ProfileBloc>(ProfileBloc(locator()));
+  locator.registerSingleton<ReservationBloc>(ReservationBloc(locator()));
 
   //
   // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

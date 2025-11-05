@@ -7,6 +7,7 @@ import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 import 'package:rozeh_project/features/feature_login/presentation/bloc/login_bloc.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/bloc/profile_bloc.dart';
+import 'package:rozeh_project/features/feature_reservation/presentation/bloc/reservation_bloc.dart';
 import 'package:rozeh_project/locator.dart';
 import 'package:rozeh_project/core/config/app_navigation.dart';
 import 'package:rozeh_project/core/config/theme_provider.dart';
@@ -32,6 +33,7 @@ Future<void> main() async {
         BlocProvider(create: (_) => locator<LoginBloc>()),
         BlocProvider(create: (_) => locator<HomeBloc>()),
         BlocProvider(create: (_) => locator<ProfileBloc>()),
+        BlocProvider(create: (_) => locator<ReservationBloc>()),
       ],
       child: const MyApp()),
   );
