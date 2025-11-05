@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:rozeh_project/core/config/colors.dart';
+import 'package:rozeh_project/core/storage/user_session.dart';
 
 import 'package:rozeh_project/core/widgets/txt_title.dart';
+import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
+import 'package:rozeh_project/features/feature_login/presentation/screen/login_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/widgets/item_for_drawer.dart';
+import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';
+import 'package:rozeh_project/locator.dart';
 
 Drawer buildDrawer(double width, BuildContext context) {
   return Drawer(
@@ -62,23 +68,12 @@ Drawer buildDrawer(double width, BuildContext context) {
                 ItemForDrawer(
                   svgPic: "assets/images/User.svg",
                   onTap: () {
-                    // context.pushNamed(EditProfileScreen.routeName);
+
+                    context.go(ProfileScreen.routePath);
                   },
                   title: "پروفایل",
                 ),
-                // Divider(color: ConsColors.blueLight),
-                // ItemForDrawer(
-                //   svgPic: "assets/images/BookDr.svg",
-                //   onTap: () {},
-                //   isArrow: true,
-                //   title: "برنامه حفظ",
-                // ),
-                // Divider(color: ConsColors.blueLight),
-                // ItemForDrawer(
-                //   svgPic: "assets/images/Bookmark.svg",
-                //   onTap: () {},
-                //   title: "نشان ها",
-                // ),
+
                 Divider(color: ConsColors.blueLight),
                 ItemForDrawer(
                   svgPic: "assets/images/Settings.svg",
@@ -88,7 +83,9 @@ Drawer buildDrawer(double width, BuildContext context) {
                 Divider(color: ConsColors.blueLight),
                 ItemForDrawer(
                   svgPic: "assets/images/Info square.svg",
-                  onTap: () {},
+                  onTap: () {
+                    context.go(HelpScreen.routePath);
+                  },
                   title: "راهنمای برنامه",
                 ),
                 Divider(color: ConsColors.blueLight),
@@ -102,6 +99,20 @@ Drawer buildDrawer(double width, BuildContext context) {
                   svgPic: "assets/images/Share.svg",
                   onTap: () {},
                   title: "اشتراک گذاری برنامه",
+                ),
+                Divider(color: ConsColors.blueLight),
+                ItemForDrawer(
+                  svgPic: "assets/images/Share.svg",
+                  onTap: () async {
+
+                    UserSession userSession = locator();
+                    await userSession.clearAll();
+                    if (context.mounted) {
+                      context.go(LoginScreen.routePath);
+                    }
+                  },
+
+                  title: "خروج از حساب",
                 ),
                 Divider(color: ConsColors.blueLight),
               ],

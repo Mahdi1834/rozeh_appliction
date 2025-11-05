@@ -23,6 +23,8 @@ import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.
 import 'package:rozeh_project/features/feature_home/presentation/widgets/expandable_reservation_card.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/fancy_card.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/login_screen.dart';
+import 'package:rozeh_project/features/feature_mainwrapper/presentation/screen/main_wrapper.dart';
+import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routePath = "/Home_screen";
@@ -184,9 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Expanded(
                                 child: Center(
-                                  child: TxtHeader(
-                                    text: Constants.nameApp,
-                                  ),
+                                  child: TxtHeader(text: Constants.nameApp),
                                 ),
                               ),
                               CustomBtnIconMenu(
@@ -386,16 +386,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 state.rozehRequestStatus
                                     as RozehRequestStatusError;
 
-                            if(err.message == "401"){
-
+                            if (err.message == "401") {
                               SnackbarHelper.show(
                                 context: context,
-                                message: "توکن شما منقضی شده است. دوباره لاگین کنید.",
+                                message:
+                                    "توکن شما منقضی شده است. دوباره لاگین کنید.",
                                 status: SnackbarStatus.error,
                               );
                               context.go(LoginScreen.routePath);
-
-                            }else {
+                            } else {
                               SnackbarHelper.show(
                                 context: context,
                                 message: err.message ?? 'خطا',
@@ -502,6 +501,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         title: "رزرو",
                                         onPressed: () {
                                           // TODO: رفتن به صفحه رزرو
+                                          context.go(ReservationScreen.routePath);
                                         },
                                         svgPicture: "assets/images/Add.svg",
                                         useGradient: true,
@@ -584,7 +584,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           speaker: _joinNames(req.speakers),
                                           type: req.rozeh?.title ?? "",
                                           gender: _mapGender(req.gender),
-                                          address: req.address ?? ""
+                                          address: req.address ?? "",
                                         );
 
                                         return Padding(

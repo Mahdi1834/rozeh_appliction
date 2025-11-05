@@ -86,7 +86,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   void _startTimer() {
     _timer?.cancel();
-    _secondsRemaining = 5;
+    _secondsRemaining = 300;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_secondsRemaining == 0) {
         timer.cancel();
@@ -237,7 +237,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                   style: TextStyle(
                                     color:
                                         _secondsRemaining > 0
-                                            ? Colors.grey
+                                            ? ConsColors.gray
                                             : ConsColors.blue,
                                     fontFamily: 'IRANSansX',
                                     fontSize: 13,
