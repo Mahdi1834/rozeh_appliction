@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rozeh_project/core/config/colors.dart';
-import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_txt_search.dart';
-
-
-
+import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_search.dart';
 
 
 class ReservationScreen extends StatefulWidget {
@@ -28,57 +25,55 @@ class _ReservationScreenState extends State<ReservationScreen> {
           width: width,
           height: height,
           color: ConsColors.blueLight,
-
           child: Column(
             children: [
-              CustomAppBarWithTextSearch(
+              CustomAppBarWithSearch(
                 mainContext: context,
-                title: "دیجی حفظ، معلم هوشمند قرآنی",
-                text: "شروع دوره اول",
-                text2: "( 15 اردیبهشت - 21 مرداد )",
-                onTapSearch: () {
-
-                },
+                title: "فرم ثبت درخواست رزرو",
+                onTapSearch: () {},
               ),
+
               Expanded(
                 child: SizedBox(
                   width: width,
-
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-
-                        SizedBox(
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned(
+                        top: height * 0.2,
+                        left: 0,
+                        child: SvgPicture.asset(
+                          height: height * 0.35,
+                          "assets/images/mandala.svg",
+                        ),
+                      ),
+                      Positioned(
+                        top: height * 0.2,
+                        right: 0,
+                        child: SvgPicture.asset(
+                          height: height * 0.35,
+                          "assets/images/mandala (1).svg",
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
                           width: width,
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              Positioned(
-                                top: 0,
-                                left: 0,
-                                child: SvgPicture.asset(
-                                  height: height * 0.15,
-                                  "assets/images/mandala.svg",
-                                ),
-                              ),
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: SvgPicture.asset(
-                                  height: height * 0.15,
-                                  "assets/images/mandala (1).svg",
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                                width: width,
-                              )
-
-                            ],
+                          height: height,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [],
+                            ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
