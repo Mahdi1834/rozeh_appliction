@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -20,7 +21,7 @@ class SnackbarHelper {
     switch (status) {
       case SnackbarStatus.success:
         snack = CustomSnackBar.success(
-          message: message,
+          message: message.toPersianDigit(),
           backgroundColor:  ConsColors.green, // سبز موفقیت
 
           textStyle: const TextStyle(
@@ -34,7 +35,7 @@ class SnackbarHelper {
 
       case SnackbarStatus.error:
         snack = CustomSnackBar.error(
-          message: message,
+          message: message.toPersianDigit(),
           backgroundColor: const Color(0xFFE74C3C), // قرمز خطا
           textStyle: const TextStyle(
             fontFamily: 'IRANSansX',
@@ -48,7 +49,7 @@ class SnackbarHelper {
       case SnackbarStatus.info:
         snack = CustomSnackBar.info(
 
-          message: message,
+          message: message.toPersianDigit(),
           backgroundColor: ConsColors.blue, // آبی اطلاع
           textStyle: const TextStyle(
             fontFamily: 'IRANSansX',

@@ -71,8 +71,9 @@ class Data {
 
   Data.fromJson(dynamic json) {
     customerId = json['customer_id'];
-    rozehId = json['rozeh_id'];
-    ageGroupId = json['age_group_id'];
+    // اگر عدد باشه به String تبدیل می‌کنیم
+    rozehId = json['rozeh_id']?.toString();
+    ageGroupId = json['age_group_id']?.toString();
     gender = json['gender'];
     description = json['description'];
     date = json['date'];
@@ -80,9 +81,9 @@ class Data {
     endTime = json['end_time'];
     updatedAt = json['updated_at'];
     createdAt = json['created_at'];
-    id = json['id'];
+    id = json['id']; // چون num هست، مشکلی نیست
     customer =
-        json['customer'] != null ? Customer.fromJson(json['customer']) : null;
+    json['customer'] != null ? Customer.fromJson(json['customer']) : null;
     rozeh = json['rozeh'] != null ? Rozeh.fromJson(json['rozeh']) : null;
     if (json['users'] != null) {
       users = [];
@@ -91,6 +92,7 @@ class Data {
       });
     }
   }
+
 
   num? customerId;
   String? rozehId;

@@ -12,7 +12,8 @@ class CustomTextField extends StatefulWidget {
     this.hintText,
     this.isTextStart = false,
     this.readOnly = false,
-    this.validator, // 👈 اضافه شد
+    this.validator,
+    this.suffixIcon,
   });
 
   final TextEditingController controller;
@@ -21,7 +22,8 @@ class CustomTextField extends StatefulWidget {
   final String? hintText;
   final bool isTextStart;
   final bool readOnly;
-  final String? Function(String?)? validator; // 👈 اضافه شد
+  final String? Function(String?)? validator;
+  final Widget? suffixIcon;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -93,19 +95,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: ConsColors.blue, width: 1.5),
         ),
-        suffixIcon: widget.isShowText
-            ? Padding(
-          padding: const EdgeInsets.only(top: 15),
-          child: Text(
-            '98+'.toPersianDigit(),
-            style: TextStyle(
-              color: ConsColors.blue,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'IRANSansX',
-            ),
-          ),
-        )
-            : null,
+        suffixIcon: widget.suffixIcon ??
+            (widget.isShowText
+                ? Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Text(
+                '98+'.toPersianDigit(),
+                style: TextStyle(
+                  color: ConsColors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'IRANSansX',
+                ),
+              ),
+            )
+                : null),
+
       ),
       validator: widget.validator, // 👈 اضافه شد
     );

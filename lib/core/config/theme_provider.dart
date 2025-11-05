@@ -21,7 +21,7 @@ class MyThemes {
 
     ),
     datePickerTheme: DatePickerThemeData(
-      headerBackgroundColor: ConsColors.blueLight,
+      headerBackgroundColor: ConsColors.green,
       // Header background color
       backgroundColor: Colors.white,
       dayBackgroundColor: WidgetStateProperty.resolveWith<Color?>((
@@ -74,11 +74,11 @@ class MyThemes {
         // backgroundColor: WidgetStatePropertyAll(Colors.red), // رنگ پس‌زمینه
       ),
 
-      dayPeriodColor:ConsColors.blueLight,
+      dayPeriodColor:ConsColors.greenBg,
 
       dayPeriodTextColor:ConsColors.blue,
-      dialHandColor: ConsColors.blueLight,
-      hourMinuteColor: ConsColors.blueLight,
+      dialHandColor: ConsColors.greenBg,
+      hourMinuteColor: ConsColors.greenBg,
 
       hourMinuteTextColor: ConsColors.blue,
       helpTextStyle: TextStyle(color: ConsColors.blue)// متن ساعت انتخاب شده
@@ -88,14 +88,14 @@ class MyThemes {
 
     ),
     datePickerTheme: DatePickerThemeData(
-      headerBackgroundColor: ConsColors.blueLight,
+      headerBackgroundColor: ConsColors.greenBg,
       // Header background color
       backgroundColor: Colors.white,
       dayBackgroundColor: WidgetStateProperty.resolveWith<Color?>((
         Set<WidgetState> states,
       ) {
         if (states.contains(WidgetState.selected)) {
-          return ConsColors.blueLight; // Background color for selected day
+          return ConsColors.greenBg; // Background color for selected day
         } else if (states.contains(WidgetState.disabled)) {
           return Colors.transparent; // Background color for disabled days
         }
@@ -105,7 +105,7 @@ class MyThemes {
           Set<WidgetState> states,
           ) {
         if (states.contains(WidgetState.selected)) {
-          return ConsColors.blueLight; // Background color for selected day
+          return ConsColors.greenBg; // Background color for selected day
         } else if (states.contains(WidgetState.disabled)) {
           return Colors.transparent; // Background color for disabled days
         }
@@ -116,7 +116,7 @@ class MyThemes {
         Set<WidgetState> states,
       ) {
         if (states.contains(WidgetState.selected)) {
-          return ConsColors.blueLight; // Background color for selected day
+          return ConsColors.greenBg; // Background color for selected day
         } else if (states.contains(WidgetState.disabled)) {
           return Colors.red; // Background color for disabled days
         } else if (states.contains(WidgetState.focused)) {
@@ -128,7 +128,7 @@ class MyThemes {
       }),
 
       // weekdayStyle: TextStyle(color: ConsColors.blue ,),
-      surfaceTintColor: Colors.red,
+      surfaceTintColor: Colors.purple,
 
       headerForegroundColor: ConsColors.blue,
 

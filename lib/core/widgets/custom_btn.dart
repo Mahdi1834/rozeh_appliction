@@ -11,15 +11,16 @@ class CustomBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return SizedBox(
       height: 40, // 👈 همانند دکمه گرادینت
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          foregroundColor: ConsColors.orange,
+          foregroundColor: ConsColors.blue,
           backgroundColor:isBg ? ConsColors.blueLight : Colors.transparent,
-          side: BorderSide(color: ConsColors.orange),
+          side: BorderSide(color: Colors.transparent),
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
