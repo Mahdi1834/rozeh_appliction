@@ -102,7 +102,7 @@ Drawer buildDrawer(double width, BuildContext context) {
                 ),
                 Divider(color: ConsColors.blueLight),
                 ItemForDrawer(
-                  svgPic: "assets/images/Share.svg",
+                  svgPic: "assets/images/Logout.svg",
                   onTap: () async {
 
                     UserSession userSession = locator();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/storage/user_session.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_search.dart';
@@ -48,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (mobile != null && mobile.startsWith('0')) {
       mobile = mobile.substring(1);
     }
-    mobileController.text = mobile ?? "";
+    mobileController.text = (mobile ?? "").toPersianDigit();
   }
 
   @override
@@ -94,7 +95,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       addressController.text =
                           customerInfoModel.data?.address ?? "";
                       nationalCodeController.text =
-                          customerInfoModel.data?.nationalCode ?? "";
+                          (customerInfoModel.data?.nationalCode ?? "")
+                              .toPersianDigit();
                       selectedProvince =
                           (customerInfoModel.data?.provinceId ?? "").toString();
                       selectedCity =
@@ -178,6 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   const SizedBox(height: 10),
                                   CustomTextField(
+                                    isCodeNational: true,
                                     textInputType: TextInputType.number,
                                     isTextStart: true,
                                     controller: nationalCodeController,
@@ -472,7 +475,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   nationalCode:
                                                       nationalCodeController
                                                           .text
-                                                          .trim(),
+                                                          .trim().toEnglishDigit(),
                                                   address:
                                                       addressController.text
                                                           .trim(),
