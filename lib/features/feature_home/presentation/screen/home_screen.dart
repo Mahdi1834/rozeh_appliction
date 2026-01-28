@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
-
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/config/constants.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_icon_menu.dart';
@@ -15,7 +14,6 @@ import 'package:rozeh_project/core/widgets/txt_header.dart';
 import 'package:rozeh_project/core/widgets/txt_medium.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';
-
 import 'package:rozeh_project/features/feature_home/data/info_reservation_model.dart';
 import 'package:rozeh_project/features/feature_home/data/model/current_hadith_model.dart';
 import 'package:rozeh_project/features/feature_home/data/model/rozeh_request_model.dart';
@@ -38,19 +36,19 @@ class _HomeScreenState extends State<HomeScreen> {
   // برای انیمیشن کارت بالا
   late ScrollController _scrollController;
 
-  // برای لیست رزروها (lazy load)
+
   late ScrollController _listController;
 
   bool isFancyCardExpanded = true;
 
-  // صفحه فعلی و آخرین صفحه
+
   int _currentPage = 1;
   int _lastPage = 1;
 
-  // وضعیت لود صفحه بعد
+
   bool _isLoadingMore = false;
 
-  // لیست تجمیعی آیتم‌ها (از تمام صفحات)
+
   final List<RozehRequest> _requests = [];
 
   @override
@@ -68,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _fetchPage(1);
   }
 
-  // درخواست صفحه nام
+
   void _fetchPage(int pageNumber) {
     _currentPage = pageNumber;
     BlocProvider.of<HomeBloc>(
@@ -76,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ).add(GetRozehRequestEvent(page: pageNumber.toString()));
   }
 
-  // لود تنبل: رسیدن به انتهای لیست
+
   void _onListScroll() {
     if (_listController.position.pixels >=
             _listController.position.maxScrollExtent - 120 &&
@@ -87,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // فراخوانی دستی رویداد رزرو
+
   void callGetRozehRequest(int pageNumber) {
     BlocProvider.of<HomeBloc>(
       context,
@@ -96,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    // اگر لازم شد آزاد کن
+
     // _scrollController.dispose();
     // _listController.dispose();
     super.dispose();
@@ -198,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: height * 0.02),
 
-                          // کارت حدیث
+
                           AnimatedSize(
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,

@@ -1,15 +1,7 @@
-/// LoginModel
-/// ساختار عمومی پاسخ API در لاراول:
-/// {
-///   "success": true,
-///   "message": "کد با موفقیت ارسال شد",
-///   "data": []
-/// }
-
 class LoginModel {
   bool? success;
   String? message;
-  dynamic data; // ممکن است list یا map یا null باشد
+  LoginData? data;
 
   LoginModel({
     this.success,
@@ -20,25 +12,43 @@ class LoginModel {
   LoginModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
-    data = json['data'];
+    data = json['data'] != null
+        ? LoginData.fromJson(json['data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['success'] = success;
-    map['message'] = message;
-    map['data'] = data;
-    return map;
+    return {
+      'success': success,
+      'message': message,
+      'data': data?.toJson(),
+    };
   }
 
   LoginModel copyWith({
     bool? success,
     String? message,
-    dynamic data,
-  }) =>
-      LoginModel(
-        success: success ?? this.success,
-        message: message ?? this.message,
-        data: data ?? this.data,
-      );
+    LoginData? data,
+  }) {
+    return LoginModel(
+      success: success ?? this.success,
+      message: message ?? this.message,
+      data: data ?? this.data,
+    );
+  }
+}
+class LoginData {
+  String? code;
+
+  LoginData({this.code});
+
+  LoginData.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'code': code,
+    };
+  }
 }

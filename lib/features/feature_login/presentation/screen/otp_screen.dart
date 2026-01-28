@@ -220,6 +220,36 @@ class _OtpScreenState extends State<OtpScreen> {
                             ),
 
                             const SizedBox(height: 24),
+                            BlocBuilder<LoginBloc, LoginState>(
+                              builder: (context, state) {
+                                if (state.loginVerificationStatusStatus
+                                    is LoginVerificationStatusCompleted) {
+                                  LoginVerificationStatusCompleted
+                                  loginVerificationStatusCompleted =
+                                      state.loginVerificationStatusStatus
+                                          as LoginVerificationStatusCompleted;
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TxtTitle(
+                                        text: "کد ورود شما : ",
+                                        color: ConsColors.blue,
+                                      ),
+                                      TxtTitle(
+                                        text:
+                                            loginVerificationStatusCompleted
+                                                .loginModel
+                                                .data
+                                                ?.code ??
+                                            "",
+                                        color: ConsColors.orange,
+                                      ),
+                                    ],
+                                  );
+                                }
+                                return SizedBox.shrink();
+                              },
+                            ),
 
                             Center(
                               child: GestureDetector(
@@ -319,22 +349,20 @@ class _OtpScreenState extends State<OtpScreen> {
                               },
 
                               listener: (context, state) {
-
                                 if (state.loginVerificationStatusStatus
-                                is LoginVerificationStatusCompleted) {
-
+                                    is LoginVerificationStatusCompleted) {
                                   _startTimer();
                                 }
                                 if (state.loginVerificationStatusStatus
-                                is LoginVerificationStatusError) {
+                                    is LoginVerificationStatusError) {
                                   LoginVerificationStatusError
                                   loginVerificationStatusError =
-                                  state.loginVerificationStatusStatus
-                                  as LoginVerificationStatusError;
+                                      state.loginVerificationStatusStatus
+                                          as LoginVerificationStatusError;
                                   SnackbarHelper.show(
                                     context: context,
                                     message:
-                                    loginVerificationStatusError.message!,
+                                        loginVerificationStatusError.message!,
                                     status: SnackbarStatus.error,
                                   );
                                 }

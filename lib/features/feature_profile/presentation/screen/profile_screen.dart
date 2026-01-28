@@ -157,6 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               key: _formKey,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+
                                 children: [
                                   TxtTitle(
                                     text: "نام و نام خانوادگی",
