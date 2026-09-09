@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomIconBtn extends StatelessWidget {
   const CustomIconBtn({
@@ -41,7 +42,7 @@ class CustomIconBtn extends StatelessWidget {
             gradient:
                 useGradient
                     ? LinearGradient(
-                      colors: [ConsColors.orange2, ConsColors.orange],
+                      colors: [context.appColors.warning2, context.appColors.warning],
                     )
                     : null,
             color: useGradient ? null : Colors.transparent,
@@ -58,13 +59,13 @@ class CustomIconBtn extends StatelessWidget {
                   child: TxtTitle(
                     size: 12,
                     text: title,
-                    color: useGradient ? Colors.white : ConsColors.orange,
+                    color: useGradient ? Colors.white : context.appColors.warning,
                   ),
                 ),
                 Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 12,
-                  color: useGradient ? Colors.white : ConsColors.orange,
+                  color: useGradient ? Colors.white : context.appColors.warning,
                 ),
               ],
             ),

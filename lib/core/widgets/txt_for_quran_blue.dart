@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class TxtForQuranBlue extends StatelessWidget {
   const TxtForQuranBlue({
@@ -9,25 +10,25 @@ class TxtForQuranBlue extends StatelessWidget {
     this.height = 2,
     this.fontSize = 14,
     this.wordSpacing = 2,
-    this.txtColor= ConsColors.blue,
+    this.txtColor,
   });
 
   final String text;
   final double height;
   final double fontSize;
   final double wordSpacing;
-  final Color txtColor;
+  final Color? txtColor;
 
   @override
   Widget build(BuildContext context) {
     return RichText(
       textDirection: TextDirection.rtl,
       textAlign: TextAlign.justify,
-      text: TextSpan(children: _buildStyledText(text)),
+      text: TextSpan(children: _buildStyledText(text, context)),
     );
   }
 
-  List<TextSpan> _buildStyledText(String input) {
+  List<TextSpan> _buildStyledText(String input, BuildContext context) {
     final regex = RegExp(r'\(\d+\)'); // تشخیص اعداد داخل پرانتز به انگلیسی
     final matches = regex.allMatches(input);
 
@@ -44,7 +45,7 @@ class TxtForQuranBlue extends StatelessWidget {
             style: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: txtColor,
+              color: txtColor ?? context.appColors.textPrimary,
               fontFamily: 'IRANSansX',
               height: 2,
               wordSpacing: wordSpacing,
@@ -61,7 +62,7 @@ class TxtForQuranBlue extends StatelessWidget {
           style: TextStyle(
             fontSize: fontSize,
             fontWeight: FontWeight.bold,
-            color: ConsColors.orange,
+            color: context.appColors.warning,
             height: 2,
             fontFamily: 'IRANSansX',
             wordSpacing: wordSpacing,
@@ -82,7 +83,7 @@ class TxtForQuranBlue extends StatelessWidget {
             fontSize: fontSize,
             fontFamily: 'IRANSansX',
             fontWeight: FontWeight.bold,
-            color: ConsColors.blue,
+            color: context.appColors.textPrimary,
             height: 2,
             wordSpacing: wordSpacing,
           ),

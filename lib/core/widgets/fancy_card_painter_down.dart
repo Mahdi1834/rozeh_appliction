@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class FancyCardPainterDown extends CustomPainter {
   final Color backgroundColor;
+  final Color shadowColor;
   final double dipWidth;
-  FancyCardPainterDown( {required this.backgroundColor , this.dipWidth = 140,});
+  FancyCardPainterDown({
+    required this.backgroundColor,
+    required this.shadowColor,
+    this.dipWidth = 140,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = backgroundColor
-      ..style = PaintingStyle.fill;
+    final paint =
+        Paint()
+          ..color = backgroundColor
+          ..style = PaintingStyle.fill;
 
     final path = Path();
 
-    const radius = 20.0;      // شعاع گوشه‌ها
+    const radius = 20.0; // شعاع گوشه‌ها
     // double dipWidth =  dipWidth;   // عرض تو رفتگی
-    const dipHeight = 35.0;   // عمق تو رفتگی
+    const dipHeight = 35.0; // عمق تو رفتگی
 
     path.moveTo(0, radius);
 
@@ -33,7 +40,12 @@ class FancyCardPainterDown extends CustomPainter {
     path.lineTo(size.width, size.height - radius);
 
     // گوشه پایین راست گرد
-    path.quadraticBezierTo(size.width, size.height, size.width - radius, size.height);
+    path.quadraticBezierTo(
+      size.width,
+      size.height,
+      size.width - radius,
+      size.height,
+    );
 
     // خط تا شروع تو رفتگی
     path.lineTo((size.width + dipWidth) / 2 + radius, size.height);
@@ -89,12 +101,10 @@ class FancyCardPainterDown extends CustomPainter {
     // 🟠 اضافه کردن سایه نارنجی
     canvas.drawShadow(
       path,
-      ConsColors.orange2.withValues(alpha: 0.5), // رنگ سایه با شفافیت
+      shadowColor.withValues(alpha: 0.5), // رنگ سایه با شفافیت
       2.0, // ضخامت سایه
       false, // برای نمایش یکنواخت دور تا دور، false باید باشه
     );
-
-
 
     canvas.drawPath(path, paint);
   }

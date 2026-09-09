@@ -6,6 +6,7 @@ import 'package:rozeh_project/core/widgets/custom_btn_icon_menu.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_icon_menu_nbg.dart';
 import 'package:rozeh_project/core/widgets/txt_header.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomAppBarWithTextOneIcon extends StatelessWidget {
   const CustomAppBarWithTextOneIcon({
@@ -37,7 +38,7 @@ class CustomAppBarWithTextOneIcon extends StatelessWidget {
           bottomRight: Radius.circular(10),
         ),
         gradient: LinearGradient(
-          colors: [ConsColors.blueBg2, ConsColors.blueBg1],
+          colors: [context.appColors.primary, context.appColors.secondary],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -89,7 +90,7 @@ class CustomAppBarWithTextOneIcon extends StatelessWidget {
                    ) : SizedBox(width: 40),
                   ],
                 ),
-                Divider(color: ConsColors.dividerGreen),
+                Divider(color: context.appColors.divider),
                 Row(
                   children: [
                     Expanded(

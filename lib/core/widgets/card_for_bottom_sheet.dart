@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/fancy_card_bottom_sheet.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 
 class CardForBottomSheet extends StatelessWidget {
@@ -44,7 +45,7 @@ class CardForBottomSheet extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       gradient: LinearGradient(
-                        colors: [ConsColors.orange2, ConsColors.orange],
+                        colors: [context.appColors.warning2, context.appColors.warning],
                       ),
                     ),
                     child: const Icon(Icons.close, color: Colors.white),

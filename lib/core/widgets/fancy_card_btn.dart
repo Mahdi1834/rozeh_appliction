@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/fancy_card_painter2.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class FancyCardBtn extends StatelessWidget {
   final Widget child;
@@ -13,7 +14,7 @@ class FancyCardBtn extends StatelessWidget {
     return CustomPaint(
       painter: FancyCardPainter2(
         backgroundGradient: LinearGradient(
-          colors: [ConsColors.orange, ConsColors.orange2],
+          colors: [context.appColors.warning, context.appColors.warning2],
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         ),

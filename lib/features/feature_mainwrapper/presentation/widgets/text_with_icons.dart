@@ -1,3 +1,4 @@
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 // import 'package:flutter/material.dart';
 // import 'package:memorizing_quran/core/config/colors.dart';
 //
@@ -22,14 +23,14 @@
 //             imageUrl,
 //             width: 22,
 //             height: 22,
-//             color: ConsColors.grayLight,
+//             color: context.appColors.textSecondaryLight,
 //           ),
 //           SizedBox(width: 10),
 //           Expanded(
 //               child: Text(
 //             text,
 //             style: TextStyle(
-//                 color: ConsColors.blue,
+//                 color: context.appColors.textPrimary,
 //                 fontSize: 16,
 //               ),
 //           )),
@@ -37,7 +38,7 @@
 //             "assets/images/bottom_arrow.png",
 //             width: 24,
 //             height: 24,
-//             color: ConsColors.blue,
+//             color: context.appColors.textPrimary,
 //           ),
 //         ],
 //       ),

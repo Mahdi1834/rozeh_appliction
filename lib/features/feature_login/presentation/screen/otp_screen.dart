@@ -17,6 +17,7 @@ import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_out_icon.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class OtpScreen extends StatefulWidget {
   static const routePath = '/otp_screen';
@@ -135,13 +136,13 @@ class _OtpScreenState extends State<OtpScreen> {
       width: 50,
       height: 50,
       textStyle: TextStyle(
-        color: ConsColors.blue,
+        color: context.appColors.textPrimary,
         fontWeight: FontWeight.bold,
         fontFamily: 'IRANSansX',
         fontSize: 18,
       ),
       decoration: BoxDecoration(
-        color: ConsColors.gray.withValues(alpha: 0.15),
+        color: context.appColors.textSecondary.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(12),
       ),
     );
@@ -151,7 +152,7 @@ class _OtpScreenState extends State<OtpScreen> {
         body: Container(
           width: width,
           height: height,
-          color: ConsColors.blueLight,
+          color: context.appColors.inputBackground,
           child: Column(
             children: [
               CustomAppBarWithOutIcon(
@@ -176,7 +177,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TxtTitle(text: "کد تایید", color: ConsColors.blue),
+                            TxtTitle(text: "کد تایید", color: context.appColors.textPrimary),
                             const SizedBox(height: 18),
 
                             /// 🔹 فیلد کد تایید با Pinput و AutoFill داخلی
@@ -193,7 +194,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 defaultPinTheme: defaultPinTheme,
                                 focusedPinTheme: defaultPinTheme.copyWith(
                                   decoration: BoxDecoration(
-                                    color: ConsColors.blue.withValues(
+                                    color: context.appColors.textPrimary.withValues(
                                       alpha: 0.25,
                                     ),
                                     border: Border.all(
@@ -204,7 +205,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 ),
                                 submittedPinTheme: defaultPinTheme.copyWith(
                                   decoration: BoxDecoration(
-                                    color: ConsColors.blueLight,
+                                    color: context.appColors.inputBackground,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
@@ -233,7 +234,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                     children: [
                                       TxtTitle(
                                         text: "کد ورود شما : ",
-                                        color: ConsColors.blue,
+                                        color: context.appColors.textPrimary,
                                       ),
                                       TxtTitle(
                                         text:
@@ -242,7 +243,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                                 .data
                                                 ?.code ??
                                             "",
-                                        color: ConsColors.orange,
+                                        color: context.appColors.warning,
                                       ),
                                     ],
                                   );
@@ -267,8 +268,8 @@ class _OtpScreenState extends State<OtpScreen> {
                                   style: TextStyle(
                                     color:
                                         _secondsRemaining > 0
-                                            ? ConsColors.gray
-                                            : ConsColors.blue,
+                                            ? context.appColors.textSecondary
+                                            : context.appColors.textPrimary,
                                     fontFamily: 'IRANSansX',
                                     fontSize: 13,
                                     decoration:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 class TxtForQuran extends StatelessWidget {
   const TxtForQuran({super.key, required this.text});
 
@@ -12,7 +13,7 @@ class TxtForQuran extends StatelessWidget {
       text.toPersianDigit(),
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: ConsColors.green,
+        color: context.appColors.success,
         fontSize: 14,
         // wordSpacing: 2,
         height: 2,

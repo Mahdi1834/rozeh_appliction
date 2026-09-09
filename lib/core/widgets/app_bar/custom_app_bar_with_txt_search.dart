@@ -5,6 +5,7 @@ import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_icon_menu.dart';
 import 'package:rozeh_project/core/widgets/txt_header.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomAppBarWithTextSearch extends StatelessWidget {
   const CustomAppBarWithTextSearch({
@@ -34,7 +35,7 @@ class CustomAppBarWithTextSearch extends StatelessWidget {
           bottomRight: Radius.circular(10),
         ),
         gradient: LinearGradient(
-          colors: [ConsColors.blueBg2, ConsColors.blueBg1],
+          colors: [context.appColors.primary, context.appColors.secondary],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -84,7 +85,7 @@ class CustomAppBarWithTextSearch extends StatelessWidget {
                     ),
                   ],
                 ),
-                Divider(color: ConsColors.dividerGreen),
+                Divider(color: context.appColors.divider),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

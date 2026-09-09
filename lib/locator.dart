@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:rozeh_project/core/config/theme/data/api/theme_api_provider.dart';
+import 'package:rozeh_project/core/config/theme/data/repository/theme_repository.dart';
+import 'package:rozeh_project/core/config/theme/presentation/theme_cubit.dart';
 import 'package:rozeh_project/core/storage/user_session.dart';
 import 'package:rozeh_project/features/feature_home/data/api/home_api_provider.dart';
 import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
@@ -30,18 +33,36 @@ Future<void> initLocator() async{
   locator.registerSingleton<HomeApiProvider>(HomeApiProvider(locator()));
   locator.registerSingleton<ProfileApiProvider>(ProfileApiProvider(locator()));
   locator.registerSingleton<ReservationApiProvider>(ReservationApiProvider(locator()));
+  locator.registerLazySingleton<ThemeApiProvider>(
+        () => ThemeApiProvider(
+      locator<Dio>(),
+    ),
+  );
+
+
+
 
   ///repository
   locator.registerSingleton<LoginRepository>(LoginRepository(locator()));
   locator.registerSingleton<HomeRepository>(HomeRepository(locator()));
   locator.registerSingleton<ProfileRepository>(ProfileRepository(locator()));
   locator.registerSingleton<ReservationRepository>(ReservationRepository(locator()));
-
+  locator.registerLazySingleton<ThemeRepository>(
+        () => ThemeRepository(
+      locator<ThemeApiProvider>(),
+    ),
+  );
   ///bloc
   locator.registerSingleton<LoginBloc>(LoginBloc(locator()));
   locator.registerSingleton<HomeBloc>(HomeBloc(locator()));
   locator.registerSingleton<ProfileBloc>(ProfileBloc(locator()));
   locator.registerSingleton<ReservationBloc>(ReservationBloc(locator()));
+
+  locator.registerFactory<ThemeCubit>(
+        () => ThemeCubit(
+      locator<ThemeRepository>(),
+    ),
+  );
 
   //
   // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

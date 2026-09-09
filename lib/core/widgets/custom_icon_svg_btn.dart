@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomSvgIconBtn extends StatelessWidget {
   const CustomSvgIconBtn({
@@ -25,9 +26,9 @@ class CustomSvgIconBtn extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          foregroundColor: ConsColors.blue,
-          backgroundColor: ConsColors.greenBg,
-          // side: BorderSide(color: ConsColors.blue),
+          foregroundColor: context.appColors.textPrimary,
+          backgroundColor: context.appColors.secondary,
+          // side: BorderSide(color: context.appColors.textPrimary),
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -39,7 +40,7 @@ class CustomSvgIconBtn extends StatelessWidget {
             SvgPicture.asset(
               width: 15,
               height: 15,
-              colorFilter: ColorFilter.mode(ConsColors.blue, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(context.appColors.textPrimary, BlendMode.srcIn),
               svgPicture,
             ),
             SizedBox(width: 10),

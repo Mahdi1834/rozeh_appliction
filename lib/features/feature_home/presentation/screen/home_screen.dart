@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/config/constants.dart';
+import 'package:rozeh_project/core/config/theme/presentation/theme_cubit.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_icon_menu.dart';
 import 'package:rozeh_project/core/widgets/custom_icon_svg_btn.dart';
 import 'package:rozeh_project/core/widgets/dot_loading_widget.dart';
@@ -36,18 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
   // برای انیمیشن کارت بالا
   late ScrollController _scrollController;
 
-
   late ScrollController _listController;
 
   bool isFancyCardExpanded = true;
 
-
   int _currentPage = 1;
   int _lastPage = 1;
 
-
   bool _isLoadingMore = false;
-
 
   final List<RozehRequest> _requests = [];
 
@@ -66,14 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
     _fetchPage(1);
   }
 
-
   void _fetchPage(int pageNumber) {
     _currentPage = pageNumber;
     BlocProvider.of<HomeBloc>(
       context,
     ).add(GetRozehRequestEvent(page: pageNumber.toString()));
   }
-
 
   void _onListScroll() {
     if (_listController.position.pixels >=
@@ -85,7 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
   void callGetRozehRequest(int pageNumber) {
     BlocProvider.of<HomeBloc>(
       context,
@@ -94,7 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-
     // _scrollController.dispose();
     // _listController.dispose();
     super.dispose();
@@ -104,13 +98,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    final isDark =
+        context.watch<ThemeCubit>().state.themeMode == ThemeMode.dark;
 
     return SafeArea(
       child: Scaffold(
         body: Container(
           width: width,
           height: height,
-          color: ConsColors.blueLight,
+          color: context.appColors.background,
           child: Column(
             children: [
               // ================= Header + FancyCard (Hadith) =================
@@ -122,7 +118,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     bottomRight: Radius.circular(10),
                   ),
                   gradient: LinearGradient(
-                    colors: [ConsColors.blueBg2, ConsColors.blueBg1],
+                    colors: [
+                      context.appColors.primary,
+                      context.appColors.secondary,
+                    ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -156,12 +155,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 120,
                           height: 35,
                           decoration: BoxDecoration(
-                            color: ConsColors.yellow,
+                            color: context.appColors.warning,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
                             child: TxtTitle(
-                              color: ConsColors.orange,
+                              color: context.appColors.textPrimary,
                               text: "سرچشمه شوق",
                             ),
                           ),
@@ -192,10 +191,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 imageUrl: "assets/images/Search.svg",
                               ),
+                              IconButton(
+                                onPressed: () {
+                                  context.read<ThemeCubit>().toggleTheme();
+                                },
+                                tooltip:
+                                    isDark
+                                        ? 'تغییر به حالت روشن'
+                                        : 'تغییر به حالت تاریک',
+                                icon: Icon(
+                                  isDark
+                                      ? Icons.light_mode_rounded
+                                      : Icons.dark_mode_rounded,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: height * 0.02),
-
 
                           AnimatedSize(
                             duration: const Duration(milliseconds: 300),
@@ -304,7 +317,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   ?.source ??
                                                               "",
                                                           color:
-                                                              ConsColors.blue,
+                                                              context
+                                                                  .appColors
+                                                                  .textPrimary,
                                                         ),
                                                       ),
                                                     ),
@@ -323,7 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               },
                                               icon: Icon(
                                                 Icons.refresh,
-                                                color: ConsColors.green,
+                                                color: context.appColors.error,
                                               ),
                                             );
                                           }
@@ -466,7 +481,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   icon: Icon(
                                     size: 40,
                                     Icons.refresh,
-                                    color: ConsColors.blue,
+                                    color: context.appColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -489,7 +504,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       size: 18,
                                       text:
                                           "کاربر عزیز   \n برای رزرو مجالس و روضه های خانگی خود فرم ثبت درخواست را تکمیل نمایید",
-                                      color: ConsColors.blue,
+                                      color: context.appColors.textPrimary,
                                     ),
                                     const SizedBox(height: 20),
                                     SizedBox(
@@ -498,7 +513,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         title: "رزرو",
                                         onPressed: () {
                                           // TODO: رفتن به صفحه رزرو
-                                          context.go(ReservationScreen.routePath);
+                                          context.go(
+                                            ReservationScreen.routePath,
+                                          );
                                         },
                                         svgPicture: "assets/images/Add.svg",
                                         useGradient: true,
@@ -521,7 +538,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 TxtTitle(
                                   size: 18,
                                   text: "برنامه مراسم رزرو شده برای شما",
-                                  color: ConsColors.blue,
+                                  color: context.appColors.textPrimary,
                                 ),
                                 const SizedBox(height: 10),
 

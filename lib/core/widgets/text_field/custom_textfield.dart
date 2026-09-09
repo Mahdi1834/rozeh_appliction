@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -76,19 +77,19 @@ class _CustomTextFieldState extends State<CustomTextField> {
       textAlign: widget.isTextStart ? TextAlign.start : TextAlign.center,
       minLines: 1,
       maxLines: widget.textInputType == TextInputType.multiline ? 6 : 1,
-      cursorColor: ConsColors.blueBg1,
+      cursorColor: context.appColors.secondary,
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 14,
-        color: ConsColors.blue,
+        color: context.appColors.textPrimary,
         fontFamily: 'IRANSansX',
       ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: ConsColors.blueLight,
+        fillColor: context.appColors.inputBackground,
         hintText: widget.hintText?.toPersianDigit(),
         hintStyle: TextStyle(
-          color: ConsColors.blue.withValues(alpha: 0.25),
+          color: context.appColors.textPrimary.withValues(alpha: 0.25),
           fontFamily: 'IRANSansX',
         ),
         isDense: true,
@@ -99,7 +100,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: ConsColors.blue, width: 1.5),
+          borderSide: BorderSide(color: context.appColors.textPrimary, width: 1.5),
         ),
         suffixIcon: widget.suffixIcon ??
             (widget.isShowText
@@ -108,7 +109,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               child: Text(
                 '98+'.toPersianDigit(),
                 style: TextStyle(
-                  color: ConsColors.blue,
+                  color: context.appColors.textPrimary,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'IRANSansX',
                 ),

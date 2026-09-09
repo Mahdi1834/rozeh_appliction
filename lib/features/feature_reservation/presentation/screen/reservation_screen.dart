@@ -16,6 +16,7 @@ import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';
 import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 import 'package:rozeh_project/features/feature_reservation/data/model/rozeh_request_send_model.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/bloc/reservation_bloc.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class ReservationScreen extends StatefulWidget {
   static const routePath = "/reservation_screen";
@@ -158,7 +159,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
         body: Container(
           width: width,
           height: height,
-          color: ConsColors.blueLight,
+          color: context.appColors.inputBackground,
           child: Column(
             children: [
               CustomAppBarWithSearch(
@@ -187,7 +188,11 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 10 , right: 10 , bottom: 10),
+                      padding: const EdgeInsets.only(
+                        left: 10,
+                        right: 10,
+                        bottom: 10,
+                      ),
                       child: Column(
                         children: [
                           // --- Progress Bar Header ---
@@ -246,8 +251,12 @@ class _ReservationScreenState extends State<ReservationScreen> {
                                               text: _titles[stepIndex],
                                               color:
                                                   isActive
-                                                      ? ConsColors.orange
-                                                      : ConsColors.gray,
+                                                      ? context
+                                                          .appColors
+                                                          .warning
+                                                      : context
+                                                          .appColors
+                                                          .textSecondary,
                                               size: 12,
                                             ),
                                             const SizedBox(height: 6),
@@ -257,11 +266,17 @@ class _ReservationScreenState extends State<ReservationScreen> {
                                               decoration: BoxDecoration(
                                                 color:
                                                     isActive
-                                                        ? ConsColors.orange
+                                                        ? context
+                                                            .appColors
+                                                            .warning
                                                         : isDone
-                                                        ? ConsColors.orange
+                                                        ? context
+                                                            .appColors
+                                                            .warning
                                                             .withOpacity(0.3)
-                                                        : ConsColors.gray,
+                                                        : context
+                                                            .appColors
+                                                            .textSecondary,
                                                 borderRadius:
                                                     BorderRadius.circular(5),
                                               ),
@@ -329,18 +344,21 @@ class _ReservationScreenState extends State<ReservationScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ----------- انتخاب مداح -----------
-            TxtTitle(text: "انتخاب مداح", color: ConsColors.blue),
+            TxtTitle(text: "انتخاب مداح", color: context.appColors.textPrimary),
             const SizedBox(height: 10),
             _buildMaddahDropdown(context),
             const SizedBox(height: 20),
 
             // ----------- انتخاب سخنران -----------
-            TxtTitle(text: "انتخاب سخنران", color: ConsColors.blue),
+            TxtTitle(
+              text: "انتخاب سخنران",
+              color: context.appColors.textPrimary,
+            ),
             const SizedBox(height: 10),
             _buildSpeakerDropdown(context),
             const SizedBox(height: 20),
             // ----------- تاریخ -----------
-            TxtTitle(text: "تاریخ", color: ConsColors.blue),
+            TxtTitle(text: "تاریخ", color: context.appColors.textPrimary),
             const SizedBox(height: 10),
             GestureDetector(
               onTap: _selectDate,
@@ -350,10 +368,10 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   readOnly: true,
                   controller: dateController,
                   suffixIcon: IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       size: 16,
                       Icons.calendar_month_rounded,
-                      color: ConsColors.orange,
+                      color: context.appColors.warning,
                     ),
                     onPressed: _selectDate,
                   ),
@@ -363,7 +381,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
             const SizedBox(height: 20),
 
             // ----------- زمان شروع و پایان -----------
-            TxtTitle(text: "زمان شروع", color: ConsColors.blue),
+            TxtTitle(text: "زمان شروع", color: context.appColors.textPrimary),
             const SizedBox(height: 10),
             GestureDetector(
               onTap: () => _selectTime(startTimeController),
@@ -373,10 +391,10 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   readOnly: true,
                   controller: startTimeController,
                   suffixIcon: IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       size: 16,
                       Icons.access_time,
-                      color: ConsColors.orange,
+                      color: context.appColors.warning,
                     ),
                     onPressed: _selectDate,
                   ),
@@ -386,25 +404,31 @@ class _ReservationScreenState extends State<ReservationScreen> {
             const SizedBox(height: 20),
 
             // ----------- انتخاب نوع مراسم -----------
-            TxtTitle(text: "نوع مراسم", color: ConsColors.blue),
+            TxtTitle(text: "نوع مراسم", color: context.appColors.textPrimary),
             const SizedBox(height: 10),
             _buildRozehTypeDropdown(context),
             const SizedBox(height: 20),
 
             // ----------- انتخاب گروه سنی -----------
-            TxtTitle(text: "رنج سنی شرکت کنندگان", color: ConsColors.blue),
+            TxtTitle(
+              text: "رنج سنی شرکت کنندگان",
+              color: context.appColors.textPrimary,
+            ),
             const SizedBox(height: 10),
             _buildAgeGroupDropdown(context),
             const SizedBox(height: 20),
 
             // ----------- جنسیت شرکت کنندگان -----------
-            TxtTitle(text: "جنسیت شرکت کنندگان", color: ConsColors.blue),
+            TxtTitle(
+              text: "جنسیت شرکت کنندگان",
+              color: context.appColors.textPrimary,
+            ),
             const SizedBox(height: 10),
             _buildGenderDropdown(context),
             const SizedBox(height: 20),
             TxtTitle(
               text: "آدرس (پیش فرض آدرس پروفایل می باشد)",
-              color: ConsColors.blue,
+              color: context.appColors.textPrimary,
             ),
             const SizedBox(height: 10),
             CustomTextField(
@@ -511,14 +535,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         TxtTitleNotBold(
                           size: 15,
                           text: "تاریخ مراسم:",
-                          color: ConsColors.gray,
+                          color: context.appColors.textSecondary,
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: TxtTitle(
                             size: 16,
                             text: dateController.text.trim(),
-                            color: ConsColors.blue,
+                            color: context.appColors.textPrimary,
                           ),
                         ),
                       ],
@@ -530,14 +554,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         TxtTitleNotBold(
                           size: 15,
                           text: "زمان مراسم:",
-                          color: ConsColors.gray,
+                          color: context.appColors.textSecondary,
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: TxtTitle(
                             size: 16,
                             text: startTimeController.text.trim(),
-                            color: ConsColors.blue,
+                            color: context.appColors.textPrimary,
                           ),
                         ),
                       ],
@@ -549,14 +573,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         TxtTitleNotBold(
                           size: 15,
                           text: "مداح:",
-                          color: ConsColors.gray,
+                          color: context.appColors.textSecondary,
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: TxtTitle(
                             size: 16,
                             text: selectedMaddahName ?? "",
-                            color: ConsColors.blue,
+                            color: context.appColors.textPrimary,
                           ),
                         ),
                       ],
@@ -568,14 +592,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         TxtTitleNotBold(
                           size: 15,
                           text: "سخنران:",
-                          color: ConsColors.gray,
+                          color: context.appColors.textSecondary,
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: TxtTitle(
                             size: 16,
                             text: selectedSpeakerName ?? "",
-                            color: ConsColors.blue,
+                            color: context.appColors.textPrimary,
                           ),
                         ),
                       ],
@@ -587,14 +611,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         TxtTitleNotBold(
                           size: 15,
                           text: "نوع مراسم:",
-                          color: ConsColors.gray,
+                          color: context.appColors.textSecondary,
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: TxtTitle(
                             size: 16,
                             text: selectedTypeName ?? "",
-                            color: ConsColors.blue,
+                            color: context.appColors.textPrimary,
                           ),
                         ),
                       ],
@@ -606,14 +630,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         TxtTitleNotBold(
                           size: 15,
                           text: "مخاطبین:",
-                          color: ConsColors.gray,
+                          color: context.appColors.textSecondary,
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: TxtTitle(
                             size: 16,
                             text: selectedGenderName ?? "",
-                            color: ConsColors.blue,
+                            color: context.appColors.textPrimary,
                           ),
                         ),
                       ],
@@ -625,14 +649,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         TxtTitleNotBold(
                           size: 15,
                           text: "رنج سنی:",
-                          color: ConsColors.gray,
+                          color: context.appColors.textSecondary,
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: TxtTitle(
                             size: 16,
                             text: selectedAgeGroupName ?? "",
-                            color: ConsColors.blue,
+                            color: context.appColors.textPrimary,
                           ),
                         ),
                       ],
@@ -645,14 +669,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         TxtTitleNotBold(
                           size: 15,
                           text: "آدرس:",
-                          color: ConsColors.gray,
+                          color: context.appColors.textSecondary,
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: TxtTitle(
                             size: 16,
                             text: addressController.text.trim(),
-                            color: ConsColors.blue,
+                            color: context.appColors.textPrimary,
                           ),
                         ),
                       ],
@@ -665,7 +689,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           Container(
             height: 50,
             decoration: BoxDecoration(
-              color: ConsColors.blueLight,
+              color: context.appColors.inputBackground,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
@@ -674,10 +698,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 TxtTitle(
                   size: 15,
                   text: "هزینه قابل پرداخت:",
-                  color: ConsColors.gray,
+                  color: context.appColors.textSecondary,
                 ),
                 SizedBox(width: 10),
-                TxtTitle(size: 16, text: " 0 تومان", color: ConsColors.orange),
+                TxtTitle(
+                  size: 16,
+                  text: " 0 تومان",
+                  color: context.appColors.warning,
+                ),
               ],
             ),
           ),
@@ -799,14 +827,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     isAlignCenter: true,
                     size: 16,
                     text: "درخواست رزرو شما با موفقیت ثبت شد .",
-                    color: ConsColors.blue,
+                    color: context.appColors.textPrimary,
                   ),
                   SizedBox(height: 10),
                   TxtTitleNotBold(
                     textAlign: TextAlign.center,
                     text:
                         "برای مشاهده درخواست های رزرو شده به صفحه اصلی بازگردید .",
-                    color: ConsColors.blue,
+                    color: context.appColors.textPrimary,
                   ),
 
                   const SizedBox(height: 50),
@@ -871,7 +899,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
             onPressed: () {
               BlocProvider.of<ReservationBloc>(context).add(GetMaddahEvent());
             },
-            icon: const Icon(Icons.refresh, color: ConsColors.blue),
+            icon: Icon(Icons.refresh, color: context.appColors.textPrimary),
           ),
         );
       }
@@ -939,7 +967,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
             onPressed: () {
               BlocProvider.of<ReservationBloc>(context).add(GetSpeakerEvent());
             },
-            icon: const Icon(Icons.refresh, color: ConsColors.blue),
+            icon: Icon(Icons.refresh, color: context.appColors.textPrimary),
           ),
         );
       }
@@ -1009,7 +1037,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     context,
                   ).add(GetRozehTypeEvent());
                 },
-                icon: const Icon(Icons.refresh, color: ConsColors.blue),
+                icon: Icon(Icons.refresh, color: context.appColors.textPrimary),
               ),
             );
           }
@@ -1077,7 +1105,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
             onPressed: () {
               BlocProvider.of<ReservationBloc>(context).add(GetAgeGroupEvent());
             },
-            icon: const Icon(Icons.refresh, color: ConsColors.blue),
+            icon: Icon(Icons.refresh, color: context.appColors.textPrimary),
           ),
         );
       }

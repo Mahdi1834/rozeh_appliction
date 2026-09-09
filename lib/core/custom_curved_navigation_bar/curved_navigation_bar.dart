@@ -6,6 +6,7 @@ import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dar
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item_widget.dart';
 import 'src/nav_button.dart';
 import 'src/nav_custom_painter.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 typedef _LetIndexPage = bool Function(int value);
 
@@ -103,7 +104,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
     return Container(
-      color:ConsColors.blueLight, // رنگ پس‌زمینه کل بخش، شامل مارجین
+      color:context.appColors.inputBackground, // رنگ پس‌زمینه کل بخش، شامل مارجین
       padding: EdgeInsets.all(10),
       child: SizedBox(
         height: widget.height,
@@ -145,7 +146,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
                             child: ShaderMask(
                               shaderCallback: (Rect bounds) {
                                 return LinearGradient(
-                                  colors: [ConsColors.orange, ConsColors.orange2],
+                                  colors: [context.appColors.warning, context.appColors.warning2],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ).createShader(bounds);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class TxtForQuranBlueWithHighLight extends StatelessWidget {
   const TxtForQuranBlueWithHighLight({
@@ -25,11 +26,11 @@ class TxtForQuranBlueWithHighLight extends StatelessWidget {
     return RichText(
       textDirection: TextDirection.rtl,
       textAlign: TextAlign.justify,
-      text: TextSpan(children: _buildStyledText()),
+      text: TextSpan(children: _buildStyledText(context)),
     );
   }
 
-  List<TextSpan> _buildStyledText() {
+  List<TextSpan> _buildStyledText(BuildContext context) {
     final regex = RegExp(r'\(\d+\)');
     List<TextSpan> spans = [];
 
@@ -41,48 +42,59 @@ class TxtForQuranBlueWithHighLight extends StatelessWidget {
       for (final match in matches) {
         if (match.start > lastIndex) {
           final normalText = input.substring(lastIndex, match.start);
-          spans.add(TextSpan(
-            text: normalText.toPersianDigit(),
+          spans.add(
+            TextSpan(
+              text: normalText.toPersianDigit(),
+              style: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: _getTextColor(context, i, isNumber: false),
+                fontFamily: 'IRANSansX',
+                height: height,
+                wordSpacing: wordSpacing,
+              ),
+            ),
+          );
+        }
+
+        final numberText = input.substring(match.start, match.end);
+        spans.add(
+          TextSpan(
+            text: numberText.toPersianDigit(),
             style: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: _getTextColor(i, isNumber: false),
+              color: _getTextColor(context, i, isNumber: true),
               fontFamily: 'IRANSansX',
               height: height,
               wordSpacing: wordSpacing,
             ),
-          ));
-        }
-
-        final numberText = input.substring(match.start, match.end);
-        spans.add(TextSpan(
-          text: numberText.toPersianDigit(),
-          style: TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            color: _getTextColor(i, isNumber: true),
-            fontFamily: 'IRANSansX',
-            height: height,
-            wordSpacing: wordSpacing,
           ),
-        ));
+        );
 
         lastIndex = match.end;
       }
 
       if (lastIndex < input.length) {
         final remainingText = input.substring(lastIndex);
-        spans.add(TextSpan(
-          text: '${remainingText.toPersianDigit()} ',
-          style: TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            color: _getTextColor(i, isNumber: false, isRemaining: true),
-            fontFamily: 'IRANSansX',
-            height: height,
-            wordSpacing: wordSpacing,
+        spans.add(
+          TextSpan(
+            text: '${remainingText.toPersianDigit()} ',
+            style: TextStyle(
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+              color: _getTextColor(
+                context,
+                i,
+                isNumber: false,
+                isRemaining: true,
+              ),
+              fontFamily: 'IRANSansX',
+              height: height,
+              wordSpacing: wordSpacing,
+            ),
           ),
-        ));
+        );
       }
     }
 
@@ -90,21 +102,26 @@ class TxtForQuranBlueWithHighLight extends StatelessWidget {
   }
 
   /// انتخاب رنگ بر اساس وضعیت بازی و آیه جاری
-  Color _getTextColor(int index,
-      {bool isNumber = false, bool isRemaining = false}) {
+  Color _getTextColor(
+    BuildContext context,
+    int index, {
+    bool isNumber = false,
+    bool isRemaining = false,
+  }) {
     if (!isPlaying) {
       // 👈 در حالت عادی (قبل از شروع چشم‌خوانی)
-      return isNumber ? ConsColors.orange : ConsColors.blue;
+      return isNumber
+          ? context.appColors.warning
+          : context.appColors.textPrimary;
     }
 
     if (index == currentIndex) {
-      if (isNumber) return ConsColors.orange;
-      if (isRemaining) return ConsColors.yellow;
-      return ConsColors.blue;
+      if (isNumber) return context.appColors.warning;
+      if (isRemaining) return context.appColors.warning;
+      return context.appColors.textPrimary;
     }
 
     // 👈 وقتی در حالت چشم‌خوانی هستیم و این آیه جاری نیست → محو کن
     return Colors.transparent;
   }
-
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomBtnGradient extends StatelessWidget {
   const CustomBtnGradient({
@@ -33,10 +34,10 @@ class CustomBtnGradient extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [ConsColors.greenBg, ConsColors.greenBg],
+              colors: [context.appColors.secondary, context.appColors.secondary],
             ),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: ConsColors.greenBg),
+            border: Border.all(color: context.appColors.secondary),
           ),
           child: Container(
             alignment: Alignment.center,
@@ -46,7 +47,7 @@ class CustomBtnGradient extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14, // 👈 برابر با دکمه‌ی معمولی
                 fontWeight: FontWeight.bold,
-                color: ConsColors.blue,
+                color: context.appColors.textPrimary,
               ),
             ),
           ),

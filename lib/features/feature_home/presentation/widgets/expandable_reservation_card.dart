@@ -3,6 +3,7 @@ import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/features/feature_home/data/info_reservation_model.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/custom_txt_with_title.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class ExpandableReservationCard extends StatefulWidget {
   final InfoReservationModel infoReservationModel;
@@ -37,7 +38,7 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: ConsColors.yellow.withValues(alpha: 0.8),
+                  color: context.appColors.warning.withValues(alpha: 0.8),
                   blurRadius: 5.3,
                   offset: Offset(0, 2),
                 ),
@@ -51,12 +52,12 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
                     Expanded(
                       child: TxtTitle(
                         text: widget.infoReservationModel.title,
-                        color: ConsColors.blue,
+                        color: context.appColors.textPrimary,
                       ),
                     ),
                     TxtTitle(
                       text: widget.infoReservationModel.date,
-                      color: ConsColors.blue,
+                      color: context.appColors.textPrimary,
                     ),
                     SizedBox(width: 20),
                     Container(
@@ -65,7 +66,7 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         gradient: LinearGradient(
-                          colors: [ConsColors.orange, ConsColors.orange2],
+                          colors: [context.appColors.warning, context.appColors.warning2],
                         ),
                       ),
                       child: Icon(
@@ -84,7 +85,7 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        Divider(color: ConsColors.yellow),
+                        Divider(color: context.appColors.warning),
                         CustomTxtWithTitle(
                           title: "نام مداح:",
                           content: widget.infoReservationModel.maddah,

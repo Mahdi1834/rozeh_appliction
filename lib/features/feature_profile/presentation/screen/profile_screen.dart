@@ -15,6 +15,7 @@ import 'package:rozeh_project/features/feature_profile/data/model/customer_info_
 import 'package:rozeh_project/features/feature_profile/data/model/profile_model_for_send.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/bloc/profile_bloc.dart';
 import 'package:rozeh_project/locator.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const routePath = "/profile_screen";
@@ -62,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: Container(
           width: width,
           height: height,
-          color: ConsColors.blueLight,
+          color: context.appColors.inputBackground,
           child: Column(
             children: [
               BlocListener<ProfileBloc, ProfileState>(
@@ -161,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   TxtTitle(
                                     text: "نام و نام خانوادگی",
-                                    color: ConsColors.blue,
+                                    color: context.appColors.textPrimary,
                                   ),
                                   const SizedBox(height: 10),
                                   CustomTextField(
@@ -177,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   const SizedBox(height: 20),
                                   TxtTitle(
                                     text: "کدملی",
-                                    color: ConsColors.blue,
+                                    color: context.appColors.textPrimary,
                                   ),
                                   const SizedBox(height: 10),
                                   CustomTextField(
@@ -197,7 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   const SizedBox(height: 20),
                                   TxtTitle(
                                     text: "شماره تماس",
-                                    color: ConsColors.blue,
+                                    color: context.appColors.textPrimary,
                                   ),
                                   const SizedBox(height: 10),
                                   CustomTextField(
@@ -210,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   const SizedBox(height: 20),
                                   TxtTitle(
                                     text: "استان",
-                                    color: ConsColors.blue,
+                                    color: context.appColors.textPrimary,
                                   ),
                                   const SizedBox(height: 10),
 
@@ -252,9 +253,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 context,
                                               ).add(GetProvincesEvent());
                                             },
-                                            icon: const Icon(
+                                            icon: Icon(
                                               Icons.refresh,
-                                              color: ConsColors.blue,
+                                              color:
+                                                  context.appColors.textPrimary,
                                             ),
                                           ),
                                         );
@@ -319,7 +321,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
 
                                   const SizedBox(height: 20),
-                                  TxtTitle(text: "شهر", color: ConsColors.blue),
+                                  TxtTitle(
+                                    text: "شهر",
+                                    color: context.appColors.textPrimary,
+                                  ),
                                   const SizedBox(height: 10),
 
                                   // Dropdown شهر
@@ -383,7 +388,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   const SizedBox(height: 20),
                                   TxtTitle(
                                     text: "ادرس دقیق",
-                                    color: ConsColors.blue,
+                                    color: context.appColors.textPrimary,
                                   ),
                                   const SizedBox(height: 10),
                                   CustomTextField(
@@ -476,7 +481,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   nationalCode:
                                                       nationalCodeController
                                                           .text
-                                                          .trim().toEnglishDigit(),
+                                                          .trim()
+                                                          .toEnglishDigit(),
                                                   address:
                                                       addressController.text
                                                           .trim(),

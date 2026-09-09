@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/widgets/top_left_cut_painter.dart';
-
 
 class FancyCardCalender extends StatelessWidget {
   final Widget child;
@@ -18,8 +18,8 @@ class FancyCardCalender extends StatelessWidget {
     return CustomPaint(
       painter: TopLeftCutPainter(
         cutWidth: cutWidth,
-
         backgroundColor: Colors.white,
+        shadowColor: context.appColors.warning2,
       ),
       child: Stack(
         children: [

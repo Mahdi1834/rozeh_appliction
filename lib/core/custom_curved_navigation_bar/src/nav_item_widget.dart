@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dart';
 import 'package:flutter/material.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class NavItemWidget extends StatelessWidget {
   final NavItem item;
@@ -15,8 +16,8 @@ class NavItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorText = isSelected ? ConsColors.orange: ConsColors.blue;
-    final colorIcon = isSelected ? ConsColors.orange: ConsColors.gray;
+    final colorText = isSelected ? context.appColors.warning: context.appColors.textPrimary;
+    final colorIcon = isSelected ? context.appColors.warning: context.appColors.textSecondary;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,

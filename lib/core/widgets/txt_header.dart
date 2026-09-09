@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/config/colors.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class TxtHeader extends StatelessWidget {
   const TxtHeader({super.key, required this.text});
@@ -12,7 +13,7 @@ class TxtHeader extends StatelessWidget {
     return Text(
       text.toPersianDigit(),
       style: TextStyle(
-        color: ConsColors.blue,
+        color: context.appColors.textPrimary,
         fontWeight: FontWeight.bold,
         fontSize: 18,
       ),

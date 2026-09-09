@@ -16,6 +16,7 @@ import 'package:rozeh_project/features/feature_login/presentation/screen/otp_scr
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routePath = '/login_screen';
@@ -45,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Container(
           width: width,
           height: height,
-          color: ConsColors.blueLight,
+          color: context.appColors.inputBackground,
 
           child: Column(
             children: [
@@ -79,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             TxtTitle(
                               text: "شماره همراه",
-                              color: ConsColors.blue,
+                              color: context.appColors.textPrimary,
                             ),
                             SizedBox(height: 10),
                             CustomTextField(

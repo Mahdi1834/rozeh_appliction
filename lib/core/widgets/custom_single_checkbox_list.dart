@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomSingleCheckboxList extends StatefulWidget {
   final List<String> options;
@@ -50,10 +51,10 @@ class _CustomSingleCheckboxListState extends State<CustomSingleCheckboxList> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6),
                         border: Border.all(
-                          color: isSelected ? ConsColors.orange : ConsColors.borderInactive,
+                          color: isSelected ? context.appColors.warning : context.appColors.border,
                           width: 1,
                         ),
-                        color: isSelected ?ConsColors.orange : Colors.transparent,
+                        color: isSelected ?context.appColors.warning : Colors.transparent,
                       ),
                       child:
                           isSelected
@@ -67,7 +68,7 @@ class _CustomSingleCheckboxListState extends State<CustomSingleCheckboxList> {
                     SizedBox(width: 10),
                     // ✅ متن گزینه
                     Expanded(
-                      child: TxtTitle(text: option, color:ConsColors.blue),
+                      child: TxtTitle(text: option, color:context.appColors.textPrimary),
                     ),
                   ],
                 ),

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 
 import 'package:rozeh_project/core/widgets/txt_title.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class ItemForDrawer extends StatelessWidget {
   const ItemForDrawer({
@@ -30,15 +31,15 @@ class ItemForDrawer extends StatelessWidget {
               width: 20,
               height: 20,
               svgPic,
-              colorFilter: ColorFilter.mode(ConsColors.blue, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(context.appColors.textPrimary, BlendMode.srcIn),
             ),
             SizedBox(width: 10),
-            Expanded(child: TxtTitle(text: title, color: ConsColors.blue)),
+            Expanded(child: TxtTitle(text: title, color: context.appColors.textPrimary)),
             isArrow
                 ? Icon(
                   Icons.keyboard_arrow_left_rounded,
                   size: 30,
-                  color: ConsColors.orange,
+                  color: context.appColors.warning,
                 )
                 : SizedBox.shrink(),
           ],

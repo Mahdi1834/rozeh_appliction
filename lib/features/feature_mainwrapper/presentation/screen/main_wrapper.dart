@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rozeh_project/core/config/colors.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dart';
 import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
@@ -89,6 +91,24 @@ class _MainWrapperState extends State<MainWrapper> {
         key: widget._key,
         resizeToAvoidBottomInset: true,
         extendBody: true,
+        // 👇 FAB
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // عملکرد دکمه
+            context.push('/your-route');
+          },
+          backgroundColor: context.appColors.primary,
+          elevation: 4,
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
+
+        // 👇 قرار گرفتن در وسط پایین
+        floatingActionButtonLocation:
+        FloatingActionButtonLocation.centerDocked,
+
         bottomNavigationBar:
             _shouldShowBottomNavBar(context)
                 ? CurvedNavigationBar(

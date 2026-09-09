@@ -11,6 +11,7 @@ import 'package:rozeh_project/features/feature_login/presentation/screen/login_s
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/widgets/item_for_drawer.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';
 import 'package:rozeh_project/locator.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 Drawer buildDrawer(double width, BuildContext context) {
   return Drawer(
@@ -27,7 +28,7 @@ Drawer buildDrawer(double width, BuildContext context) {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15)),
             gradient: LinearGradient(
-              colors: [ConsColors.blueBg2, ConsColors.blueBg1],
+              colors: [context.appColors.primary, context.appColors.secondary],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -74,13 +75,13 @@ Drawer buildDrawer(double width, BuildContext context) {
                   title: "پروفایل",
                 ),
 
-                Divider(color: ConsColors.blueLight),
+                Divider(color: context.appColors.inputBackground),
                 ItemForDrawer(
                   svgPic: "assets/images/Settings.svg",
                   onTap: () {},
                   title: "تنظیمات",
                 ),
-                Divider(color: ConsColors.blueLight),
+                Divider(color: context.appColors.inputBackground),
                 ItemForDrawer(
                   svgPic: "assets/images/Info square.svg",
                   onTap: () {
@@ -88,19 +89,19 @@ Drawer buildDrawer(double width, BuildContext context) {
                   },
                   title: "راهنمای برنامه",
                 ),
-                Divider(color: ConsColors.blueLight),
+                Divider(color: context.appColors.inputBackground),
                 ItemForDrawer(
                   svgPic: "assets/images/Message square.svg",
                   onTap: () {},
                   title: "پشتیبانی",
                 ),
-                Divider(color: ConsColors.blueLight),
+                Divider(color: context.appColors.inputBackground),
                 ItemForDrawer(
                   svgPic: "assets/images/Share.svg",
                   onTap: () {},
                   title: "اشتراک گذاری برنامه",
                 ),
-                Divider(color: ConsColors.blueLight),
+                Divider(color: context.appColors.inputBackground),
                 ItemForDrawer(
                   svgPic: "assets/images/Logout.svg",
                   onTap: () async {
@@ -114,7 +115,7 @@ Drawer buildDrawer(double width, BuildContext context) {
 
                   title: "خروج از حساب",
                 ),
-                Divider(color: ConsColors.blueLight),
+                Divider(color: context.appColors.inputBackground),
               ],
             ),
           ),

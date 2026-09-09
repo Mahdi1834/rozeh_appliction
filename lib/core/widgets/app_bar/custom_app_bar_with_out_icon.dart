@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 
 import 'package:rozeh_project/core/widgets/txt_header.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomAppBarWithOutIcon extends StatelessWidget {
   const CustomAppBarWithOutIcon({
@@ -27,7 +28,7 @@ class CustomAppBarWithOutIcon extends StatelessWidget {
           bottomRight: Radius.circular(10),
         ),
         gradient: LinearGradient(
-          colors: [ConsColors.blueBg2, ConsColors.blueBg1],
+          colors: [context.appColors.primary, context.appColors.secondary],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),

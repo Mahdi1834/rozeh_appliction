@@ -5,6 +5,7 @@ import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_icon_menu.dart';
 import 'package:rozeh_project/core/widgets/txt_header.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomAppBarWithProfile extends StatelessWidget {
   const CustomAppBarWithProfile({
@@ -28,7 +29,7 @@ class CustomAppBarWithProfile extends StatelessWidget {
           bottomRight: Radius.circular(10),
         ),
         gradient: LinearGradient(
-          colors: [ConsColors.blueBg2, ConsColors.blueBg1],
+          colors: [context.appColors.primary, context.appColors.secondary],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -80,14 +81,14 @@ class CustomAppBarWithProfile extends StatelessWidget {
                     ),
                   ],
                 ),
-                Divider(color: ConsColors.dividerGreen),
+                Divider(color: context.appColors.divider),
                 Row(
                   children: [
                     Container(
                       width: width * 0.15,
                       height: width * 0.15,
                       decoration: BoxDecoration(
-                        color: ConsColors.yellowBKProfile,
+                        color: context.appColors.warningBKProfile,
                         borderRadius: BorderRadius.circular(width * 0.2),
                         boxShadow: [
                           BoxShadow(

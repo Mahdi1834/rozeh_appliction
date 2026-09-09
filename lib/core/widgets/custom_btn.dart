@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomBtn extends StatelessWidget {
   const CustomBtn({super.key, required this.title, required this.onPressed , this.isBg= true});
@@ -18,8 +19,8 @@ class CustomBtn extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          foregroundColor: ConsColors.blue,
-          backgroundColor:isBg ? ConsColors.blueLight : Colors.transparent,
+          foregroundColor: context.appColors.textPrimary,
+          backgroundColor:isBg ? context.appColors.inputBackground : Colors.transparent,
           side: BorderSide(color: Colors.transparent),
           elevation: 0,
           shape: RoundedRectangleBorder(

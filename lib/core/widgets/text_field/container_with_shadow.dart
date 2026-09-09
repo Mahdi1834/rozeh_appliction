@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class ContainerWithShadow extends StatelessWidget {
   const ContainerWithShadow({super.key, required this.child});
@@ -17,7 +18,7 @@ class ContainerWithShadow extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: ConsColors.orange.withValues(alpha:0.2),
+            color: context.appColors.warning.withValues(alpha:0.2),
             blurRadius: 5,
             spreadRadius: 5,
           ),

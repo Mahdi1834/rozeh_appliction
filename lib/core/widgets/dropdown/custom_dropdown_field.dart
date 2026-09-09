@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class CustomDropdownField<T> extends StatefulWidget {
   const CustomDropdownField({
@@ -38,10 +39,10 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
       onChanged: widget.onChanged,
       decoration: InputDecoration(
         filled: true,
-        fillColor: ConsColors.blueLight,
+        fillColor: context.appColors.inputBackground,
         hintText: widget.hintText?.toPersianDigit(),
         hintStyle: TextStyle(
-          color: ConsColors.blue.withValues(alpha: 0.25),
+          color: context.appColors.textPrimary.withValues(alpha: 0.25),
           fontFamily: 'IRANSansX',
         ),
         isDense: true,
@@ -55,7 +56,7 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: ConsColors.blue, width: 1.5),
+          borderSide: BorderSide(color: context.appColors.textPrimary, width: 1.5),
         ),
       ),
       dropdownStyleData: DropdownStyleData(
@@ -72,7 +73,7 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 14,
-        color: ConsColors.blue,
+        color: context.appColors.textPrimary,
         fontFamily: 'IRANSansX',
       ),
       dropdownSearchData:
@@ -87,7 +88,7 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
                     decoration: InputDecoration(
                       hintText: 'جستجو...',
                       hintStyle: TextStyle(
-                        color: ConsColors.blue.withValues(alpha: 0.3),
+                        color: context.appColors.textPrimary.withValues(alpha: 0.3),
                         fontFamily: 'IRANSansX',
                       ),
                       contentPadding: const EdgeInsets.symmetric(
@@ -97,7 +98,7 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: ConsColors.blue.withValues(alpha: 0.2),
+                          color: context.appColors.textPrimary.withValues(alpha: 0.2),
                         ),
                       ),
                     ),

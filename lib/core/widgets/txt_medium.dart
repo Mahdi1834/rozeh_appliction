@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class TxtMedium extends StatelessWidget {
   const TxtMedium({
@@ -20,7 +21,7 @@ class TxtMedium extends StatelessWidget {
       text.toPersianDigit(),
       textAlign: isAlignCenter ? TextAlign.center : TextAlign.start,
       style: TextStyle(
-        color: ConsColors.blue,
+        color: context.appColors.textPrimary,
         fontSize: sizeText,
         fontWeight: FontWeight.w400,
       ),
