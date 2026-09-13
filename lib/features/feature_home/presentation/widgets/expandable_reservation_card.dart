@@ -35,7 +35,7 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
             margin: EdgeInsets.only(top: 10),
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.appColors.navigationBackground,
               boxShadow: [
                 BoxShadow(
                   color: context.appColors.warning.withValues(alpha: 0.8),

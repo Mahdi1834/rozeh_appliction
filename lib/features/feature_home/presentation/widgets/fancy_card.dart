@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/fancy_card_painter.dart';
 class FancyCard extends StatelessWidget {
   final Widget child;
@@ -8,7 +9,7 @@ class FancyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: FancyCardPainter(backgroundColor: Colors.white),
+      painter: FancyCardPainter(backgroundColor:  context.appColors.navigationBackground,),
       child: Container(
         margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),

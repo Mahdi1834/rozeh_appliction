@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/storage/user_session.dart';
+import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_out_icon.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_search.dart';
+import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_txt_one_icon.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
 import 'package:rozeh_project/core/widgets/dot_loading_widget.dart';
 import 'package:rozeh_project/core/widgets/dropdown/custom_dropdown_field.dart';
@@ -18,7 +20,8 @@ import 'package:rozeh_project/locator.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class ProfileScreen extends StatefulWidget {
-  static const routePath = "/profile_screen";
+  static const routePath = "profile_screen";
+  static const routeName = "profile_screen";
 
   const ProfileScreen({super.key});
 
@@ -30,10 +33,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController nationalCodeController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+  TextEditingController telephoneController = TextEditingController();
 
-  String? selectedProvince;
-  String? selectedCity;
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -41,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     setMobile();
     BlocProvider.of<ProfileBloc>(context).add(GetCustomerInfoEvent());
-    BlocProvider.of<ProfileBloc>(context).add(GetProvincesEvent());
+
   }
 
   Future<void> setMobile() async {
@@ -93,32 +95,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     setState(() {
                       fullNameController.text =
                           customerInfoModel.data?.fullName ?? "";
-                      addressController.text =
-                          customerInfoModel.data?.address ?? "";
+                      telephoneController.text =
+                          customerInfoModel.data?.telephone ?? "";
                       nationalCodeController.text =
                           (customerInfoModel.data?.nationalCode ?? "")
                               .toPersianDigit();
-                      selectedProvince =
-                          (customerInfoModel.data?.provinceId ?? "").toString();
-                      selectedCity =
-                          (customerInfoModel.data?.cityId ?? "").toString();
-                      if (customerInfoModel.data?.provinceId != null ||
-                          (customerInfoModel.data?.provinceId ?? "")
-                              .toString()
-                              .isNotEmpty)
-                        BlocProvider.of<ProfileBloc>(context).add(
-                          GetCitiesEvent(
-                            provinceId:
-                                customerInfoModel.data!.provinceId.toString(),
-                          ),
-                        );
+
+
                     });
                   }
                 },
-                child: CustomAppBarWithSearch(
+                child: CustomAppBarBackBtn(
+
                   mainContext: context,
                   title: "پروفایل کاربر",
-                  onTapSearch: () {},
+
+
                 ),
               ),
               Expanded(
@@ -150,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           width: width,
                           height: height,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: context.appColors.navigationBackground,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: SingleChildScrollView(
@@ -209,199 +201,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     controller: mobileController,
                                   ),
                                   const SizedBox(height: 20),
+
                                   TxtTitle(
-                                    text: "استان",
-                                    color: context.appColors.textPrimary,
-                                  ),
-                                  const SizedBox(height: 10),
-
-                                  // Dropdown استان
-                                  BlocConsumer<ProfileBloc, ProfileState>(
-                                    listenWhen:
-                                        (previous, current) =>
-                                            previous.provincesStatus !=
-                                            current.provincesStatus,
-                                    buildWhen:
-                                        (previous, current) =>
-                                            previous.provincesStatus !=
-                                            current.provincesStatus,
-                                    listener: (context, state) {
-                                      if (state.provincesStatus
-                                          is ProvincesStatusError) {
-                                        final provincesStatusError =
-                                            state.provincesStatus
-                                                as ProvincesStatusError;
-                                        SnackbarHelper.show(
-                                          context: context,
-                                          message:
-                                              provincesStatusError.message!,
-                                          status: SnackbarStatus.error,
-                                        );
-                                      }
-                                    },
-                                    builder: (context, state) {
-                                      if (state.provincesStatus
-                                          is ProvincesStatusLoading) {
-                                        return const DotLoadingWidget(size: 30);
-                                      }
-                                      if (state.provincesStatus
-                                          is ProvincesStatusError) {
-                                        return Center(
-                                          child: IconButton(
-                                            onPressed: () {
-                                              BlocProvider.of<ProfileBloc>(
-                                                context,
-                                              ).add(GetProvincesEvent());
-                                            },
-                                            icon: Icon(
-                                              Icons.refresh,
-                                              color:
-                                                  context.appColors.textPrimary,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                      if (state.provincesStatus
-                                          is ProvincesStatusCompleted) {
-                                        final provincesStatusCompleted =
-                                            state.provincesStatus
-                                                as ProvincesStatusCompleted;
-                                        final provincesModel =
-                                            provincesStatusCompleted
-                                                .provincesModel;
-
-                                        // بررسی مقدار انتخاب شده معتبره یا نه
-                                        if (selectedProvince != null &&
-                                            !provincesModel.data!.any(
-                                              (p) =>
-                                                  p.id.toString() ==
-                                                  selectedProvince,
-                                            )) {
-                                          selectedProvince = null;
-                                          selectedCity = null;
-                                        }
-
-                                        return CustomDropdownField<String>(
-                                          value: selectedProvince,
-                                          items:
-                                              provincesModel.data!
-                                                  .map(
-                                                    (province) =>
-                                                        DropdownMenuItem<
-                                                          String
-                                                        >(
-                                                          value:
-                                                              province.id
-                                                                  .toString(),
-                                                          child: Text(
-                                                            province.name ??
-                                                                "-",
-                                                          ),
-                                                        ),
-                                                  )
-                                                  .toList(),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              selectedProvince = value;
-                                              selectedCity =
-                                                  null; // ریست کردن شهر
-                                            });
-                                            BlocProvider.of<ProfileBloc>(
-                                              context,
-                                            ).add(
-                                              GetCitiesEvent(
-                                                provinceId: value!,
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      }
-                                      return const SizedBox.shrink();
-                                    },
-                                  ),
-
-                                  const SizedBox(height: 20),
-                                  TxtTitle(
-                                    text: "شهر",
-                                    color: context.appColors.textPrimary,
-                                  ),
-                                  const SizedBox(height: 10),
-
-                                  // Dropdown شهر
-                                  BlocBuilder<ProfileBloc, ProfileState>(
-                                    buildWhen:
-                                        (previous, current) =>
-                                            previous.citiesStatus !=
-                                            current.citiesStatus,
-                                    builder: (context, state) {
-                                      if (state.citiesStatus
-                                          is CitiesStatusLoading) {
-                                        return const DotLoadingWidget(size: 30);
-                                      }
-                                      if (state.citiesStatus
-                                          is CitiesStatusCompleted) {
-                                        final citiesStatusCompleted =
-                                            state.citiesStatus
-                                                as CitiesStatusCompleted;
-                                        final cities =
-                                            citiesStatusCompleted
-                                                .citiesModel
-                                                .data ??
-                                            [];
-
-                                        // بررسی مقدار انتخاب شده معتبره یا نه
-                                        if (selectedCity != null &&
-                                            !cities.any(
-                                              (c) =>
-                                                  c.id.toString() ==
-                                                  selectedCity,
-                                            )) {
-                                          selectedCity = null;
-                                        }
-
-                                        return CustomDropdownField<String>(
-                                          value: selectedCity,
-                                          items:
-                                              cities
-                                                  .map(
-                                                    (city) => DropdownMenuItem<
-                                                      String
-                                                    >(
-                                                      value: city.id.toString(),
-                                                      child: Text(
-                                                        city.name ?? "-",
-                                                      ),
-                                                    ),
-                                                  )
-                                                  .toList(),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              selectedCity = value;
-                                            });
-                                          },
-                                        );
-                                      }
-                                      return const SizedBox.shrink();
-                                    },
-                                  ),
-
-                                  const SizedBox(height: 20),
-                                  TxtTitle(
-                                    text: "ادرس دقیق",
+                                    text: "تلفن منزل (با پیش شماره)",
                                     color: context.appColors.textPrimary,
                                   ),
                                   const SizedBox(height: 10),
                                   CustomTextField(
-                                    textInputType: TextInputType.multiline,
+                                    textInputType: TextInputType.number,
                                     isTextStart: true,
-                                    controller: addressController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return "آدرس الزامی است";
-                                      }
-                                      return null;
-                                    },
+                                    isShowText: false,
+                                    readOnly: false,
+                                    controller: telephoneController,
                                   ),
+
                                   const SizedBox(height: 20),
                                   BlocConsumer<ProfileBloc, ProfileState>(
                                     buildWhen:
@@ -451,26 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            if (selectedProvince == null ||
-                                                selectedProvince!.isEmpty) {
-                                              SnackbarHelper.show(
-                                                context: context,
-                                                message:
-                                                    "لطفا استان را انتخاب کنید",
-                                                status: SnackbarStatus.error,
-                                              );
-                                              return;
-                                            }
-                                            if (selectedCity == null ||
-                                                selectedCity!.isEmpty) {
-                                              SnackbarHelper.show(
-                                                context: context,
-                                                message:
-                                                    "لطفا شهر را انتخاب کنید",
-                                                status: SnackbarStatus.error,
-                                              );
-                                              return;
-                                            }
+
 
                                             ProfileModelForSend
                                             profileModelForSend =
@@ -483,15 +277,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           .text
                                                           .trim()
                                                           .toEnglishDigit(),
-                                                  address:
-                                                      addressController.text
+                                                  telephone:
+                                                      telephoneController.text
                                                           .trim(),
-                                                  provinceId: int.parse(
-                                                    selectedProvince!,
-                                                  ),
-                                                  cityId: int.parse(
-                                                    selectedCity!,
-                                                  ),
                                                 );
                                             BlocProvider.of<ProfileBloc>(
                                               context,

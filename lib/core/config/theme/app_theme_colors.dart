@@ -6,58 +6,74 @@ class AppThemePalettes {
   AppThemePalettes._();
 
   static const light = AppThemeColors(
-    primary: ConsColors.blue,
-    secondary: ConsColors.greenBg,
+    // Primary
+    primary: ConsColors.greenBg,
+    secondary: ConsColors.blueBg2,
 
-    background: Colors.white,
-    surface: Colors.white,
-    card: Colors.white,
+    // Background
+    background: ConsColors.lightBackground,
+    surface: ConsColors.lightSurface,
+    card: ConsColors.lightCard,
 
+    // Text
     textPrimary: ConsColors.blue,
     textSecondary: ConsColors.gray,
-    textDisabled: Color(0xFFB8C2C8),
+    textDisabled: ConsColors.grayDisabled,
 
+    // Border / Divider
     border: ConsColors.borderInactive,
     divider: ConsColors.dividerGreen,
 
-    inputBackground: Color(0xFFF6FAFA),
+    // Input
+    inputBackground: ConsColors.lightInput,
 
+    // Navigation
     navigationBackground: Colors.white,
 
+    // Status
     success: ConsColors.green,
     warning: ConsColors.orange,
     warning2: ConsColors.orange2,
     warningBKProfile: ConsColors.yellowBKProfile,
-    error: Colors.red,
+    error: ConsColors.error,
 
+    // Shadow
     shadow: ConsColors.shadow,
   );
 
   static const dark = AppThemeColors(
+    // Primary
     primary: ConsColors.greenBg,
     secondary: ConsColors.blueBg2,
 
-    background: Color(0xFF07191B),
-    surface: Color(0xFF0B2225),
-    card: Color(0xFF10292B),
+    // Background
+    background: ConsColors.darkBackground,
+    surface: ConsColors.darkSurface,
+    card: ConsColors.darkCard,
 
-    textPrimary: Colors.white,
-    textSecondary: Color(0xFFB5C6C8),
-    textDisabled: Color(0xFF617578),
+    // Text
+    textPrimary: ConsColors.darkTextPrimary,
+    textSecondary: ConsColors.darkTextSecondary,
+    textDisabled: ConsColors.darkTextDisabled,
 
-    border: Color(0xFF1E4043),
-    divider: Color(0xFF1B3D3F),
+    // Border / Divider
+    border: ConsColors.darkBorderInactive,
+    divider: ConsColors.darkDivider,
 
-    inputBackground: Color(0xFF10292B),
+    // Input
+    inputBackground: ConsColors.darkInput,
 
-    navigationBackground: Color(0xFF0B2225),
+    // Navigation
+    navigationBackground: ConsColors.darkNavigation,
 
+    // Status
     success: ConsColors.greenBg,
-    warning: Color(0xFFFFC46B),
-    warning2: Color(0xFFF7A33E),
-    warningBKProfile: Color(0xFFCCE7DC),
-    error: Colors.redAccent,
+    warning: ConsColors.orange,
+    warning2: ConsColors.orange2,
+    warningBKProfile: Color(0xFF442E2A),
+    error: ConsColors.error,
 
-    shadow: Colors.black54,
+    // Shadow
+    shadow: ConsColors.darkShadow,
   );
 }

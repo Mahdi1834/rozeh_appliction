@@ -2,15 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
+import 'package:rozeh_project/features/feature_list_address/presentation/screen/address_screen.dart';
+import 'package:rozeh_project/features/feature_list_address/presentation/screen/list_address_screen.dart';
+import 'package:rozeh_project/features/feature_list_profile/presentation/screen/profile_menu_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/screen/main_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/otp_screen.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
+import 'package:rozeh_project/features/feature_shrine/presentation/screen/shrine_screen.dart';
 
 import 'package:rozeh_project/features/feature_splash/presentation/screen/splash_screen.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/login_screen.dart';
-
 
 class AppNavigation {
   AppNavigation._();
@@ -21,7 +24,6 @@ class AppNavigation {
   // Private navigators
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-
   static final _shellNavigatorHome = GlobalKey<NavigatorState>(
     debugLabel: 'shellHome',
   );
@@ -30,13 +32,16 @@ class AppNavigation {
     debugLabel: 'shellReservation',
   );
 
+  static final _shellNavigatorShrine = GlobalKey<NavigatorState>(
+    debugLabel: 'shellShrine',
+  );
+
   static final _shellNavigatorProfile = GlobalKey<NavigatorState>(
     debugLabel: 'shellProfile',
   );
   static final _shellNavigatorHelp = GlobalKey<NavigatorState>(
     debugLabel: 'shellHelp',
   );
-
 
   static List<GlobalKey<NavigatorState>>? t;
 
@@ -65,7 +70,6 @@ class AppNavigation {
         },
       ),
 
-
       /// MainWrapper
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -81,14 +85,12 @@ class AppNavigation {
                 name: "Home",
                 builder:
                     (BuildContext context, GoRouterState state) => HomeScreen(),
-                routes: [
-
-                ],
+                routes: [],
               ),
             ],
           ),
 
-          /// Brach Calender
+          /// Brach reservation
           StatefulShellBranch(
             navigatorKey: _shellNavigatorReservation,
             routes: <RouteBase>[
@@ -98,28 +100,87 @@ class AppNavigation {
                 builder:
                     (BuildContext context, GoRouterState state) =>
                         const ReservationScreen(),
-                routes: [
-
-
-
-
-                ],
+                routes: [],
               ),
             ],
           ),
 
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorShrine,
+            routes: <RouteBase>[
+              GoRoute(
+                path: ShrineScreen.routePath,
+                name: "Shrine",
+                builder:
+                    (BuildContext context, GoRouterState state) =>
+                        const ShrineScreen(),
+                routes: [],
+              ),
+            ],
+          ),
 
-          /// Brach Academy
+          /// Brach profile
           StatefulShellBranch(
             navigatorKey: _shellNavigatorProfile,
             routes: <RouteBase>[
               GoRoute(
-                path: ProfileScreen.routePath,
-                name: "profile",
+                path: ProfileMenuScreen.routePath,
+                name: ProfileMenuScreen.routeName,
                 builder:
                     (BuildContext context, GoRouterState state) =>
-                        ProfileScreen(),
-                routes: [],
+                        ProfileMenuScreen(),
+                routes: [
+                  GoRoute(
+                    path: ProfileScreen.routePath,
+                    name: ProfileScreen.routeName,
+                    pageBuilder:
+                        (context, state) => CustomTransitionPage<void>(
+                          key: state.pageKey,
+                          child: const ProfileScreen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) =>
+                                  FadeTransition(
+                                    opacity: animation,
+                                    child: child,
+                                  ),
+                        ),
+                  ),
+
+                  GoRoute(
+                    path: ListAddressScreen.routePath,
+                    name: ListAddressScreen.routeName,
+                    pageBuilder:
+                        (context, state) => CustomTransitionPage<void>(
+                      key: state.pageKey,
+                      child: const ListAddressScreen(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) =>
+                          FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          ),
+
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: AddressScreen.routePath,
+                        name: AddressScreen.routeName,
+                        pageBuilder:
+                            (context, state) => CustomTransitionPage<void>(
+                          key: state.pageKey,
+                          child: const AddressScreen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) =>
+                              FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              ),
+                        ),
+                      ),
+
+                    ]
+                  ),
+                ],
               ),
             ],
           ),
@@ -140,8 +201,6 @@ class AppNavigation {
           ),
         ],
       ),
-
-
     ],
   );
 }

@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_icon_menu.dart';
-import 'package:rozeh_project/core/widgets/custom_btn_icon_menu_nbg.dart';
 import 'package:rozeh_project/core/widgets/txt_header.dart';
-import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
-class CustomAppBarWithTextOneIcon extends StatelessWidget {
-  const CustomAppBarWithTextOneIcon({
+class CustomAppBarBackBtn extends StatelessWidget {
+  const CustomAppBarBackBtn({
     super.key,
     required this.mainContext,
     required this.title,
-    required this.text,
-    required this.url,
-    required this.onPress,
-    this.showBack = false,
   });
 
   final BuildContext mainContext;
   final String title;
-  final String text;
-  final String url;
-  final VoidCallback onPress;
-  final bool showBack;
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,39 +60,15 @@ class CustomAppBarWithTextOneIcon extends StatelessWidget {
 
           Padding(
             padding: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                Row(
-                  children: [
-                    CustomBtnIconMenu(
-                      onTap: () {
-                        Scaffold.of(mainContext).openDrawer();
-                      },
-                      imageUrl: "assets/images/menu.svg",
-                    ),
-                    Expanded(child: Center(child: TxtHeader(text: title))),
-                   showBack?  CustomBtnIconMenu(
-                     onTap: () {
-                       context.pop();
-                     },
-                     imageUrl: "assets/images/arrow_left.svg",
-                   ) : SizedBox(width: 40),
-                  ],
-                ),
-                Divider(color: context.appColors.divider),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TxtTitle(
-                        text: text,
-                        color: Colors.white,
-                        size: 16,
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    CustomBtnIconMenuNbg( imageUrl: url, onTap: onPress),
-                  ],
+                SizedBox(width: 40),
+                Expanded(child: Center(child: TxtHeader(text: title))),
+                CustomBtnIconMenu(
+                  onTap: () {
+                    context.pop();
+                  },
+                  imageUrl: "assets/images/arrow_left.svg",
                 ),
               ],
             ),

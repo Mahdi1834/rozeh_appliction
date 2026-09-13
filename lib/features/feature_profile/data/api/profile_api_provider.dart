@@ -62,9 +62,7 @@ class ProfileApiProvider {
       "full_name": profileModelForSend.fullName,
       if (profileModelForSend.nationalCode != null)
         "national_code": profileModelForSend.nationalCode,
-      "address": profileModelForSend.address,
-      "province_id": profileModelForSend.provinceId,
-      "city_id": profileModelForSend.cityId,
+      "telephone": profileModelForSend.telephone,
     };
 
     final response = await dio.post(

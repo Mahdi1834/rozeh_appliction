@@ -7,9 +7,11 @@ import 'package:rozeh_project/core/custom_curved_navigation_bar/curved_navigatio
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dart';
 import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
+import 'package:rozeh_project/features/feature_list_profile/presentation/screen/profile_menu_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/widgets/drawer.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
+import 'package:rozeh_project/features/feature_shrine/presentation/screen/shrine_screen.dart';
 
 
 class MainWrapper extends StatefulWidget {
@@ -44,7 +46,8 @@ class _MainWrapperState extends State<MainWrapper> {
     const allowedRouteNames = {
       HomeScreen.routePath,
       ReservationScreen.routePath,
-      ProfileScreen.routePath,
+      ShrineScreen.routePath,
+      ProfileMenuScreen.routePath,
       HelpScreen.routePath,
       // "/${StartDeterminationScreen.routePath}",
       // هر routeName دیگری که میخوای BottomNav داشته باشه اینجا اضافه کن
@@ -91,23 +94,7 @@ class _MainWrapperState extends State<MainWrapper> {
         key: widget._key,
         resizeToAvoidBottomInset: true,
         extendBody: true,
-        // 👇 FAB
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // عملکرد دکمه
-            context.push('/your-route');
-          },
-          backgroundColor: context.appColors.primary,
-          elevation: 4,
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-        ),
 
-        // 👇 قرار گرفتن در وسط پایین
-        floatingActionButtonLocation:
-        FloatingActionButtonLocation.centerDocked,
 
         bottomNavigationBar:
             _shouldShowBottomNavBar(context)
@@ -122,6 +109,11 @@ class _MainWrapperState extends State<MainWrapper> {
                     ),
 
                     NavItem(
+                      svgPath: 'assets/images/Add.svg',
+                      title: ' روضه نیابتی',
+                    ),
+
+                    NavItem(
                       svgPath: 'assets/images/Profile 1.svg',
                       title: 'پروفایل',
                     ),
@@ -130,8 +122,8 @@ class _MainWrapperState extends State<MainWrapper> {
                       title: 'راهنما',
                     ),
                   ],
-                  color: Colors.white,
-                  buttonBackgroundColor: Colors.white,
+                  color: context.appColors.navigationBackground,
+                  buttonBackgroundColor: context.appColors.navigationBackground,
                   backgroundColor: Colors.transparent,
                   animationCurve: Curves.easeInOut,
                   animationDuration: Duration(milliseconds: 600),
