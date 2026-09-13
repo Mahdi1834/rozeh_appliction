@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
-import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/config/constants.dart';
 import 'package:rozeh_project/core/config/theme/presentation/theme_cubit.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';

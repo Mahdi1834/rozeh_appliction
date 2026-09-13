@@ -13,7 +13,6 @@ import 'package:rozeh_project/features/feature_login/data/model/verify_code_mode
 import 'package:rozeh_project/features/feature_login/presentation/bloc/login_bloc.dart';
 import 'package:rozeh_project/locator.dart';
 import 'package:smart_auth/smart_auth.dart';
-import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_out_icon.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';

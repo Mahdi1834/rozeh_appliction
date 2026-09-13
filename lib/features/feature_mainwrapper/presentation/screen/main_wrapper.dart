@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rozeh_project/core/config/colors.dart';
+
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dart';
@@ -9,7 +9,6 @@ import 'package:rozeh_project/features/feature_help/presentation/screen/help_scr
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
 import 'package:rozeh_project/features/feature_list_profile/presentation/screen/profile_menu_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/widgets/drawer.dart';
-import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
 import 'package:rozeh_project/features/feature_shrine/presentation/screen/shrine_screen.dart';
 

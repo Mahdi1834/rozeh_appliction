@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rozeh_project/core/config/colors.dart';
-
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_search.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';

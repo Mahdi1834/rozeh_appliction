@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:rozeh_project/core/config/colors.dart';
+
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_custom_clipper.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item_widget.dart';

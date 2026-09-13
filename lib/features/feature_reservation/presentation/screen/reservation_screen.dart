@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
-import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_search.dart';
 import 'package:rozeh_project/core/widgets/card_with_button_in_dip.dart';
 import 'package:rozeh_project/core/widgets/custom_btn.dart';

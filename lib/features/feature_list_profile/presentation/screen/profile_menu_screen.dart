@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_search.dart';
-import 'package:rozeh_project/core/widgets/txt_title.dart';
-import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';
 import 'package:rozeh_project/features/feature_list_address/presentation/screen/list_address_screen.dart';
 import 'package:rozeh_project/features/feature_list_profile/presentation/widgets/item_for_profile.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';

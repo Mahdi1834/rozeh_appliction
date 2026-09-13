@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class TxtHeader extends StatelessWidget {

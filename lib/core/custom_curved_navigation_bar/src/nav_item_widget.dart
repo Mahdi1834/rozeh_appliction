@@ -1,5 +1,4 @@
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dart';
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';

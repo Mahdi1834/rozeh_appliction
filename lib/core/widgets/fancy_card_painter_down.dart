@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rozeh_project/core/config/colors.dart';
-import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
+
 
 class FancyCardPainterDown extends CustomPainter {
   final Color backgroundColor;

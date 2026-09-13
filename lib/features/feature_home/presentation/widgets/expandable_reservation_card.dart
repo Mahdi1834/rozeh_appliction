@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/features/feature_home/data/info_reservation_model.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/custom_txt_with_title.dart';

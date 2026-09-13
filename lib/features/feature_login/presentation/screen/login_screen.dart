@@ -1,9 +1,8 @@
-// lib/features/feature_login/presentation/screen/login_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_out_icon.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
 import 'package:rozeh_project/core/widgets/dot_loading_widget.dart';
