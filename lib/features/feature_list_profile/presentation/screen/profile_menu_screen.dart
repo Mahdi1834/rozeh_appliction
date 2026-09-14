@@ -51,7 +51,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                         description: "تکمیل اطلاعات فردی و تحصیلی",
                         imageUrl: "assets/images/Calendar.svg",
                         onPress: () {
-                          context.goNamed(ProfileScreen.routeName);
+                          context.pushNamed(ProfileScreen.routeName);
                         },
                       ),
                       ItemForProfile(
@@ -59,7 +59,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                         description: "اضافه،ویرایش و حذف ادرس ها",
                         imageUrl: "assets/images/location-pin-svgrepo-com.svg",
                         onPress: () {
-                          context.goNamed(ListAddressScreen.routeName);
+                          context.pushNamed(ListAddressScreen.routeName);
                         },
                       ),
                     ],

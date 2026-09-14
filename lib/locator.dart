@@ -7,6 +7,9 @@ import 'package:rozeh_project/core/storage/user_session.dart';
 import 'package:rozeh_project/features/feature_home/data/api/home_api_provider.dart';
 import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 import 'package:rozeh_project/features/feature_home/repositories/home_repository.dart';
+import 'package:rozeh_project/features/feature_list_address/data/api/address_api_provider.dart';
+import 'package:rozeh_project/features/feature_list_address/presentation/bloc/address_bloc.dart';
+import 'package:rozeh_project/features/feature_list_address/repositories/address_repository.dart';
 import 'package:rozeh_project/features/feature_login/data/api/login_api_provider.dart';
 import 'package:rozeh_project/features/feature_login/presentation/bloc/login_bloc.dart';
 import 'package:rozeh_project/features/feature_login/repositories/login_repository.dart';
@@ -33,6 +36,7 @@ Future<void> initLocator() async{
   locator.registerSingleton<HomeApiProvider>(HomeApiProvider(locator()));
   locator.registerSingleton<ProfileApiProvider>(ProfileApiProvider(locator()));
   locator.registerSingleton<ReservationApiProvider>(ReservationApiProvider(locator()));
+  locator.registerSingleton<AddressApiProvider>(AddressApiProvider(locator()));
   locator.registerLazySingleton<ThemeApiProvider>(
         () => ThemeApiProvider(
       locator<Dio>(),
@@ -47,6 +51,7 @@ Future<void> initLocator() async{
   locator.registerSingleton<HomeRepository>(HomeRepository(locator()));
   locator.registerSingleton<ProfileRepository>(ProfileRepository(locator()));
   locator.registerSingleton<ReservationRepository>(ReservationRepository(locator()));
+  locator.registerSingleton<AddressRepository>(AddressRepository(locator()));
   locator.registerLazySingleton<ThemeRepository>(
         () => ThemeRepository(
       locator<ThemeApiProvider>(),
@@ -57,6 +62,7 @@ Future<void> initLocator() async{
   locator.registerSingleton<HomeBloc>(HomeBloc(locator()));
   locator.registerSingleton<ProfileBloc>(ProfileBloc(locator()));
   locator.registerSingleton<ReservationBloc>(ReservationBloc(locator()));
+  locator.registerSingleton<AddressBloc>(AddressBloc(locator()));
 
   locator.registerFactory<ThemeCubit>(
         () => ThemeCubit(

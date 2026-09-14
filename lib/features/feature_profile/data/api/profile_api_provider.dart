@@ -23,7 +23,7 @@ class ProfileApiProvider {
     final response = await dio.get(
       "${Constants.baseUrl}/public/cities",
       queryParameters: {
-        "province_id": provinceId, // 👈 پارامتر ارسالی به سرور
+        "province_id": provinceId,
       },
 
       options: Options(headers: {"Accept": "application/json"}),
