@@ -24,62 +24,75 @@ class BannerSlider extends StatelessWidget {
         final double height = constraints.maxHeight;
 
         return Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: CarouselSlider.builder(
-            itemCount: banners.length,
-            options: CarouselOptions(
-              height: height,
-              viewportFraction: 1,
-              autoPlay: infinite,
-              enableInfiniteScroll: infinite,
-              autoPlayInterval: const Duration(seconds: 4),
-              autoPlayAnimationDuration: const Duration(
-                milliseconds: 800,
-              ),
-              autoPlayCurve: Curves.easeInOut,
-              enlargeCenterPage: false,
-              padEnds: false,
-            ),
-            itemBuilder: (
-                BuildContext context,
-                int index,
-                int realIndex,
-                ) {
-              final banner = banners[index];
+          padding: const EdgeInsets.all(4),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            clipBehavior: Clip.hardEdge,
+            child: CarouselSlider.builder(
+              itemCount: banners.length,
+              options: CarouselOptions(
+                height: height,
+                viewportFraction: 1.0,
 
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: CachedNetworkImage(
-                  imageUrl: banner.imageUrl!,
+                autoPlay: infinite,
+                enableInfiniteScroll: infinite,
+
+                autoPlayInterval: const Duration(seconds: 4),
+                autoPlayAnimationDuration: const Duration(
+                  milliseconds: 800,
+                ),
+                autoPlayCurve: Curves.easeInOut,
+
+                enlargeCenterPage: false,
+                padEnds: false,
+
+                // خیلی مهم
+                scrollPhysics: const ClampingScrollPhysics(),
+              ),
+              itemBuilder: (
+                  BuildContext context,
+                  int index,
+                  int realIndex,
+                  ) {
+                final banner = banners[index];
+
+                return SizedBox(
                   width: double.infinity,
                   height: height,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) {
-                    return Container(
-                      width: double.infinity,
-                      height: height,
-                      color: Colors.grey.shade200,
-                      alignment: Alignment.center,
-                      child: const CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
-                    );
-                  },
-                  errorWidget: (context, url, error) {
-                    return Container(
-                      width: double.infinity,
-                      height: height,
-                      color: Colors.grey.shade200,
-                      alignment: Alignment.center,
-                      child: const Icon(
-                        Icons.broken_image_outlined,
-                        size: 40,
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
+                  child: CachedNetworkImage(
+                    imageUrl: banner.imageUrl!,
+                    width: double.infinity,
+                    height: height,
+                    fit: BoxFit.cover,
+
+                    placeholder: (context, url) {
+                      return Container(
+                        color: Colors.grey.shade200,
+                        alignment: Alignment.center,
+                        child: const CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                      );
+                    },
+
+                    errorWidget: (context, url, error) {
+                      debugPrint(
+                        'Banner image error: $error',
+                      );
+
+                      return Container(
+                        color: Colors.grey.shade200,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.broken_image_outlined,
+                          size: 40,
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
