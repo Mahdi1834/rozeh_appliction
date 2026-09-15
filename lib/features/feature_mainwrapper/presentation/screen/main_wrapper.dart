@@ -1,17 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dart';
-import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
-import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
-import 'package:rozeh_project/features/feature_list_profile/presentation/screen/profile_menu_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/widgets/drawer.dart';
-import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
-import 'package:rozeh_project/features/feature_shrine/presentation/screen/shrine_screen.dart';
-
 
 class MainWrapper extends StatefulWidget {
   static const routeName = "/main_wrapper";
@@ -28,31 +21,47 @@ class MainWrapper extends StatefulWidget {
 class _MainWrapperState extends State<MainWrapper> {
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
-
-
   /// چک می‌کنه آیا مسیر فعلی جزو مسیرهایی هست که باید bottom nav داشته باشه
+  // bool _shouldShowBottomNavBar(BuildContext context) {
+  //   final location = GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
+  //
+  //   final lastSegment = location.split('/').last;
+  //
+  //   // قسمت آخر مسیر به همراه اسلش اولش
+  //   final lastSegmentWithSlash = '/$lastSegment';
+  //
+  //   print(location);
+  //   print(lastSegmentWithSlash);
+  //
+  //   const allowedRouteNames = {
+  //     HomeScreen.routePath,
+  //     ReservationScreen.routePath,
+  //     ShrineScreen.routePath,
+  //     ProfileMenuScreen.routePath,
+  //     HelpScreen.routePath,
+  //     // "/${StartDeterminationScreen.routePath}",
+  //     // هر routeName دیگری که میخوای BottomNav داشته باشه اینجا اضافه کن
+  //   };
+  //
+  //   return allowedRouteNames.contains(lastSegmentWithSlash);
+  // }
+
+
+
   bool _shouldShowBottomNavBar(BuildContext context) {
-    final location = GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
+    final location = GoRouterState.of(context).uri.path;
 
-    final lastSegment = location.split('/').last;
+    debugPrint('BottomNav location: $location');
 
-    // قسمت آخر مسیر به همراه اسلش اولش
-    final lastSegmentWithSlash = '/$lastSegment';
-
-    print(location);
-    print(lastSegmentWithSlash);
-
-    const allowedRouteNames = {
-      HomeScreen.routePath,
-      ReservationScreen.routePath,
-      ShrineScreen.routePath,
-      ProfileMenuScreen.routePath,
-      HelpScreen.routePath,
-      // "/${StartDeterminationScreen.routePath}",
-      // هر routeName دیگری که میخوای BottomNav داشته باشه اینجا اضافه کن
+    const allowedRoutes = {
+      '/Home_screen',
+      '/reservation_screen',
+      '/shrine_screen',
+      '/profile_menu_screen',
+      '/help_screen',
     };
 
-    return allowedRouteNames.contains(lastSegmentWithSlash);
+    return allowedRoutes.contains(location);
   }
 
   void _goBranch(int index) {
@@ -72,10 +81,6 @@ class _MainWrapperState extends State<MainWrapper> {
     );
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -93,7 +98,6 @@ class _MainWrapperState extends State<MainWrapper> {
         key: widget._key,
         resizeToAvoidBottomInset: true,
         extendBody: true,
-
 
         bottomNavigationBar:
             _shouldShowBottomNavBar(context)

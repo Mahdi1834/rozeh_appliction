@@ -25,27 +25,48 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
   final Color warning2;
   final Color warningBKProfile;
   final Color error;
+  final Color appBarBackground;
+  final Color appBarSecondary;
+
+  final Color inputHint;
+
+  final Color backButtonBackground;
+  final Color backButtonStroke;
 
   final Color shadow;
 
   const AppThemeColors({
     required this.primary,
     required this.secondary,
+
     required this.background,
     required this.surface,
     required this.card,
+
     required this.textPrimary,
     required this.textSecondary,
     required this.textDisabled,
+
     required this.border,
     required this.divider,
+
     required this.inputBackground,
+    required this.inputHint,
+
     required this.navigationBackground,
+
+    required this.appBarBackground,
+    required this.appBarSecondary,
+
+    required this.backButtonBackground,
+    required this.backButtonStroke,
+
     required this.success,
     required this.warning,
     required this.warning2,
     required this.warningBKProfile,
     required this.error,
+
     required this.shadow,
   });
 
@@ -69,6 +90,11 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
     Color? warningBKProfile,
     Color? error,
     Color? shadow,
+    Color? appBarBackground,
+    Color? appBarSecondary,
+    Color? inputHint,
+    Color? backButtonBackground,
+    Color? backButtonStroke,
   }) {
     return AppThemeColors(
       primary: primary ?? this.primary,
@@ -89,6 +115,15 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
       warningBKProfile: warningBKProfile ?? this.warningBKProfile,
       error: error ?? this.error,
       shadow: shadow ?? this.shadow,
+      appBarBackground: appBarBackground ?? this.appBarBackground,
+
+      appBarSecondary: appBarSecondary ?? this.appBarSecondary,
+
+      inputHint: inputHint ?? this.inputHint,
+
+      backButtonBackground: backButtonBackground ?? this.backButtonBackground,
+
+      backButtonStroke: backButtonStroke ?? this.backButtonStroke,
     );
   }
 
@@ -119,6 +154,18 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
           Color.lerp(warningBKProfile, other.warningBKProfile, t)!,
       error: Color.lerp(error, other.error, t)!,
       shadow: Color.lerp(shadow, other.shadow, t)!,
+      appBarBackground:
+          Color.lerp(appBarBackground, other.appBarBackground, t)!,
+
+      appBarSecondary: Color.lerp(appBarSecondary, other.appBarSecondary, t)!,
+
+      inputHint: Color.lerp(inputHint, other.inputHint, t)!,
+
+      backButtonBackground:
+          Color.lerp(backButtonBackground, other.backButtonBackground, t)!,
+
+      backButtonStroke:
+          Color.lerp(backButtonStroke, other.backButtonStroke, t)!,
     );
   }
 }

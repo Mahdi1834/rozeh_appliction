@@ -118,8 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   gradient: LinearGradient(
                     colors: [
-                      context.appColors.primary,
-                      context.appColors.secondary,
+                      context.appColors.appBarBackground,
+                      context.appColors.appBarSecondary,
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
+import 'package:rozeh_project/features/feature_list_address/data/model/list_address_model.dart';
 import 'package:rozeh_project/features/feature_list_address/presentation/screen/address_screen.dart';
 import 'package:rozeh_project/features/feature_list_address/presentation/screen/list_address_screen.dart';
 import 'package:rozeh_project/features/feature_list_profile/presentation/screen/profile_menu_screen.dart';
@@ -165,17 +166,22 @@ class AppNavigation {
                       GoRoute(
                         path: AddressScreen.routePath,
                         name: AddressScreen.routeName,
-                        pageBuilder:
-                            (context, state) => CustomTransitionPage<void>(
-                          key: state.pageKey,
-                          child: const AddressScreen(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) =>
-                              FadeTransition(
-                                opacity: animation,
-                                child: child,
-                              ),
-                        ),
+                        pageBuilder: (context, state) {
+                          final address = state.extra as Addresses?;
+
+                          return CustomTransitionPage<void>(
+                            key: state.pageKey,
+                            child: AddressScreen(
+                              editingAddress: address,
+                            ),
+                            transitionsBuilder:
+                                (context, animation, secondaryAnimation, child) =>
+                                FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                          );
+                        },
                       ),
 
                     ]

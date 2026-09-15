@@ -104,7 +104,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
     return Container(
-      color:context.appColors.inputBackground, // رنگ پس‌زمینه کل بخش، شامل مارجین
+      color:context.appColors.background, // رنگ پس‌زمینه کل بخش، شامل مارجین
       padding: EdgeInsets.all(10),
       child: SizedBox(
         height: widget.height,

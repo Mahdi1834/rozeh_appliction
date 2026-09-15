@@ -15,7 +15,6 @@ class CustomAppBarBackBtn extends StatelessWidget {
   final BuildContext mainContext;
   final String title;
 
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -28,7 +27,10 @@ class CustomAppBarBackBtn extends StatelessWidget {
           bottomRight: Radius.circular(10),
         ),
         gradient: LinearGradient(
-          colors: [context.appColors.primary, context.appColors.secondary],
+          colors: [
+            context.appColors.appBarBackground,
+            context.appColors.appBarSecondary,
+          ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),

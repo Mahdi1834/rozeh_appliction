@@ -56,7 +56,7 @@ dependencies:
   smart_auth: ^3.2.0
   top_snackbar_flutter: ^3.3.0
   loading_animation_widget: ^1.3.0
-  flutter_map: ^8.3.2
+  neshan_maps_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

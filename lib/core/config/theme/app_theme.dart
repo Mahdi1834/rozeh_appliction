@@ -3,6 +3,8 @@ import 'package:rozeh_project/core/config/colors.dart';
 import 'package:rozeh_project/core/config/theme/app_theme_colors.dart';
 
 class MyThemes {
+  MyThemes._();
+
   // ============================================================
   // LIGHT THEME
   // ============================================================
@@ -11,36 +13,57 @@ class MyThemes {
     useMaterial3: true,
     fontFamily: 'IRANSansX',
     brightness: Brightness.light,
-    extensions: const [AppThemePalettes.light],
 
-    scaffoldBackgroundColor: Colors.white,
+    extensions: [AppThemePalettes.light],
 
-    colorScheme: ColorScheme.light(
-      primary: ConsColors.blueBg2,
-      secondary: ConsColors.green,
-      surface: Colors.white,
-      onPrimary: Colors.white,
-      onSecondary: Colors.white,
+    // ==========================================================
+    // Scaffold
+    // ==========================================================
+    scaffoldBackgroundColor: ConsColors.lightBackground,
+
+    // ==========================================================
+    // Color Scheme
+    // ==========================================================
+    colorScheme: const ColorScheme.light(
+      primary: ConsColors.greenBg,
+      secondary: ConsColors.blueBg2,
+
+      surface: ConsColors.lightSurface,
+
+      onPrimary: ConsColors.blue,
+      onSecondary: ConsColors.blue,
       onSurface: ConsColors.blue,
     ),
 
+    // ==========================================================
+    // AppBar
+    // ==========================================================
     appBarTheme: const AppBarTheme(
       backgroundColor: ConsColors.blueBg1,
       foregroundColor: ConsColors.blue,
       elevation: 0,
+      scrolledUnderElevation: 0,
       centerTitle: true,
     ),
 
+    // ==========================================================
+    // Card
+    // ==========================================================
     cardTheme: CardThemeData(
-      color: Colors.white,
+      color: ConsColors.lightCard,
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
 
+    // ==========================================================
+    // Input
+    // ==========================================================
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: ConsColors.blueLight,
+      fillColor: ConsColors.lightInput,
+
+      hintStyle: const TextStyle(color: ConsColors.gray),
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
@@ -59,21 +82,60 @@ class MyThemes {
           width: 1.5,
         ),
       ),
+
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: ConsColors.error),
+      ),
+
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: ConsColors.error, width: 1.5),
+      ),
     ),
 
+    // ==========================================================
+    // Divider
+    // ==========================================================
     dividerTheme: const DividerThemeData(
       color: ConsColors.dividerGreen,
       thickness: 1,
     ),
 
-    timePickerTheme: TimePickerThemeData(
-      backgroundColor: Colors.white,
+    // ==========================================================
+    // Navigation Bar
+    // ==========================================================
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: ConsColors.lightSurface,
+      elevation: 0,
+      indicatorColor: Colors.transparent,
+      iconTheme: WidgetStateProperty.resolveWith<IconThemeData?>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const IconThemeData(color: ConsColors.green);
+        }
+
+        return const IconThemeData(color: ConsColors.gray);
+      }),
+      labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const TextStyle(color: ConsColors.green);
+        }
+
+        return const TextStyle(color: ConsColors.gray);
+      }),
+    ),
+
+    // ==========================================================
+    // Time Picker
+    // ==========================================================
+    timePickerTheme: const TimePickerThemeData(
+      backgroundColor: ConsColors.lightSurface,
 
       confirmButtonStyle: ButtonStyle(
         foregroundColor: WidgetStatePropertyAll(ConsColors.blue),
       ),
 
-      cancelButtonStyle: const ButtonStyle(
+      cancelButtonStyle: ButtonStyle(
         foregroundColor: WidgetStatePropertyAll(Colors.grey),
       ),
 
@@ -85,14 +147,17 @@ class MyThemes {
       hourMinuteColor: ConsColors.greenBg,
       hourMinuteTextColor: ConsColors.blue,
 
-      helpTextStyle: const TextStyle(color: ConsColors.blue),
+      helpTextStyle: TextStyle(color: ConsColors.blue),
     ),
 
+    // ==========================================================
+    // Date Picker
+    // ==========================================================
     datePickerTheme: DatePickerThemeData(
       headerBackgroundColor: ConsColors.greenBg,
       headerForegroundColor: ConsColors.blue,
 
-      backgroundColor: Colors.white,
+      backgroundColor: ConsColors.lightSurface,
 
       dayBackgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
         if (states.contains(WidgetState.selected)) {
@@ -123,11 +188,8 @@ class MyThemes {
           return Colors.transparent;
         }
 
-        if (states.contains(WidgetState.focused)) {
-          return ConsColors.blueLight;
-        }
-
-        if (states.contains(WidgetState.hovered)) {
+        if (states.contains(WidgetState.focused) ||
+            states.contains(WidgetState.hovered)) {
           return ConsColors.blueLight;
         }
 
@@ -154,93 +216,157 @@ class MyThemes {
     useMaterial3: true,
     fontFamily: 'IRANSansX',
     brightness: Brightness.dark,
+
     extensions: const [AppThemePalettes.dark],
 
-    scaffoldBackgroundColor: const Color(0xFF071E24),
+    // ==========================================================
+    // Scaffold
+    // ==========================================================
+    scaffoldBackgroundColor: ConsColors.darkBackground,
 
+    // ==========================================================
+    // Color Scheme
+    // ==========================================================
     colorScheme: const ColorScheme.dark(
-      primary: ConsColors.blueBg2,
-      secondary: ConsColors.greenBg,
+      primary: ConsColors.darkPrimary,
+      secondary: ConsColors.darkPrimaryActive,
 
-      surface: Color(0xFF0D2A31),
+      surface: ConsColors.darkSurface,
 
       onPrimary: Colors.white,
-      onSecondary: Color(0xFF071E24),
-      onSurface: Colors.white,
+      onSecondary: Colors.white,
+      onSurface: ConsColors.darkTextPrimary,
     ),
 
+    // ==========================================================
+    // AppBar
+    // ==========================================================
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFF08272E),
-      foregroundColor: Colors.white,
+      backgroundColor: ConsColors.darkAppBar,
+      foregroundColor: ConsColors.darkTextPrimary,
       elevation: 0,
+      scrolledUnderElevation: 0,
       centerTitle: true,
     ),
 
+    // ==========================================================
+    // Card
+    // ==========================================================
     cardTheme: CardThemeData(
-      color: Color(0xFF0D2A31),
+      color: ConsColors.darkCard,
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
 
+    // ==========================================================
+    // Input
+    // ==========================================================
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Color(0xFF12353D),
+      fillColor: ConsColors.darkInput,
+
+      hintStyle: const TextStyle(color: ConsColors.darkInputHint),
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Color(0xFF35636A)),
+        borderSide: const BorderSide(color: ConsColors.darkBorderInactive),
       ),
 
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Color(0xFF35636A)),
+        borderSide: const BorderSide(color: ConsColors.darkBorderInactive),
       ),
 
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: ConsColors.greenBg, width: 1.5),
+        borderSide: const BorderSide(
+          color: ConsColors.darkBorderActive,
+          width: 1.5,
+        ),
       ),
 
-      hintStyle: const TextStyle(color: Color(0xFF9AB2B7)),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: ConsColors.error),
+      ),
+
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: ConsColors.error, width: 1.5),
+      ),
     ),
 
+    // ==========================================================
+    // Divider
+    // ==========================================================
     dividerTheme: const DividerThemeData(
-      color: Color(0xFF285159),
+      color: ConsColors.darkDivider,
       thickness: 1,
     ),
 
+    // ==========================================================
+    // Navigation Bar
+    // ==========================================================
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: ConsColors.darkNavigation,
+      elevation: 0,
+
+      // در طرح جدید آیتم انتخاب شده قرمز است
+      indicatorColor: Colors.transparent,
+      iconTheme: WidgetStateProperty.resolveWith<IconThemeData?>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const IconThemeData(color: ConsColors.darkPrimaryActive);
+        }
+
+        return const IconThemeData(color: ConsColors.darkTextSecondary);
+      }),
+      labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const TextStyle(color: ConsColors.darkPrimaryActive);
+        }
+
+        return const TextStyle(color: ConsColors.darkTextSecondary);
+      }),
+    ),
+
+    // ==========================================================
+    // Time Picker
+    // ==========================================================
     timePickerTheme: const TimePickerThemeData(
-      backgroundColor: Color(0xFF0D2A31),
+      backgroundColor: ConsColors.darkSurface,
 
       confirmButtonStyle: ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(ConsColors.greenBg),
+        foregroundColor: WidgetStatePropertyAll(ConsColors.darkPrimaryActive),
       ),
 
       cancelButtonStyle: ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(Color(0xFFB0BEC5)),
+        foregroundColor: WidgetStatePropertyAll(ConsColors.darkTextSecondary),
       ),
 
-      dayPeriodColor: Color(0xFF164B51),
+      dayPeriodColor: ConsColors.darkPrimary,
       dayPeriodTextColor: Colors.white,
 
-      dialHandColor: ConsColors.greenBg,
+      dialHandColor: ConsColors.darkPrimaryActive,
 
-      hourMinuteColor: Color(0xFF164B51),
+      hourMinuteColor: ConsColors.darkPrimary,
       hourMinuteTextColor: Colors.white,
 
       helpTextStyle: TextStyle(color: Colors.white),
     ),
 
+    // ==========================================================
+    // Date Picker
+    // ==========================================================
     datePickerTheme: DatePickerThemeData(
-      headerBackgroundColor: Color(0xFF164B51),
+      headerBackgroundColor: ConsColors.darkPrimary,
       headerForegroundColor: Colors.white,
 
-      backgroundColor: Color(0xFF0D2A31),
+      backgroundColor: ConsColors.darkSurface,
 
       dayBackgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
         if (states.contains(WidgetState.selected)) {
-          return ConsColors.green;
+          return ConsColors.darkPrimaryActive;
         }
 
         if (states.contains(WidgetState.disabled)) {
@@ -252,7 +378,7 @@ class MyThemes {
 
       todayBackgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
         if (states.contains(WidgetState.selected)) {
-          return ConsColors.green;
+          return ConsColors.darkPrimaryActive;
         }
 
         return Colors.transparent;
@@ -260,19 +386,16 @@ class MyThemes {
 
       yearBackgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
         if (states.contains(WidgetState.selected)) {
-          return ConsColors.green;
+          return ConsColors.darkPrimaryActive;
         }
 
         if (states.contains(WidgetState.disabled)) {
           return Colors.transparent;
         }
 
-        if (states.contains(WidgetState.focused)) {
-          return Color(0xFF164B51);
-        }
-
-        if (states.contains(WidgetState.hovered)) {
-          return Color(0xFF164B51);
+        if (states.contains(WidgetState.focused) ||
+            states.contains(WidgetState.hovered)) {
+          return ConsColors.darkPrimary;
         }
 
         return Colors.transparent;
@@ -281,11 +404,11 @@ class MyThemes {
       surfaceTintColor: Colors.transparent,
 
       confirmButtonStyle: const ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(ConsColors.greenBg),
+        foregroundColor: WidgetStatePropertyAll(ConsColors.darkPrimaryActive),
       ),
 
       cancelButtonStyle: const ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(Color(0xFFB0BEC5)),
+        foregroundColor: WidgetStatePropertyAll(ConsColors.darkTextSecondary),
       ),
     ),
   );

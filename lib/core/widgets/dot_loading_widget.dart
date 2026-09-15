@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:rozeh_project/core/config/colors.dart';
+import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class DotLoadingWidget extends StatelessWidget {
   final double size;
@@ -15,7 +16,7 @@ class DotLoadingWidget extends StatelessWidget {
       child: Center(
         child: LoadingAnimationWidget.staggeredDotsWave(
           size: size,
-          color: color! ,
+          color: context.appColors.primary ,
         ),
       ),
     );

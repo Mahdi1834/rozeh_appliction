@@ -104,11 +104,12 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
                                     SizedBox(
                                       width: 150,
                                       height: 45,
-                                      child: OutlinedButton(
+                                      child: CustomBtnGradient(
+
                                         onPressed: () {
                                           addressBloc.add(ListAddressEvent());
                                         },
-                                        child: const Text("تلاش مجدد"),
+                                        title:"تلاش مجدد",
                                       ),
                                     ),
                                   ],
