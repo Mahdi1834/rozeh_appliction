@@ -16,13 +16,11 @@ import 'package:rozeh_project/core/widgets/txt_medium.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';
 import 'package:rozeh_project/features/feature_home/data/info_reservation_model.dart';
-import 'package:rozeh_project/features/feature_home/data/model/banners_model.dart';
 import 'package:rozeh_project/features/feature_home/data/model/current_hadith_model.dart';
 import 'package:rozeh_project/features/feature_home/data/model/rozeh_request_model.dart';
 import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/expandable_reservation_card.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/fancy_card.dart';
-import 'package:rozeh_project/features/feature_home/presentation/widgets/image_slider.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/login_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
 
@@ -37,7 +35,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // برای انیمیشن کارت بالا
-  late ScrollController _scrollController;
+
 
   late ScrollController _listController;
 
@@ -56,8 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // حدیث
     // BlocProvider.of<HomeBloc>(context).add(GetCurrentHadithEvent());
-    BlocProvider.of<HomeBloc>(context).add(GetBannersEvent());
-    _scrollController = ScrollController();
+
+
 
     _listController = ScrollController()..addListener(_onListScroll);
 
@@ -91,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     // _scrollController.dispose();
-    // _listController.dispose();
+    _listController.dispose();
     super.dispose();
   }
 
@@ -146,7 +144,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         "assets/images/logo_top_right.svg",
                       ),
                     ),
-
+                    Positioned(
+                      top: height * 0.071,
+                      left: 0,
+                      right: 0,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          width: 120,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            color: context.appColors.warning,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: TxtTitle(
+                              color: context.appColors.textPrimary,
+                              text: "سرچشمه شوق",
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Column(
@@ -190,77 +209,147 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: height * 0.02),
 
-                          Container(
-                            height: height * 0.25,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: 40,
+                                maxHeight:
+                                    isFancyCardExpanded ? height * 0.25 : 40,
+                                minWidth: width,
+                                maxWidth: width,
+                              ),
+                              child: FancyCard(
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    Expanded(
+                                      child: BlocConsumer<HomeBloc, HomeState>(
+                                        listenWhen:
+                                            (p, c) =>
+                                                p.currentHadithStatus !=
+                                                c.currentHadithStatus,
+                                        buildWhen:
+                                            (p, c) =>
+                                                p.currentHadithStatus !=
+                                                c.currentHadithStatus,
+                                        listener: (context, state) {
+                                          if (state.currentHadithStatus
+                                              is CurrentHadithStatusError) {
+                                            final err =
+                                                state.currentHadithStatus
+                                                    as CurrentHadithStatusError;
+                                            SnackbarHelper.show(
+                                              context: context,
+                                              message: err.message ?? 'خطا',
+                                              status: SnackbarStatus.error,
+                                            );
+                                          }
+                                        },
+                                        builder: (context, state) {
+                                          if (state.currentHadithStatus
+                                              is CurrentHadithStatusLoading) {
+                                            return const DotLoadingWidget(
+                                              size: 50,
+                                            );
+                                          }
+                                          if (state.currentHadithStatus
+                                              is CurrentHadithStatusCompleted) {
+                                            final comp =
+                                                state.currentHadithStatus
+                                                    as CurrentHadithStatusCompleted;
+                                            final CurrentHadithModel m =
+                                                comp.currentHadithModel;
 
-                            child: BlocConsumer<HomeBloc, HomeState>(
-                              listenWhen:
-                                  (p, c) => p.bannersStatus != c.bannersStatus,
-                              buildWhen:
-                                  (p, c) => p.bannersStatus != c.bannersStatus,
-                              listener: (context, state) {
-                                if (state.bannersStatus is BannersStatusError) {
-                                  final err =
-                                      state.bannersStatus as BannersStatusError;
-                                  SnackbarHelper.show(
-                                    context: context,
-                                    message: err.message ?? 'خطا',
-                                    status: SnackbarStatus.error,
-                                  );
-                                }
-                              },
-                              builder: (context, state) {
-                                if (state.bannersStatus
-                                    is BannersStatusLoading) {
-                                  return const DotLoadingWidget(size: 50);
-                                }
-                                if (state.bannersStatus
-                                    is BannersStatusCompleted) {
-                                  final comp =
-                                      state.bannersStatus
-                                          as BannersStatusCompleted;
-
-                                  final BannersModel model = comp.bannersModel;
-                                  final List<Banners> banners =
-                                      model.data?.banners
-                                          ?.where(
-                                            (banner) =>
-                                                banner.isActive == true &&
-                                                banner.imageUrl != null &&
-                                                banner.imageUrl!.isNotEmpty,
-                                          )
-                                          .toList() ??
-                                      [];
-                                    print(banners.first.imageUrl);
-                                  return BannerSlider(
-                                    banners: banners,
-                                  );
-
-
-                                }
-                                if (state.bannersStatus is BannersStatusError) {
-                                  return IconButton(
-                                    onPressed: () {
-                                      BlocProvider.of<HomeBloc>(
-                                        context,
-                                      ).add(GetBannersEvent());
-                                    },
-                                    icon: Icon(
-                                      Icons.refresh,
-                                      color: context.appColors.error,
+                                            return SingleChildScrollView(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 5.0,
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: width,
+                                                      child: TxtMedium(
+                                                        text:
+                                                            m
+                                                                .data
+                                                                ?.currentHadith
+                                                                ?.author ??
+                                                            "",
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    TxtForQuran(
+                                                      text:
+                                                          m
+                                                              .data
+                                                              ?.currentHadith
+                                                              ?.contentAr ??
+                                                          "",
+                                                    ),
+                                                    const SizedBox(height: 5),
+                                                    TxtMedium(
+                                                      isAlignCenter: true,
+                                                      text:
+                                                          m
+                                                              .data
+                                                              ?.currentHadith
+                                                              ?.contentFa ??
+                                                          "",
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    SizedBox(
+                                                      width: width,
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: TxtTitleNotBold(
+                                                          size: 12,
+                                                          text:
+                                                              m
+                                                                  .data
+                                                                  ?.currentHadith
+                                                                  ?.source ??
+                                                              "",
+                                                          color:
+                                                              context
+                                                                  .appColors
+                                                                  .textPrimary,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                          if (state.currentHadithStatus
+                                              is CurrentHadithStatusError) {
+                                            return IconButton(
+                                              onPressed: () {
+                                                BlocProvider.of<HomeBloc>(
+                                                  context,
+                                                ).add(GetCurrentHadithEvent());
+                                              },
+                                              icon: Icon(
+                                                Icons.refresh,
+                                                color: context.appColors.error,
+                                              ),
+                                            );
+                                          }
+                                          return const SizedBox.shrink();
+                                        },
+                                      ),
                                     ),
-                                  );
-                                }
-                                return const SizedBox.shrink();
-                              },
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-
                           const SizedBox(height: 10),
                         ],
                       ),

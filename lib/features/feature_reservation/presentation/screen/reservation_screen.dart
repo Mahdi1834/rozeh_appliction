@@ -158,7 +158,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
         body: Container(
           width: width,
           height: height,
-          color: context.appColors.inputBackground,
+          color: context.appColors.background,
           child: Column(
             children: [
               CustomAppBarWithSearch(
@@ -176,6 +176,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       child: SvgPicture.asset(
                         height: height * 0.35,
                         "assets/images/mandala.svg",
+                        color: context.appColors.appBarSecondary,
                       ),
                     ),
                     Positioned(
@@ -184,6 +185,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       child: SvgPicture.asset(
                         height: height * 0.35,
                         "assets/images/mandala (1).svg",
+                        color: context.appColors.appBarSecondary,
                       ),
                     ),
                     Padding(

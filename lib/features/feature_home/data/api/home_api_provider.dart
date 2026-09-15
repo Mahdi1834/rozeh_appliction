@@ -23,6 +23,20 @@ class HomeApiProvider{
 
     return response;
   }
+  dynamic callGetBanners() async {
+
+    final response = await dio.get("${Constants.baseUrl}/public/banners",
+
+        options: Options(
+          headers: {
+            "Accept": "application/json",
+          },
+        )
+
+    );
+
+    return response;
+  }
 
 
   dynamic callGetRozehRequest({required String page , String? query}) async {

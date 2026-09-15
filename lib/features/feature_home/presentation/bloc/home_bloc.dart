@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rozeh_project/core/resources/data_state.dart';
+import 'package:rozeh_project/features/feature_home/data/model/banners_model.dart';
 import 'package:rozeh_project/features/feature_home/data/model/current_hadith_model.dart';
 import 'package:rozeh_project/features/feature_home/data/model/rozeh_request_model.dart';
 import 'package:rozeh_project/features/feature_home/repositories/home_repository.dart';
@@ -10,18 +11,20 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 part 'current_hadith_status.dart';
+
 part 'rozeh_request_status.dart';
+
+part 'banners_status.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeRepository homeRepository;
 
   HomeBloc(this.homeRepository)
-    : super(HomeState(
+      : super(HomeState(
       rozehRequestStatus: RozehRequestStatusInit(),
-      currentHadithStatus: CurrentHadithStatusInit()
+      currentHadithStatus: CurrentHadithStatusInit(),
+      bannersStatus: BannersStatusInit(),
   )) {
-    
-    
     on<GetCurrentHadithEvent>((event, emit) async {
       // TODO: implement event handler
       emit(
@@ -54,7 +57,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<GetRozehRequestEvent>((event, emit) async {
-
       emit(
         state.copyWith(
           newRozehRequestStatus: RozehRequestStatusLoading(),
@@ -84,5 +86,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
       }
     });
+    ///////////// banners /////////////
+
+    on<GetBannersEvent>((event, emit) async {
+      emit(
+        state.copyWith(
+          newBannersStatus: BannersStatusLoading(),
+        ),
+      );
+      DataState dataState = await homeRepository.fetchBanners();
+
+      if (dataState is DataSuccess) {
+        emit(
+          state.copyWith(
+            newBannersStatus: BannersStatusCompleted(
+              dataState.data,
+            ),
+          ),
+        );
+      }
+      if (dataState is DataFailed) {
+        emit(
+          state.copyWith(
+            newBannersStatus: BannersStatusError(
+              dataState.error!,
+            ),
+          ),
+        );
+      }
+    });
   }
+
+
 }

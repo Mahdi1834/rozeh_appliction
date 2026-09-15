@@ -12,7 +12,7 @@ import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 Drawer buildDrawer(double width, BuildContext context) {
   return Drawer(
-    backgroundColor: Colors.white,
+    backgroundColor: context.appColors.background,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(topLeft: Radius.circular(15)),
     ),
@@ -25,7 +25,7 @@ Drawer buildDrawer(double width, BuildContext context) {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15)),
             gradient: LinearGradient(
-              colors: [context.appColors.primary, context.appColors.secondary],
+              colors: [context.appColors.appBarBackground, context.appColors.appBarSecondary],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -59,6 +59,7 @@ Drawer buildDrawer(double width, BuildContext context) {
         ),
 
         Container(
+
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: SingleChildScrollView(
             child: Column(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_search.dart';
@@ -32,7 +33,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
         body: Container(
           width: width,
           height: height,
-          color: context.appColors.inputBackground,
+          color: context.appColors.background,
           child: Column(
             children: [
               CustomAppBarWithSearch(
@@ -43,24 +44,51 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
 
               SizedBox(height: 10),
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
+                child: SizedBox(
+                  width: width,
+                  child: Stack(
+                    clipBehavior: Clip.none,
                     children: [
-                      ItemForProfile(
-                        title: "تکمیل پروفایل",
-                        description: "تکمیل اطلاعات فردی و تحصیلی",
-                        imageUrl: "assets/images/Calendar.svg",
-                        onPress: () {
-                          context.pushNamed(ProfileScreen.routeName);
-                        },
+                      Positioned(
+                        top: height * 0.2,
+                        left: 0,
+                        child: SvgPicture.asset(
+                          height: height * 0.35,
+                          "assets/images/mandala.svg",
+                          color: context.appColors.appBarSecondary,
+                        ),
                       ),
-                      ItemForProfile(
-                        title: "مدیریت آدرس ها",
-                        description: "اضافه،ویرایش و حذف ادرس ها",
-                        imageUrl: "assets/images/location-pin-svgrepo-com.svg",
-                        onPress: () {
-                          context.pushNamed(ListAddressScreen.routeName);
-                        },
+                      Positioned(
+                        top: height * 0.2,
+                        right: 0,
+                        child: SvgPicture.asset(
+                          height: height * 0.35,
+                          "assets/images/mandala (1).svg",
+                          color: context.appColors.appBarSecondary,
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ItemForProfile(
+                              title: "تکمیل پروفایل",
+                              description: "تکمیل اطلاعات فردی و تحصیلی",
+                              imageUrl: "assets/images/Calendar.svg",
+                              onPress: () {
+                                context.pushNamed(ProfileScreen.routeName);
+                              },
+                            ),
+                            ItemForProfile(
+                              title: "مدیریت آدرس ها",
+                              description: "اضافه،ویرایش و حذف ادرس ها",
+                              imageUrl:
+                                  "assets/images/location-pin-svgrepo-com.svg",
+                              onPress: () {
+                                context.pushNamed(ListAddressScreen.routeName);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

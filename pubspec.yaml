@@ -57,6 +57,8 @@ dependencies:
   top_snackbar_flutter: ^3.3.0
   loading_animation_widget: ^1.3.0
   neshan_maps_flutter: ^1.1.0
+  carousel_slider: ^5.1.2
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:

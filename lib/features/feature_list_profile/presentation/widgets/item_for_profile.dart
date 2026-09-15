@@ -26,7 +26,7 @@ class ItemForProfile extends StatelessWidget {
         margin: EdgeInsets.all(10),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         decoration: BoxDecoration(
-          color: context.appColors.navigationBackground,
+          color: context.appColors.inputBackground,
           boxShadow: [
             BoxShadow(
               color: context.appColors.warning.withValues(alpha: 0.8),
@@ -40,11 +40,11 @@ class ItemForProfile extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: 40,
-              height: 40,
+              width: 25,
+              height: 25,
               child: SvgPicture.asset(imageUrl,color: context.appColors.primary,),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 15),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

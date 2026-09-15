@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:rozeh_project/core/error_handling/get_message.dart';
 import 'package:rozeh_project/core/resources/data_state.dart';
 import 'package:rozeh_project/features/feature_home/data/api/home_api_provider.dart';
+import 'package:rozeh_project/features/feature_home/data/model/banners_model.dart';
 import 'package:rozeh_project/features/feature_home/data/model/current_hadith_model.dart';
 import 'package:rozeh_project/features/feature_home/data/model/rozeh_request_model.dart';
 
@@ -18,12 +19,28 @@ class HomeRepository {
         final CurrentHadithModel currentHadithModel = CurrentHadithModel.fromJson(response.data);
         return DataSuccess(currentHadithModel);
       } else {
-        return DataFailed("خطا در ارسال پیامک !!!");
+        return DataFailed("خطا در دریافت احادیث !!!");
       }
     } on DioException catch (e) {
       return DataFailed(getMessage(e));
     }
   }
+
+
+  Future<DataState<BannersModel>> fetchBanners() async {
+    try {
+      Response response = await apiProvider.callGetBanners();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final BannersModel bannersModel = BannersModel.fromJson(response.data);
+        return DataSuccess(bannersModel);
+      } else {
+        return DataFailed("خطا در دریافت بنرها !!!");
+      }
+    } on DioException catch (e) {
+      return DataFailed(getMessage(e));
+    }
+  }
+
 
 
   Future<DataState<RozehRequestModel>> fetchRequestRozeh({required String page , String? query}) async {
