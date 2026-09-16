@@ -68,26 +68,29 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                         ),
                       ),
                       SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            ItemForProfile(
-                              title: "تکمیل پروفایل",
-                              description: "تکمیل اطلاعات فردی و تحصیلی",
-                              imageUrl: "assets/images/Calendar.svg",
-                              onPress: () {
-                                context.pushNamed(ProfileScreen.routeName);
-                              },
-                            ),
-                            ItemForProfile(
-                              title: "مدیریت آدرس ها",
-                              description: "اضافه،ویرایش و حذف ادرس ها",
-                              imageUrl:
-                                  "assets/images/location-pin-svgrepo-com.svg",
-                              onPress: () {
-                                context.pushNamed(ListAddressScreen.routeName);
-                              },
-                            ),
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              ItemForProfile(
+                                title: "تکمیل پروفایل",
+                                description: "تکمیل اطلاعات فردی و تحصیلی",
+                                imageUrl: "assets/images/Calendar.svg",
+                                onPress: () {
+                                  context.pushNamed(ProfileScreen.routeName);
+                                },
+                              ),
+                              ItemForProfile(
+                                title: "مدیریت آدرس ها",
+                                description: "اضافه،ویرایش و حذف ادرس ها",
+                                imageUrl:
+                                    "assets/images/location-pin-svgrepo-com.svg",
+                                onPress: () {
+                                  context.pushNamed(ListAddressScreen.routeName);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

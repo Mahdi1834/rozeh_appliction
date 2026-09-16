@@ -29,7 +29,7 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
     return Container(
       margin: const EdgeInsets.only(top: 10, bottom: 4),
       decoration: BoxDecoration(
-        color: theme.background,
+        color: theme.navigationBackground,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.grey),
         boxShadow: [

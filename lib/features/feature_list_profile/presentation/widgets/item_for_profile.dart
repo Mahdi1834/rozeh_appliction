@@ -20,48 +20,102 @@ class ItemForProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPress,
-      child: Container(
-        margin: EdgeInsets.all(10),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-        decoration: BoxDecoration(
-          color: context.appColors.background,
-          boxShadow: [
-            BoxShadow(
-              color: context.appColors.warning.withValues(alpha: 0.8),
-              blurRadius: 5.3,
-              offset: Offset(0, 2),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          children: [
-            SizedBox(
-              width: 25,
-              height: 25,
-              child: SvgPicture.asset(imageUrl,color: context.appColors.primary,),
-            ),
-            SizedBox(width: 15),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+    final theme = context.appColors;
+
+    return Container(
+      margin: const EdgeInsets.only(top: 10, bottom: 4),
+      decoration: BoxDecoration(
+        color: theme.navigationBackground,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: theme.border),
+        boxShadow: [
+          BoxShadow(
+            color: theme.warning.withValues(alpha: 0.15),
+            blurRadius: 5.3,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onPress,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 14, 12, 14),
+              child: Row(
                 children: [
-                  TxtTitle(
-                    text: title,
-                    color: context.appColors.textPrimary,
+                  // ============================================================
+                  // Icon
+                  // ============================================================
+                  Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          theme.primary,
+                          theme.primary.withValues(alpha: 0.70),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    alignment: Alignment.center,
+                    child: SvgPicture.asset(
+                      imageUrl,
+                      width: 22,
+                      height: 22,
+                      colorFilter: ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                   ),
-                  TxtTitleNotBold(
-                    text: description,
-                    color: context.appColors.textPrimary,
+
+                  const SizedBox(width: 10),
+
+                  // ============================================================
+                  // Title + Description
+                  // ============================================================
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TxtTitle(text: title, color: theme.textPrimary),
+
+                        const SizedBox(height: 4),
+
+                        TxtTitleNotBold(
+                          text: description,
+                          color: theme.textPrimary.withValues(alpha: 0.55),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  // ============================================================
+                  // Arrow
+                  // ============================================================
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: theme.primary.withValues(alpha: 0.08),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      color: theme.primary,
+                      size: 14,
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

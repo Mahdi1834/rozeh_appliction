@@ -248,206 +248,284 @@ class _AddressItem extends StatelessWidget {
   final Addresses address;
   final VoidCallback onTap;
 
-  const _AddressItem({required this.address, required this.onTap});
+  const _AddressItem({
+    required this.address,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(15),
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: context.appColors.surface,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color:
-                address.isDefault == true
-                    ? context.appColors.primary
-                    : context.appColors.border,
-          ),
+    final theme = context.appColors;
+
+    return Container(
+      margin: const EdgeInsets.only(top: 10, bottom: 4),
+      decoration: BoxDecoration(
+        color: theme.navigationBackground,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color:
+          address.isDefault == true
+              ? theme.primary
+              : theme.border,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ================================================================
-            // Title + Default
-            // ================================================================
-            Row(
-              children: [
-                Container(
-                  width: 38,
-                  height: 38,
-                  decoration: BoxDecoration(
-                    color: context.appColors.primary.withValues(alpha: 0.10),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(
-                    Icons.location_on_outlined,
-                    color: context.appColors.primary,
-                    size: 22,
-                  ),
-                ),
+        boxShadow: [
+          BoxShadow(
+            color: theme.primary.withValues(alpha: 0.15),
+            blurRadius: 5.3,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(16),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 14, 12, 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // ============================================================
+                  // عنوان + پیش‌فرض
+                  // ============================================================
+                  Row(
+                    children: [
+                      Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              theme.primary,
+                              theme.primary.withValues(alpha: 0.70),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.location_on_outlined,
+                          color: Colors.white,
+                          size: 22,
+                        ),
+                      ),
 
-                const SizedBox(width: 10),
+                      const SizedBox(width: 10),
 
-                Expanded(
-                  child: Text(
-                    address.title ?? "بدون عنوان",
-                    style: TextStyle(
-                      color: context.appColors.textPrimary,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              address.title ?? 'بدون عنوان',
+                              style: TextStyle(
+                                color: theme.textPrimary,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+
+                            const SizedBox(height: 4),
+
+                            Text(
+                              _getLocationName(address),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: theme.textPrimary.withValues(
+                                  alpha: 0.55,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // پیش‌فرض
+                      if (address.isDefault == true)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 9,
+                            vertical: 5,
+                          ),
+                          decoration: BoxDecoration(
+                            color: theme.primary.withValues(alpha: 0.10),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: theme.primary.withValues(alpha: 0.20),
+                            ),
+                          ),
+                          child: Text(
+                            'پیش‌فرض',
+                            style: TextStyle(
+                              color: theme.primary,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // ============================================================
+                  // آدرس
+                  // ============================================================
+                  _buildInfoRow(
+                    context,
+                    icon: Icons.home_outlined,
+                    title: 'آدرس',
+                    value: address.address ?? 'آدرس ثبت نشده',
+                  ),
+
+                  // ============================================================
+                  // کد پستی
+                  // ============================================================
+                  if (address.postalCode != null &&
+                      address.postalCode!.isNotEmpty) ...[
+                    const SizedBox(height: 10),
+
+                    _buildInfoRow(
+                      context,
+                      icon: Icons.markunread_mailbox_outlined,
+                      title: 'کد پستی',
+                      value: address.postalCode!,
                     ),
-                  ),
-                ),
+                  ],
 
-                if (address.isDefault == true)
+                  const SizedBox(height: 12),
+
+                  // ============================================================
+                  // مشاهده و ویرایش
+                  // ============================================================
                   Container(
+                    width: double.infinity,
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 9,
-                      vertical: 5,
+                      horizontal: 12,
+                      vertical: 9,
                     ),
                     decoration: BoxDecoration(
-                      color: context.appColors.primary.withValues(alpha: 0.10),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      "پیش‌فرض",
-                      style: TextStyle(
-                        color: context.appColors.primary,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
+                      color: theme.primary.withValues(alpha: 0.05),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: theme.primary.withValues(alpha: 0.10),
                       ),
                     ),
-                  ),
-              ],
-            ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.edit_location_alt_outlined,
+                          size: 17,
+                          color: theme.primary,
+                        ),
 
-            const SizedBox(height: 12),
+                        const SizedBox(width: 7),
 
-            // ================================================================
-            // Province / City
-            // ================================================================
-            Row(
-              children: [
-                Icon(
-                  Icons.map_outlined,
-                  size: 18,
-                  color: context.appColors.textSecondary,
-                ),
+                        Expanded(
+                          child: Text(
+                            'مشاهده و ویرایش آدرس',
+                            style: TextStyle(
+                              color: theme.textPrimary,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
 
-                const SizedBox(width: 7),
-
-                Expanded(
-                  child: Text(
-                    _getLocationName(address),
-                    style: TextStyle(
-                      color: context.appColors.textSecondary,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 8),
-
-            // ================================================================
-            // Address
-            // ================================================================
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.home_outlined,
-                  size: 18,
-                  color: context.appColors.textSecondary,
-                ),
-
-                const SizedBox(width: 7),
-
-                Expanded(
-                  child: Text(
-                    address.address ?? "-",
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: context.appColors.textPrimary,
-                      fontSize: 13,
-                      height: 1.6,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            // ================================================================
-            // Postal Code
-            // ================================================================
-            if (address.postalCode != null &&
-                address.postalCode!.isNotEmpty) ...[
-              const SizedBox(height: 8),
-
-              Row(
-                children: [
-                  Icon(
-                    Icons.markunread_mailbox_outlined,
-                    size: 18,
-                    color: context.appColors.textSecondary,
-                  ),
-
-                  const SizedBox(width: 7),
-
-                  Text(
-                    "کد پستی: ${address.postalCode}",
-                    style: TextStyle(
-                      color: context.appColors.textSecondary,
-                      fontSize: 12,
+                        Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          size: 13,
+                          color: theme.primary,
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ],
-
-            const SizedBox(height: 12),
-
-            // ================================================================
-            // Edit
-            // ================================================================
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "مشاهده و ویرایش",
-                  style: TextStyle(
-                    color: context.appColors.primary,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-
-                const SizedBox(width: 4),
-
-                Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  size: 13,
-                  color: context.appColors.primary,
-                ),
-              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
+
+  // ============================================================
+  // Info Row
+  // ============================================================
+
+  Widget _buildInfoRow(
+      BuildContext context, {
+        required IconData icon,
+        required String title,
+        required String value,
+      }) {
+    final theme = context.appColors;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 34,
+          height: 34,
+          decoration: BoxDecoration(
+            color: theme.primary.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(9),
+          ),
+          child: Icon(
+            icon,
+            size: 18,
+            color: theme.primary,
+          ),
+        ),
+
+        const SizedBox(width: 9),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 10,
+                  color: theme.textPrimary.withValues(alpha: 0.50),
+                ),
+              ),
+
+              const SizedBox(height: 2),
+
+              Text(
+                value,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: theme.textPrimary,
+                  height: 1.5,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ============================================================
+  // Province / City
+  // ============================================================
 
   String _getLocationName(Addresses address) {
     final province = address.province?.name;
     final city = address.city?.name;
 
     if (province != null && city != null) {
-      return "$province، $city";
+      return '$province، $city';
     }
 
     if (city != null) {
@@ -458,6 +536,6 @@ class _AddressItem extends StatelessWidget {
       return province;
     }
 
-    return "استان و شهر مشخص نشده";
+    return 'استان و شهر مشخص نشده';
   }
 }
