@@ -31,7 +31,7 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
       decoration: BoxDecoration(
         color: theme.navigationBackground,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey),
+        border: BoxBorder.all(color: context.appColors.border),
         boxShadow: [
           BoxShadow(
             color: context.appColors.warning.withValues(alpha: 0.8),

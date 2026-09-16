@@ -29,17 +29,15 @@ class ItemForProfile extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
 
         // مثل کارت ExpandableReservationCard
-        border: Border.all(
-          color: theme.border,
-        ),
-
+        border: BoxBorder.all(color: context.appColors.border),
         boxShadow: [
           BoxShadow(
-            color: theme.warning.withValues(alpha: 0.15),
+            color: context.appColors.warning.withValues(alpha: 0.8),
             blurRadius: 5.3,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
+
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
@@ -115,6 +113,7 @@ class ItemForProfile extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: theme.warning.withValues(alpha: 0.08),
                       shape: BoxShape.circle,
+
                     ),
                     child: Icon(
                       Icons.arrow_forward_ios_outlined,

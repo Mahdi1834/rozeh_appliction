@@ -269,7 +269,7 @@ class _AddressItem extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: theme.warning.withValues(alpha: 0.15),
+            color: theme.warning.withValues(alpha: 0.8),
             blurRadius: 5.3,
             offset: const Offset(0, 2),
           ),

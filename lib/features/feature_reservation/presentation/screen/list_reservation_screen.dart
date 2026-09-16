@@ -83,6 +83,7 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
         body: Container(
           width: width,
           height: height,
+          color: context.appColors.background,
           child: Column(
             children: [
               CustomAppBarWithSearch(
@@ -90,7 +91,7 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
                 title: "لیست مراسم ها",
                 onTapSearch: () {},
               ),
-
+              SizedBox(height: 10),
               // ================= Content (Rezervations) =================
               Expanded(
                 child: SizedBox(
@@ -99,7 +100,7 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
                     clipBehavior: Clip.none,
                     children: [
                       Positioned(
-                        top: 20,
+                        top: height * 0.2,
                         left: 0,
                         child: SvgPicture.asset(
                           height: height * 0.35,
@@ -108,7 +109,7 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
                         ),
                       ),
                       Positioned(
-                        top: 20,
+                        top: height * 0.2,
                         right: 0,
                         child: SvgPicture.asset(
                           height: height * 0.35,

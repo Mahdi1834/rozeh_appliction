@@ -65,7 +65,8 @@ class _HelpScreenState extends State<HelpScreen> {
                           width: width,
                           height: height,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            border: BoxBorder.all(color: context.appColors.border),
+                            color: context.appColors.navigationBackground,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: SingleChildScrollView(

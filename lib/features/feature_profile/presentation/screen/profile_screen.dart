@@ -121,6 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: SvgPicture.asset(
                           height: height * 0.35,
                           "assets/images/mandala.svg",
+                          color: context.appColors.appBarSecondary,
                         ),
                       ),
                       Positioned(
@@ -129,6 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: SvgPicture.asset(
                           height: height * 0.35,
                           "assets/images/mandala (1).svg",
+                          color: context.appColors.appBarSecondary,
                         ),
                       ),
                       Padding(
@@ -138,7 +140,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           width: width,
                           height: height,
                           decoration: BoxDecoration(
+
                             color: context.appColors.navigationBackground,
+                            border: BoxBorder.all(color: context.appColors.border),
+                            boxShadow: [
+                              BoxShadow(
+                                color: context.appColors.warning.withValues(alpha: 0.8),
+                                blurRadius: 5.3,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: SingleChildScrollView(

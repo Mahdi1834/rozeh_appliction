@@ -149,8 +149,6 @@ class _AddressScreenState extends State<AddressScreen> {
     super.dispose();
   }
 
-
-
   // ------------------------------------------------------------
   // Previous
   // ------------------------------------------------------------
@@ -321,102 +319,83 @@ class _AddressScreenState extends State<AddressScreen> {
 
   Widget _buildProgress(double width, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8.0,
-        horizontal: 5,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: List.generate(
-          _titles.length * 2 - 1,
-              (index) {
-            // خط بین مراحل
-            if (index.isOdd) {
-              final int realIndex = (index / 2).floor();
-
-              return Expanded(
-                flex: 3,
-                child: Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(
-                    top: 22,
-                  ),
-                  child: CustomPaint(
-                    painter: DottedLinePainter(
-                      color:
-                      realIndex < _currentPage
-                          ? context.appColors.warning
-                          : context.appColors.border,
-                    ),
-                    size: const Size(
-                      double.infinity,
-                      2,
-                    ),
-                  ),
-                ),
-              );
-            }
-
-            // مرحله
-            final int stepIndex = (index / 2).floor();
-
-            final bool isActive =
-                stepIndex <= _currentPage;
-
-            final bool isDone =
-                stepIndex < _currentPage;
+        children: List.generate(_titles.length * 2 - 1, (index) {
+          // خط بین مراحل
+          if (index.isOdd) {
+            final int realIndex = (index / 2).floor();
 
             return Expanded(
               flex: 3,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // عنوان مرحله
-                  Text(
-                    _titles[stepIndex],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight:
-                      isActive
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                      color:
-                      isActive
-                          ? context.appColors.warning
-                          : context.appColors.textSecondary,
-                    ),
+              child: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(top: 22),
+                child: CustomPaint(
+                  painter: DottedLinePainter(
+                    color:
+                        realIndex < _currentPage
+                            ? context.appColors.warning
+                            : context.appColors.border,
                   ),
-
-                  const SizedBox(height: 6),
-
-                  // شماره مرحله
-                  Container(
-                    width: 25,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      color:
-                      isActive
-                          ? context.appColors.warning
-                          : isDone
-                          ? context.appColors.warning.withOpacity(0.3)
-                          : context.appColors.textSecondary,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      '${stepIndex + 1}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                ],
+                  size: const Size(double.infinity, 2),
+                ),
               ),
             );
-          },
-        ),
+          }
+
+          // مرحله
+          final int stepIndex = (index / 2).floor();
+
+          final bool isActive = stepIndex <= _currentPage;
+
+          final bool isDone = stepIndex < _currentPage;
+
+          return Expanded(
+            flex: 3,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // عنوان مرحله
+                Text(
+                  _titles[stepIndex],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                    color:
+                        isActive
+                            ? context.appColors.warning
+                            : context.appColors.textSecondary,
+                  ),
+                ),
+
+                const SizedBox(height: 6),
+
+                // شماره مرحله
+                Container(
+                  width: 25,
+                  height: 25,
+                  decoration: BoxDecoration(
+                    color:
+                        isActive
+                            ? context.appColors.warning
+                            : isDone
+                            ? context.appColors.warning.withOpacity(0.3)
+                            : context.appColors.textSecondary,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    '${stepIndex + 1}',
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
@@ -505,6 +484,14 @@ class _AddressScreenState extends State<AddressScreen> {
         decoration: BoxDecoration(
           color: context.appColors.card,
           borderRadius: BorderRadius.circular(15),
+          border: BoxBorder.all(color: Colors.grey),
+          boxShadow: [
+            BoxShadow(
+              color: context.appColors.warning.withValues(alpha: 0.8),
+              blurRadius: 5.3,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
         padding: const EdgeInsets.all(15),
         child: SingleChildScrollView(
