@@ -7,10 +7,3 @@ class GetCurrentHadithEvent extends HomeEvent {}
 
 class GetBannersEvent extends HomeEvent {}
 
-class GetRozehRequestEvent extends HomeEvent {
-  final String page;
-
-  final String? query;
-
-  GetRozehRequestEvent({required this.page, this.query});
-}

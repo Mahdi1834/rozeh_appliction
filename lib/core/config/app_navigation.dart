@@ -10,6 +10,7 @@ import 'package:rozeh_project/features/feature_mainwrapper/presentation/screen/m
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/otp_screen.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';
+import 'package:rozeh_project/features/feature_reservation/presentation/screen/list_reservation_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
 import 'package:rozeh_project/features/feature_shrine/presentation/screen/shrine_screen.dart';
 
@@ -96,15 +97,36 @@ class AppNavigation {
             navigatorKey: _shellNavigatorReservation,
             routes: <RouteBase>[
               GoRoute(
-                path: ReservationScreen.routePath,
-                name: "Reservation",
+                path: ListReservationScreen.routePath,
+                name: ListReservationScreen.routePath,
                 builder:
                     (BuildContext context, GoRouterState state) =>
-                        const ReservationScreen(),
-                routes: [],
+                        const ListReservationScreen(),
+                routes: [
+                  GoRoute(
+                    path: ReservationScreen.routePath,
+                    name: ReservationScreen.routeName,
+                    pageBuilder:
+                        (context, state) => CustomTransitionPage<void>(
+                      key: state.pageKey,
+                      child: const ReservationScreen(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) =>
+                          FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
+
+
+
+
+
 
           StatefulShellBranch(
             navigatorKey: _shellNavigatorShrine,

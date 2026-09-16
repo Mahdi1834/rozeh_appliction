@@ -7,6 +7,7 @@ class ReservationState {
   final RozehTypeStatus rozehTypeStatus;
   final AgeGroupStatus ageGroupStatus;
   final RozehRequestStoreStatus rozehRequestStoreStatus;
+  final RozehRequestStatus rozehRequestStatus;
 
   const ReservationState({
     required this.maddahStatus,
@@ -14,6 +15,7 @@ class ReservationState {
     required this.rozehTypeStatus,
     required this.ageGroupStatus,
     required this.rozehRequestStoreStatus,
+    required this.rozehRequestStatus,
   });
 
   ReservationState copyWith({
@@ -22,6 +24,7 @@ class ReservationState {
     RozehTypeStatus? newRozehTypeStatus,
     AgeGroupStatus? newAgeGroupStatus,
     RozehRequestStoreStatus? newRozehRequestStoreStatus,
+    RozehRequestStatus? newRozehRequestStatus,
   }) {
     return ReservationState(
       maddahStatus: newMaddahStatus ?? maddahStatus,
@@ -30,6 +33,7 @@ class ReservationState {
       ageGroupStatus: newAgeGroupStatus ?? ageGroupStatus,
       rozehRequestStoreStatus:
           newRozehRequestStoreStatus ?? rozehRequestStoreStatus,
+      rozehRequestStatus: newRozehRequestStatus ?? rozehRequestStatus,
     );
   }
 }

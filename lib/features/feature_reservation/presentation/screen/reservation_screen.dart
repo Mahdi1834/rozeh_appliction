@@ -12,13 +12,13 @@ import 'package:rozeh_project/core/widgets/snackbar_helper.dart';
 import 'package:rozeh_project/core/widgets/text_field/custom_textfield.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';
-import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 import 'package:rozeh_project/features/feature_reservation/data/model/rozeh_request_send_model.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/bloc/reservation_bloc.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 class ReservationScreen extends StatefulWidget {
-  static const routePath = "/reservation_screen";
+  static const routePath = "reservation_screen";
+  static const routeName = "reservation_screen";
 
   const ReservationScreen({super.key});
 
@@ -464,7 +464,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     message: "درخواست با موفقیت ثبت شد 🎉",
                     status: SnackbarStatus.success,
                   );
-                  BlocProvider.of<HomeBloc>(
+                  BlocProvider.of<ReservationBloc>(
                     context,
                   ).add(GetRozehRequestEvent(page: "1"));
                 }
@@ -760,7 +760,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   message: "درخواست با موفقیت ثبت شد 🎉",
                   status: SnackbarStatus.success,
                 );
-                BlocProvider.of<HomeBloc>(
+                BlocProvider.of<ReservationBloc>(
                   context,
                 ).add(GetRozehRequestEvent(page: "1"));
                 _pageController.nextPage(

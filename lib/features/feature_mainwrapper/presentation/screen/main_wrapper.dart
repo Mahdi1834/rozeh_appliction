@@ -55,7 +55,7 @@ class _MainWrapperState extends State<MainWrapper> {
 
     const allowedRoutes = {
       '/Home_screen',
-      '/reservation_screen',
+      '/list_reservation_screen',
       '/shrine_screen',
       '/profile_menu_screen',
       '/help_screen',

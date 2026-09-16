@@ -17,3 +17,11 @@ class StoreRozehRequestEvent extends ReservationEvent {
 
   StoreRozehRequestEvent({required this.rozehRequestSendModel});
 }
+
+class GetRozehRequestEvent extends ReservationEvent {
+  final String page;
+
+  final String? query;
+
+  GetRozehRequestEvent({required this.page, this.query});
+}

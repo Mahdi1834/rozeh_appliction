@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:rozeh_project/core/resources/data_state.dart';
 import 'package:rozeh_project/features/feature_reservation/data/model/age_group_model.dart';
 import 'package:rozeh_project/features/feature_reservation/data/model/maddah_model.dart';
+import 'package:rozeh_project/features/feature_reservation/data/model/rozeh_request_model.dart';
 import 'package:rozeh_project/features/feature_reservation/data/model/rozeh_request_send_model.dart';
 import 'package:rozeh_project/features/feature_reservation/data/model/rozeh_request_store_model.dart';
 import 'package:rozeh_project/features/feature_reservation/data/model/rozeh_type_model.dart';
@@ -23,12 +24,15 @@ part 'rozeh_request_store_status.dart';
 
 part 'age_group_status.dart';
 
+part 'rozeh_request_status.dart';
+
 class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
   ReservationRepository reservationRepository;
 
   ReservationBloc(this.reservationRepository)
     : super(
         ReservationState(
+          rozehRequestStatus: RozehRequestStatusInit(),
           maddahStatus: MaddahStatusInit(),
           speakerStatus: SpeakerStatusInit(),
           rozehTypeStatus: RozehTypeStatusInit(),
@@ -36,6 +40,29 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
           rozehRequestStoreStatus: RozehRequestStoreStatusInit(),
         ),
       ) {
+    //////////////////
+    on<GetRozehRequestEvent>((event, emit) async {
+      emit(state.copyWith(newRozehRequestStatus: RozehRequestStatusLoading()));
+      DataState dataState = await reservationRepository.fetchRequestRozeh(
+        page: event.page,
+        query: event.query,
+      );
+
+      if (dataState is DataSuccess) {
+        emit(
+          state.copyWith(
+            newRozehRequestStatus: RozehRequestStatusCompleted(dataState.data),
+          ),
+        );
+      }
+      if (dataState is DataFailed) {
+        emit(
+          state.copyWith(
+            newRozehRequestStatus: RozehRequestStatusError(dataState.error!),
+          ),
+        );
+      }
+    });
     ////////////////////////////
     on<GetMaddahEvent>((event, emit) async {
       // TODO: implement event handler
@@ -126,7 +153,9 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     on<StoreRozehRequestEvent>((event, emit) async {
       // TODO: implement event handler
       emit(
-        state.copyWith(newRozehRequestStoreStatus: RozehRequestStoreStatusLoading()),
+        state.copyWith(
+          newRozehRequestStoreStatus: RozehRequestStoreStatusLoading(),
+        ),
       );
       DataState dataState = await reservationRepository.fetchRozehRequestStore(
         rozehRequestSendModel: event.rozehRequestSendModel,
@@ -144,7 +173,9 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
       if (dataState is DataFailed) {
         emit(
           state.copyWith(
-            newRozehRequestStoreStatus: RozehRequestStoreStatusError(dataState.error!),
+            newRozehRequestStoreStatus: RozehRequestStoreStatusError(
+              dataState.error!,
+            ),
           ),
         );
       }

@@ -26,7 +26,7 @@ class ItemForProfile extends StatelessWidget {
         margin: EdgeInsets.all(10),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         decoration: BoxDecoration(
-          color: context.appColors.inputBackground,
+          color: context.appColors.background,
           boxShadow: [
             BoxShadow(
               color: context.appColors.warning.withValues(alpha: 0.8),
