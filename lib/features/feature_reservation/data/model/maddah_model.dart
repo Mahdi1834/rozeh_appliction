@@ -1,9 +1,9 @@
-/// success : true
-/// message : "لیست مداح ها با موفقیت ارسال شد."
-/// data : {"maddah":[{"id":3,"full_name":"maddah","national_code":"2565","email":"m@gmail.com","email_verified_at":"2025-10-29T11:27:30.000000Z","mobile":"09171112233","mobile_verified_at":"2025-10-29T11:27:30.000000Z","telephone":"097","address":"ddd","isSetProfile":1,"created_at":"2025-10-29T11:27:30.000000Z","updated_at":"2025-10-29T11:27:30.000000Z","deleted_at":null,"province_id":null,"city_id":null}]}
-
 class MaddahModel {
-  MaddahModel({this.success, this.message, this.data});
+  MaddahModel({
+    this.success,
+    this.message,
+    this.data,
+  });
 
   MaddahModel.fromJson(dynamic json) {
     success = json['success'];
@@ -15,171 +15,144 @@ class MaddahModel {
   String? message;
   Data? data;
 
-  MaddahModel copyWith({bool? success, String? message, Data? data}) =>
-      MaddahModel(
-        success: success ?? this.success,
-        message: message ?? this.message,
-        data: data ?? this.data,
-      );
+  MaddahModel copyWith({
+    bool? success,
+    String? message,
+    Data? data,
+  }) {
+    return MaddahModel(
+      success: success ?? this.success,
+      message: message ?? this.message,
+      data: data ?? this.data,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+
     map['success'] = success;
     map['message'] = message;
+
     if (data != null) {
-      map['data'] = data?.toJson();
+      map['data'] = data!.toJson();
     }
+
     return map;
   }
 }
 
-/// maddah : [{"id":3,"full_name":"maddah","national_code":"2565","email":"m@gmail.com","email_verified_at":"2025-10-29T11:27:30.000000Z","mobile":"09171112233","mobile_verified_at":"2025-10-29T11:27:30.000000Z","telephone":"097","address":"ddd","isSetProfile":1,"created_at":"2025-10-29T11:27:30.000000Z","updated_at":"2025-10-29T11:27:30.000000Z","deleted_at":null,"province_id":null,"city_id":null}]
+
+/// data : {
+///   "users": [
+///     {
+///       "id": 3,
+///       "is_speaker": true,
+///       "is_maddah": true,
+///       "full_name": "maddah",
+///       "assignment_label": "سخنران و مداح",
+///       "assignment_display": "maddah (سخنران و مداح)"
+///     }
+///   ]
+/// }
 
 class Data {
-  Data({this.maddah});
+  Data({
+    this.users,
+  });
 
   Data.fromJson(dynamic json) {
-    if (json['maddah'] != null) {
-      maddah = [];
-      json['maddah'].forEach((v) {
-        maddah?.add(Maddah.fromJson(v));
+    if (json['users'] != null) {
+      users = [];
+
+      json['users'].forEach((v) {
+        users!.add(User.fromJson(v));
       });
     }
   }
 
-  List<Maddah>? maddah;
+  List<User>? users;
 
-  Data copyWith({List<Maddah>? maddah}) => Data(maddah: maddah ?? this.maddah);
+  Data copyWith({
+    List<User>? users,
+  }) {
+    return Data(
+      users: users ?? this.users,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (maddah != null) {
-      map['maddah'] = maddah?.map((v) => v.toJson()).toList();
+
+    if (users != null) {
+      map['users'] = users!.map((v) => v.toJson()).toList();
     }
+
     return map;
   }
 }
 
-/// id : 3
-/// full_name : "maddah"
-/// national_code : "2565"
-/// email : "m@gmail.com"
-/// email_verified_at : "2025-10-29T11:27:30.000000Z"
-/// mobile : "09171112233"
-/// mobile_verified_at : "2025-10-29T11:27:30.000000Z"
-/// telephone : "097"
-/// address : "ddd"
-/// isSetProfile : 1
-/// created_at : "2025-10-29T11:27:30.000000Z"
-/// updated_at : "2025-10-29T11:27:30.000000Z"
-/// deleted_at : null
-/// province_id : null
-/// city_id : null
 
-class Maddah {
-  Maddah({
+/// id : 3
+/// is_speaker : true
+/// is_maddah : true
+/// full_name : "maddah"
+/// assignment_label : "سخنران و مداح"
+/// assignment_display : "maddah (سخنران و مداح)"
+
+class User {
+  User({
     this.id,
+    this.isSpeaker,
+    this.isMaddah,
     this.fullName,
-    this.nationalCode,
-    this.email,
-    this.emailVerifiedAt,
-    this.mobile,
-    this.mobileVerifiedAt,
-    this.telephone,
-    this.address,
-    this.isSetProfile,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
-    this.provinceId,
-    this.cityId,
+    this.assignmentLabel,
+    this.assignmentDisplay,
   });
 
-  Maddah.fromJson(dynamic json) {
+  User.fromJson(dynamic json) {
     id = json['id'];
+    isSpeaker = json['is_speaker'];
+    isMaddah = json['is_maddah'];
     fullName = json['full_name'];
-    nationalCode = json['national_code'];
-    email = json['email'];
-    emailVerifiedAt = json['email_verified_at'];
-    mobile = json['mobile'];
-    mobileVerifiedAt = json['mobile_verified_at'];
-    telephone = json['telephone'];
-    address = json['address'];
-    isSetProfile = json['isSetProfile'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
-    provinceId = json['province_id'];
-    cityId = json['city_id'];
+    assignmentLabel = json['assignment_label'];
+    assignmentDisplay = json['assignment_display'];
   }
 
-  num? id;
+  int? id;
+  bool? isSpeaker;
+  bool? isMaddah;
   String? fullName;
-  String? nationalCode;
-  String? email;
-  String? emailVerifiedAt;
-  String? mobile;
-  String? mobileVerifiedAt;
-  String? telephone;
-  String? address;
-  num? isSetProfile;
-  String? createdAt;
-  String? updatedAt;
-  dynamic deletedAt;
-  dynamic provinceId;
-  dynamic cityId;
+  String? assignmentLabel;
+  String? assignmentDisplay;
 
-  Maddah copyWith({
-    num? id,
+  User copyWith({
+    int? id,
+    bool? isSpeaker,
+    bool? isMaddah,
     String? fullName,
-    String? nationalCode,
-    String? email,
-    String? emailVerifiedAt,
-    String? mobile,
-    String? mobileVerifiedAt,
-    String? telephone,
-    String? address,
-    num? isSetProfile,
-    String? createdAt,
-    String? updatedAt,
-    dynamic deletedAt,
-    dynamic provinceId,
-    dynamic cityId,
-  }) => Maddah(
-    id: id ?? this.id,
-    fullName: fullName ?? this.fullName,
-    nationalCode: nationalCode ?? this.nationalCode,
-    email: email ?? this.email,
-    emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
-    mobile: mobile ?? this.mobile,
-    mobileVerifiedAt: mobileVerifiedAt ?? this.mobileVerifiedAt,
-    telephone: telephone ?? this.telephone,
-    address: address ?? this.address,
-    isSetProfile: isSetProfile ?? this.isSetProfile,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    deletedAt: deletedAt ?? this.deletedAt,
-    provinceId: provinceId ?? this.provinceId,
-    cityId: cityId ?? this.cityId,
-  );
+    String? assignmentLabel,
+    String? assignmentDisplay,
+  }) {
+    return User(
+      id: id ?? this.id,
+      isSpeaker: isSpeaker ?? this.isSpeaker,
+      isMaddah: isMaddah ?? this.isMaddah,
+      fullName: fullName ?? this.fullName,
+      assignmentLabel: assignmentLabel ?? this.assignmentLabel,
+      assignmentDisplay: assignmentDisplay ?? this.assignmentDisplay,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+
     map['id'] = id;
+    map['is_speaker'] = isSpeaker;
+    map['is_maddah'] = isMaddah;
     map['full_name'] = fullName;
-    map['national_code'] = nationalCode;
-    map['email'] = email;
-    map['email_verified_at'] = emailVerifiedAt;
-    map['mobile'] = mobile;
-    map['mobile_verified_at'] = mobileVerifiedAt;
-    map['telephone'] = telephone;
-    map['address'] = address;
-    map['isSetProfile'] = isSetProfile;
-    map['created_at'] = createdAt;
-    map['updated_at'] = updatedAt;
-    map['deleted_at'] = deletedAt;
-    map['province_id'] = provinceId;
-    map['city_id'] = cityId;
+    map['assignment_label'] = assignmentLabel;
+    map['assignment_display'] = assignmentDisplay;
+
     return map;
   }
 }

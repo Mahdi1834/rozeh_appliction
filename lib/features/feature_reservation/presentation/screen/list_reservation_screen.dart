@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_search.dart';
+import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
 import 'package:rozeh_project/core/widgets/custom_icon_svg_btn.dart';
 import 'package:rozeh_project/core/widgets/dot_loading_widget.dart';
 import 'package:rozeh_project/core/widgets/snackbar_helper.dart';
@@ -116,7 +117,7 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
                         ),
                       ),
 
-                      BlocConsumer<ReservationBloc,ReservationState>(
+                      BlocConsumer<ReservationBloc, ReservationState>(
                         listenWhen:
                             (p, c) =>
                                 p.rozehRequestStatus != c.rozehRequestStatus,
@@ -282,13 +283,14 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
                                     itemBuilder: (context, index) {
                                       // لودر صفحه بعد
                                       if (index == _requests.length) {
-                                        if (_isLoadingMore && _currentPage < _lastPage) {
+                                        if (_isLoadingMore &&
+                                            _currentPage < _lastPage) {
                                           return const Padding(
-                                            padding: EdgeInsets.symmetric(vertical: 16),
+                                            padding: EdgeInsets.symmetric(
+                                              vertical: 16,
+                                            ),
                                             child: Center(
-                                              child: DotLoadingWidget(
-                                                size: 30,
-                                              ),
+                                              child: DotLoadingWidget(size: 30),
                                             ),
                                           );
                                         }
@@ -313,6 +315,23 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
+
+              // ========================================================
+              // Add Address Button
+              // ========================================================
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                height: 50,
+                child: CustomBtnGradient(
+                  title: " رزرو جدید",
+                  onPressed: () {
+                    context.pushNamed(ReservationScreen.routeName);
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 10),
             ],
           ),
         ),
@@ -328,8 +347,6 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
         .where((s) => s.trim().isNotEmpty)
         .join("، ");
   }
-
-
 
   String _mapGender(String? g) {
     switch (g) {

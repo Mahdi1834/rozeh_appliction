@@ -30,85 +30,162 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
+
     return DropdownButtonFormField2<T>(
       isExpanded: true,
       value: widget.value,
       items: widget.items,
       onChanged: widget.onChanged,
+
+      // ------------------------------------------------------------
+      // Main field
+      // ------------------------------------------------------------
       decoration: InputDecoration(
         filled: true,
-        fillColor: context.appColors.inputBackground,
+        fillColor: colors.inputBackground,
+
         hintText: widget.hintText?.toPersianDigit(),
         hintStyle: TextStyle(
-          color: context.appColors.textPrimary.withValues(alpha: 0.25),
+          color: colors.textPrimary.withValues(alpha: 0.25),
           fontFamily: 'IRANSansX',
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
         ),
+
         isDense: true,
+
         contentPadding: const EdgeInsets.symmetric(
           vertical: 10,
           horizontal: 12,
         ),
+
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.transparent, width: 1),
+          borderSide: BorderSide(color: Colors.transparent, width: 1),
         ),
+
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: context.appColors.textPrimary, width: 1.5),
+          borderSide: BorderSide(color: colors.textPrimary, width: 1.5),
         ),
       ),
+
+      // ------------------------------------------------------------
+      // Selected value text
+      // ------------------------------------------------------------
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 14,
+        color: colors.textPrimary,
+        fontFamily: 'IRANSansX',
+      ),
+
+      // ------------------------------------------------------------
+      // Dropdown popup
+      // ------------------------------------------------------------
       dropdownStyleData: DropdownStyleData(
         maxHeight: 300,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
+          color: colors.inputBackground,
         ),
-        // direction: DropdownDirection.down,
       ),
+
+      // ------------------------------------------------------------
+      // Dropdown arrow
+      // ------------------------------------------------------------
       iconStyleData: IconStyleData(
-        icon: SvgPicture.asset("assets/images/dropdown.svg"),
+        icon: SvgPicture.asset(
+          "assets/images/dropdown.svg",
+          colorFilter: ColorFilter.mode(colors.warning, BlendMode.srcIn),
+          width: 20,
+          height: 20,
+        ),
       ),
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 14,
-        color: context.appColors.textPrimary,
-        fontFamily: 'IRANSansX',
-      ),
+
+      // ------------------------------------------------------------
+      // Search
+      // ------------------------------------------------------------
       dropdownSearchData:
           widget.enableSearch
               ? DropdownSearchData(
-                searchInnerWidgetHeight: 50,
+                searchInnerWidgetHeight: 58,
                 searchController: _searchController,
+
                 searchInnerWidget: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     controller: _searchController,
+                    textDirection: TextDirection.rtl,
+
+                    style: TextStyle(
+                      color: colors.textPrimary,
+                      fontFamily: 'IRANSansX',
+                      fontSize: 14,
+                    ),
+
+                    cursorColor: colors.warning,
+
                     decoration: InputDecoration(
                       hintText: 'جستجو...',
+
                       hintStyle: TextStyle(
-                        color: context.appColors.textPrimary.withValues(alpha: 0.3),
+                        color: colors.textPrimary.withValues(alpha: 0.3),
                         fontFamily: 'IRANSansX',
+                        fontSize: 14,
                       ),
+
+                      filled: true,
+                      fillColor: colors.background,
+
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 8,
                       ),
-                      border: OutlineInputBorder(
+
+                      enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: context.appColors.textPrimary.withValues(alpha: 0.2),
+                          color: colors.textPrimary.withValues(alpha: 0.2),
+                        ),
+                      ),
+
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: colors.warning,
+                          width: 1.2,
                         ),
                       ),
                     ),
                   ),
                 ),
+
                 searchMatchFn: (item, searchValue) {
-                  final text = (item.child as Text).data ?? "";
-                  return text.toLowerCase().contains(searchValue.toLowerCase());
+                  final child = item.child;
+
+                  if (child is Text) {
+                    final text = child.data ?? '';
+
+                    return text.toLowerCase().contains(
+                      searchValue.toLowerCase(),
+                    );
+                  }
+
+                  return false;
                 },
               )
               : null,
     );
   }
 }
+
+

@@ -11,8 +11,8 @@ class FancyCardDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: FancyCardPainterDown(
-        backgroundColor: Colors.white,
-        shadowColor: context.appColors.warning2,
+        backgroundColor: context.appColors.navigationBackground,
+        shadowColor: context.appColors.textPrimary,
         dipWidth: dipWidth,
       ),
       child: Container(

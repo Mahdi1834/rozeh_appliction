@@ -263,14 +263,13 @@ class _AddressItem extends StatelessWidget {
         color: theme.navigationBackground,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color:
-          address.isDefault == true
-              ? theme.primary
+          color: address.isDefault == true
+              ? theme.warning
               : theme.border,
         ),
         boxShadow: [
           BoxShadow(
-            color: theme.primary.withValues(alpha: 0.15),
+            color: theme.warning.withValues(alpha: 0.15),
             blurRadius: 5.3,
             offset: const Offset(0, 2),
           ),
@@ -299,8 +298,8 @@ class _AddressItem extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              theme.primary,
-                              theme.primary.withValues(alpha: 0.70),
+                              theme.warning,
+                              theme.warning2,
                             ],
                           ),
                           borderRadius: BorderRadius.circular(12),
@@ -344,7 +343,9 @@ class _AddressItem extends StatelessWidget {
                         ),
                       ),
 
+                      // ========================================================
                       // پیش‌فرض
+                      // ========================================================
                       if (address.isDefault == true)
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -352,16 +353,16 @@ class _AddressItem extends StatelessWidget {
                             vertical: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: theme.primary.withValues(alpha: 0.10),
+                            color: theme.warning.withValues(alpha: 0.10),
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: theme.primary.withValues(alpha: 0.20),
+                              color: theme.warning.withValues(alpha: 0.20),
                             ),
                           ),
                           child: Text(
                             'پیش‌فرض',
                             style: TextStyle(
-                              color: theme.primary,
+                              color: theme.warning,
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
                             ),
@@ -409,10 +410,10 @@ class _AddressItem extends StatelessWidget {
                       vertical: 9,
                     ),
                     decoration: BoxDecoration(
-                      color: theme.primary.withValues(alpha: 0.05),
+                      color: theme.warning.withValues(alpha: 0.05),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: theme.primary.withValues(alpha: 0.10),
+                        color: theme.warning.withValues(alpha: 0.10),
                       ),
                     ),
                     child: Row(
@@ -420,7 +421,7 @@ class _AddressItem extends StatelessWidget {
                         Icon(
                           Icons.edit_location_alt_outlined,
                           size: 17,
-                          color: theme.primary,
+                          color: theme.warning,
                         ),
 
                         const SizedBox(width: 7),
@@ -439,7 +440,7 @@ class _AddressItem extends StatelessWidget {
                         Icon(
                           Icons.arrow_forward_ios_outlined,
                           size: 13,
-                          color: theme.primary,
+                          color: theme.warning,
                         ),
                       ],
                     ),
@@ -472,13 +473,13 @@ class _AddressItem extends StatelessWidget {
           width: 34,
           height: 34,
           decoration: BoxDecoration(
-            color: theme.primary.withValues(alpha: 0.08),
+            color: theme.warning.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(9),
           ),
           child: Icon(
             icon,
             size: 18,
-            color: theme.primary,
+            color: theme.warning,
           ),
         ),
 

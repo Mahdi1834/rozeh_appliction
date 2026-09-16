@@ -27,7 +27,12 @@ class ItemForProfile extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.navigationBackground,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.border),
+
+        // مثل کارت ExpandableReservationCard
+        border: Border.all(
+          color: theme.border,
+        ),
+
         boxShadow: [
           BoxShadow(
             color: theme.warning.withValues(alpha: 0.15),
@@ -55,8 +60,8 @@ class ItemForProfile extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          theme.primary,
-                          theme.primary.withValues(alpha: 0.70),
+                          theme.warning,
+                          theme.warning2,
                         ],
                       ),
                       borderRadius: BorderRadius.circular(12),
@@ -66,7 +71,7 @@ class ItemForProfile extends StatelessWidget {
                       imageUrl,
                       width: 22,
                       height: 22,
-                      colorFilter: ColorFilter.mode(
+                      colorFilter: const ColorFilter.mode(
                         Colors.white,
                         BlendMode.srcIn,
                       ),
@@ -82,13 +87,18 @@ class ItemForProfile extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TxtTitle(text: title, color: theme.textPrimary),
+                        TxtTitle(
+                          text: title,
+                          color: theme.textPrimary,
+                        ),
 
                         const SizedBox(height: 4),
 
                         TxtTitleNotBold(
                           text: description,
-                          color: theme.textPrimary.withValues(alpha: 0.55),
+                          color: theme.textPrimary.withValues(
+                            alpha: 0.55,
+                          ),
                         ),
                       ],
                     ),
@@ -103,12 +113,12 @@ class ItemForProfile extends StatelessWidget {
                     width: 30,
                     height: 30,
                     decoration: BoxDecoration(
-                      color: theme.primary.withValues(alpha: 0.08),
+                      color: theme.warning.withValues(alpha: 0.08),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.arrow_forward_ios_outlined,
-                      color: theme.primary,
+                      color: theme.warning,
                       size: 14,
                     ),
                   ),
