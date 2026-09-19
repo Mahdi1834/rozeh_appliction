@@ -1,6 +1,3 @@
-/// success : true
-/// message : "لیست سخنران با موفقیت ارسال شد."
-/// data : {"speaker":[{"id":4,"full_name":"سخنران","national_code":"8888","email":"S@gmail.com","email_verified_at":"2025-10-29T11:28:43.000000Z","mobile":"09172223344","mobile_verified_at":"2025-10-29T11:28:43.000000Z","telephone":"18451","address":"dfvdfvdvd","isSetProfile":1,"created_at":"2025-10-29T11:28:43.000000Z","updated_at":"2025-10-29T11:28:43.000000Z","deleted_at":null,"province_id":null,"city_id":null}]}
 
 class SpeakerModel {
   SpeakerModel({this.success, this.message, this.data});

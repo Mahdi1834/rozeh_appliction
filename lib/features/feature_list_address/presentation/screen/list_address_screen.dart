@@ -5,6 +5,7 @@ import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_txt_one_icon.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
 import 'package:rozeh_project/core/widgets/dot_loading_widget.dart';
+import 'package:rozeh_project/core/widgets/snackbar_helper.dart';
 import 'package:rozeh_project/features/feature_list_address/data/model/list_address_model.dart';
 import 'package:rozeh_project/features/feature_list_address/presentation/bloc/address_bloc.dart';
 import 'package:rozeh_project/features/feature_list_address/presentation/screen/address_screen.dart';
@@ -105,11 +106,10 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
                                       width: 150,
                                       height: 45,
                                       child: CustomBtnGradient(
-
                                         onPressed: () {
                                           addressBloc.add(ListAddressEvent());
                                         },
-                                        title:"تلاش مجدد",
+                                        title: "تلاش مجدد",
                                       ),
                                     ),
                                   ],
@@ -191,6 +191,7 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
 
                                   return _AddressItem(
                                     address: address,
+                                    addressBloc: addressBloc,
                                     onTap: () {
                                       context.pushNamed(
                                         AddressScreen.routeName,
@@ -247,11 +248,91 @@ class _ListAddressScreenState extends State<ListAddressScreen> {
 class _AddressItem extends StatelessWidget {
   final Addresses address;
   final VoidCallback onTap;
+  final AddressBloc addressBloc;
 
   const _AddressItem({
     required this.address,
     required this.onTap,
+    required this.addressBloc,
   });
+
+  Future<void> _confirmDelete(BuildContext context) async {
+    final theme = context.appColors;
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          backgroundColor: theme.navigationBackground,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+          title: Row(
+            children: [
+              Icon(
+                Icons.delete_outline_rounded,
+                color: theme.warning,
+                size: 24,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'حذف آدرس',
+                style: TextStyle(
+                  color: theme.textPrimary,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+          content: Text(
+            'آیا مطمئن هستید که می‌خواهید این آدرس را حذف کنید؟\nاین عملیات قابل بازگشت نیست.',
+            style: TextStyle(
+              color: theme.textSecondary,
+              fontSize: 13,
+              height: 1.7,
+            ),
+          ),
+          actionsPadding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop(false);
+              },
+              child: Text(
+                'انصراف',
+                style: TextStyle(color: theme.textSecondary, fontSize: 13),
+              ),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop(true);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: theme.warning,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text(
+                'حذف',
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (result != true) return;
+
+    addressBloc.add(
+      DeleteAddressEvent(addressId: int.parse(address.id!.toString())),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -263,9 +344,7 @@ class _AddressItem extends StatelessWidget {
         color: theme.navigationBackground,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: address.isDefault == true
-              ? theme.warning
-              : theme.border,
+          color: address.isDefault == true ? theme.warning : theme.border,
         ),
         boxShadow: [
           BoxShadow(
@@ -297,10 +376,7 @@ class _AddressItem extends StatelessWidget {
                         height: 42,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
-                              theme.warning,
-                              theme.warning2,
-                            ],
+                            colors: [theme.warning, theme.warning2],
                           ),
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -403,47 +479,120 @@ class _AddressItem extends StatelessWidget {
                   // ============================================================
                   // مشاهده و ویرایش
                   // ============================================================
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 9,
-                    ),
-                    decoration: BoxDecoration(
-                      color: theme.warning.withValues(alpha: 0.05),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: theme.warning.withValues(alpha: 0.10),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.edit_location_alt_outlined,
-                          size: 17,
-                          color: theme.warning,
-                        ),
-
-                        const SizedBox(width: 7),
-
-                        Expanded(
-                          child: Text(
-                            'مشاهده و ویرایش آدرس',
-                            style: TextStyle(
-                              color: theme.textPrimary,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
+                  Row(
+                    children: [
+                      // ============================================================
+                      // مشاهده و ویرایش
+                      // ============================================================
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 9,
+                          ),
+                          decoration: BoxDecoration(
+                            color: theme.warning.withValues(alpha: 0.05),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: theme.warning.withValues(alpha: 0.10),
                             ),
                           ),
-                        ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.edit_location_alt_outlined,
+                                size: 17,
+                                color: theme.warning,
+                              ),
 
-                        Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          size: 13,
-                          color: theme.warning,
+                              const SizedBox(width: 7),
+
+                              Expanded(
+                                child: Text(
+                                  'مشاهده و ویرایش آدرس',
+                                  style: TextStyle(
+                                    color: theme.textPrimary,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+
+                              Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 13,
+                                color: theme.warning,
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+
+                      const SizedBox(width: 8),
+
+                      // ============================================================
+                      // حذف
+                      // ============================================================
+                      BlocConsumer<AddressBloc, AddressState>(
+                        buildWhen:
+                            (previous, current) =>
+                                previous.deleteAddressStatus !=
+                                current.deleteAddressStatus,
+                        listenWhen:
+                            (previous, current) =>
+                                previous.deleteAddressStatus !=
+                                current.deleteAddressStatus,
+                        listener: (context, state) {
+                          if (state.deleteAddressStatus
+                              is DeleteAddressStatusCompleted) {
+                            addressBloc.add(ListAddressEvent());
+                          }
+                          if (state.deleteAddressStatus
+                              is DeleteAddressStatusError) {
+                            DeleteAddressStatusError deleteAddressStatusError =
+                                state.deleteAddressStatus
+                                    as DeleteAddressStatusError;
+
+                            SnackbarHelper.show(
+                              context: context,
+                              message: deleteAddressStatusError.message!,
+                              status: SnackbarStatus.error,
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state.deleteAddressStatus
+                              is DeleteAddressStatusLoading) {
+                            return DotLoadingWidget(size: 20);
+                          }
+                          return Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () => _confirmDelete(context),
+                              borderRadius: BorderRadius.circular(10),
+                              child: Container(
+                                width: 44,
+                                height: 42,
+                                decoration: BoxDecoration(
+                                  color: theme.warning.withValues(alpha: 0.08),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: theme.warning.withValues(
+                                      alpha: 0.15,
+                                    ),
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.delete_outline_rounded,
+                                  size: 20,
+                                  color: theme.warning,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -459,11 +608,11 @@ class _AddressItem extends StatelessWidget {
   // ============================================================
 
   Widget _buildInfoRow(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required String value,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String value,
+  }) {
     final theme = context.appColors;
 
     return Row(
@@ -476,11 +625,7 @@ class _AddressItem extends StatelessWidget {
             color: theme.warning.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(9),
           ),
-          child: Icon(
-            icon,
-            size: 18,
-            color: theme.warning,
-          ),
+          child: Icon(icon, size: 18, color: theme.warning),
         ),
 
         const SizedBox(width: 9),

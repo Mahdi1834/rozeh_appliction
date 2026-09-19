@@ -1,6 +1,3 @@
-/// success : true
-/// message : "نوع داده با موفقیت ارسال شد."
-/// data : {"rozeh":[{"id":1,"title":"وفات","created_at":"2025-10-29T08:59:08.000000Z","updated_at":"2025-10-29T08:59:08.000000Z"},{"id":2,"title":"جشن","created_at":"2025-10-29T08:59:18.000000Z","updated_at":"2025-10-29T08:59:18.000000Z"}]}
 
 class RozehTypeModel {
   RozehTypeModel({this.success, this.message, this.data});

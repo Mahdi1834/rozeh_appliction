@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/storage/user_session.dart';
 import 'package:rozeh_project/core/widgets/dot_loading_widget.dart';
-import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/login_screen.dart';
 import 'package:rozeh_project/locator.dart';

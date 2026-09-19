@@ -1,6 +1,3 @@
-/// success : true
-/// message : "گروه سنی با موفقیت ارسال شد."
-/// data : {"ageGroup":[{"id":1,"title":"کودک","created_at":"2025-10-29T06:13:40.000000Z","updated_at":"2025-10-29T06:13:40.000000Z"},{"id":2,"title":"نوجوان","created_at":"2025-10-29T06:13:40.000000Z","updated_at":"2025-10-29T06:13:40.000000Z"},{"id":3,"title":"بزرگسال","created_at":"2025-10-29T10:05:05.000000Z","updated_at":"2025-10-29T10:05:05.000000Z"}]}
 
 class AgeGroupModel {
   AgeGroupModel({this.success, this.message, this.data});
