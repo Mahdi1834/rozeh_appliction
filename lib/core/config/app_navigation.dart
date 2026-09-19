@@ -9,10 +9,12 @@ import 'package:rozeh_project/features/feature_list_profile/presentation/screen/
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/screen/main_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/otp_screen.dart';
+import 'package:rozeh_project/features/feature_niyabat/data/model/list_niyabat_model.dart';
+import 'package:rozeh_project/features/feature_niyabat/presentation/screen/niyabat_screen.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/list_reservation_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
-import 'package:rozeh_project/features/feature_shrine/presentation/screen/shrine_screen.dart';
+import 'package:rozeh_project/features/feature_niyabat/presentation/screen/niyabat_list_screen.dart';
 
 import 'package:rozeh_project/features/feature_splash/presentation/screen/splash_screen.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/login_screen.dart';
@@ -108,36 +110,50 @@ class AppNavigation {
                     name: ReservationScreen.routeName,
                     pageBuilder:
                         (context, state) => CustomTransitionPage<void>(
-                      key: state.pageKey,
-                      child: const ReservationScreen(),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) =>
-                          FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          ),
-                    ),
+                          key: state.pageKey,
+                          child: const ReservationScreen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) =>
+                                  FadeTransition(
+                                    opacity: animation,
+                                    child: child,
+                                  ),
+                        ),
                   ),
                 ],
               ),
             ],
           ),
 
-
-
-
-
-
           StatefulShellBranch(
             navigatorKey: _shellNavigatorShrine,
             routes: <RouteBase>[
               GoRoute(
-                path: ShrineScreen.routePath,
-                name: "Shrine",
+                path: NiyabatListScreen.routePath,
+                name: "Niyabat",
                 builder:
                     (BuildContext context, GoRouterState state) =>
-                        const ShrineScreen(),
-                routes: [],
+                        const NiyabatListScreen(),
+                routes: [
+                  GoRoute(
+                    path: NiyabatScreen.routePath,
+                    name: NiyabatScreen.routeName,
+                    pageBuilder: (context, state) {
+                      final calendarItem = state.extra as CalendarItem?;
+
+                      return CustomTransitionPage<void>(
+                        key: state.pageKey,
+                        child: NiyabatScreen(editingNiyabat: calendarItem),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) =>
+                                FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -174,16 +190,15 @@ class AppNavigation {
                     name: ListAddressScreen.routeName,
                     pageBuilder:
                         (context, state) => CustomTransitionPage<void>(
-                      key: state.pageKey,
-                      child: const ListAddressScreen(),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) =>
-                          FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          ),
-
-                    ),
+                          key: state.pageKey,
+                          child: const ListAddressScreen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) =>
+                                  FadeTransition(
+                                    opacity: animation,
+                                    child: child,
+                                  ),
+                        ),
                     routes: [
                       GoRoute(
                         path: AddressScreen.routePath,
@@ -193,20 +208,21 @@ class AppNavigation {
 
                           return CustomTransitionPage<void>(
                             key: state.pageKey,
-                            child: AddressScreen(
-                              editingAddress: address,
-                            ),
+                            child: AddressScreen(editingAddress: address),
                             transitionsBuilder:
-                                (context, animation, secondaryAnimation, child) =>
-                                FadeTransition(
+                                (
+                                  context,
+                                  animation,
+                                  secondaryAnimation,
+                                  child,
+                                ) => FadeTransition(
                                   opacity: animation,
                                   child: child,
                                 ),
                           );
                         },
                       ),
-
-                    ]
+                    ],
                   ),
                 ],
               ),

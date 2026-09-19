@@ -265,7 +265,7 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
                           // لیست واقعی با لود تنبل
                           return Container(
                             width: width,
-                            padding: const EdgeInsets.all(10),
+
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -279,6 +279,13 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
 
                                 Expanded(
                                   child: ListView.builder(
+                                    physics: const AlwaysScrollableScrollPhysics(),
+                                    padding: const EdgeInsets.fromLTRB(
+                                      10,
+                                      8,
+                                      10,
+                                      100,
+                                    ),
                                     controller: _listController,
                                     itemCount: _requests.length + 1,
                                     itemBuilder: (context, index) {
@@ -312,27 +319,30 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
                           );
                         },
                       ),
+
+                      Positioned(
+                        left: 8,
+                        right: 8,
+                        bottom: 15,
+                        child: SizedBox(
+                          height: 50,
+                          child: CustomBtnGradient(
+                            title: " رزرو جدید",
+                            onPressed: ()  {
+                              context.pushNamed(ReservationScreen.routeName);
+
+                            },
+                          ),
+                        ),
+                      ),
+
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
 
-              // ========================================================
-              // Add Address Button
-              // ========================================================
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                height: 50,
-                child: CustomBtnGradient(
-                  title: " رزرو جدید",
-                  onPressed: () {
-                    context.pushNamed(ReservationScreen.routeName);
-                  },
-                ),
-              ),
 
-              const SizedBox(height: 10),
+
             ],
           ),
         ),

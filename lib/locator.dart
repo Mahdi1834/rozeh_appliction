@@ -19,6 +19,9 @@ import 'package:rozeh_project/features/feature_profile/repositories/profile_repo
 import 'package:rozeh_project/features/feature_reservation/data/api/reservation_api_provider.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/bloc/reservation_bloc.dart';
 import 'package:rozeh_project/features/feature_reservation/repositories/reservation_repository.dart';
+import 'package:rozeh_project/features/feature_niyabat/data/api/niyabat_api_provider.dart';
+import 'package:rozeh_project/features/feature_niyabat/presentation/bloc/niyabat_bloc.dart';
+import 'package:rozeh_project/features/feature_niyabat/repositories/niyabat_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -37,6 +40,7 @@ Future<void> initLocator() async{
   locator.registerSingleton<ProfileApiProvider>(ProfileApiProvider(locator()));
   locator.registerSingleton<ReservationApiProvider>(ReservationApiProvider(locator()));
   locator.registerSingleton<AddressApiProvider>(AddressApiProvider(locator()));
+  locator.registerSingleton<NiyabatApiProvider>(NiyabatApiProvider(locator()));
   locator.registerLazySingleton<ThemeApiProvider>(
         () => ThemeApiProvider(
       locator<Dio>(),
@@ -52,17 +56,23 @@ Future<void> initLocator() async{
   locator.registerSingleton<ProfileRepository>(ProfileRepository(locator()));
   locator.registerSingleton<ReservationRepository>(ReservationRepository(locator()));
   locator.registerSingleton<AddressRepository>(AddressRepository(locator()));
+  locator.registerSingleton<NiyabatRepository>(NiyabatRepository(locator()));
   locator.registerLazySingleton<ThemeRepository>(
         () => ThemeRepository(
       locator<ThemeApiProvider>(),
     ),
   );
+
+
+
+
   ///bloc
   locator.registerSingleton<LoginBloc>(LoginBloc(locator()));
   locator.registerSingleton<HomeBloc>(HomeBloc(locator()));
   locator.registerSingleton<ProfileBloc>(ProfileBloc(locator()));
   locator.registerSingleton<ReservationBloc>(ReservationBloc(locator()));
   locator.registerSingleton<AddressBloc>(AddressBloc(locator()));
+  locator.registerSingleton<NiyabatBloc>(NiyabatBloc(locator()));
 
   locator.registerFactory<ThemeCubit>(
         () => ThemeCubit(

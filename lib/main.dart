@@ -15,6 +15,7 @@ import 'package:rozeh_project/features/feature_list_address/presentation/bloc/ad
 import 'package:rozeh_project/features/feature_login/presentation/bloc/login_bloc.dart';
 import 'package:rozeh_project/features/feature_profile/presentation/bloc/profile_bloc.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/bloc/reservation_bloc.dart';
+import 'package:rozeh_project/features/feature_niyabat/presentation/bloc/niyabat_bloc.dart';
 
 import 'package:rozeh_project/locator.dart';
 
@@ -41,6 +42,7 @@ Future<void> main() async {
 
         BlocProvider(create: (_) => locator<ReservationBloc>()),
         BlocProvider(create: (_) => locator<AddressBloc>()),
+        BlocProvider(create: (_) => locator<NiyabatBloc>()),
 
         BlocProvider(create: (_) => locator<ThemeCubit>()..loadTheme()),
       ],

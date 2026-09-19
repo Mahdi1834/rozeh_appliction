@@ -4,7 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dart';
+import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
+import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
+import 'package:rozeh_project/features/feature_list_profile/presentation/screen/profile_menu_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/widgets/drawer.dart';
+import 'package:rozeh_project/features/feature_reservation/presentation/screen/list_reservation_screen.dart';
+import 'package:rozeh_project/features/feature_niyabat/presentation/screen/niyabat_list_screen.dart';
 
 class MainWrapper extends StatefulWidget {
   static const routeName = "/main_wrapper";
@@ -46,19 +51,17 @@ class _MainWrapperState extends State<MainWrapper> {
   //   return allowedRouteNames.contains(lastSegmentWithSlash);
   // }
 
-
-
   bool _shouldShowBottomNavBar(BuildContext context) {
     final location = GoRouterState.of(context).uri.path;
 
     debugPrint('BottomNav location: $location');
 
     const allowedRoutes = {
-      '/Home_screen',
-      '/list_reservation_screen',
-      '/shrine_screen',
-      '/profile_menu_screen',
-      '/help_screen',
+      HomeScreen.routePath,
+      ListReservationScreen.routePath,
+      NiyabatListScreen.routePath,
+      ProfileMenuScreen.routePath,
+      HelpScreen.routePath,
     };
 
     return allowedRoutes.contains(location);
@@ -112,7 +115,7 @@ class _MainWrapperState extends State<MainWrapper> {
                     ),
 
                     NavItem(
-                      svgPath: 'assets/images/Add.svg',
+                      svgPath: 'assets/images/Calendar.svg',
                       title: ' روضه نیابتی',
                     ),
 

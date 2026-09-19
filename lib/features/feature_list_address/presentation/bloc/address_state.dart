@@ -7,7 +7,7 @@ class AddressState {
   final DeleteAddressStatus deleteAddressStatus;
   final StoreAddressStatus storeAddressStatus;
 
-  AddressState({
+  const AddressState({
     required this.listAddressStatus,
     required this.updateAddressStatus,
     required this.deleteAddressStatus,
