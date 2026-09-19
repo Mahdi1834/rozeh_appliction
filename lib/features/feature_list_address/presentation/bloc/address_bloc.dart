@@ -9,10 +9,10 @@ import 'package:rozeh_project/features/feature_list_address/repositories/address
 
 part 'address_event.dart';
 part 'address_state.dart';
-part 'list_address_state.dart';
-part 'delete_address_state.dart';
-part 'store_address_state.dart';
-part 'update_address_state.dart';
+part 'list_address_status.dart';
+part 'delete_address_status.dart';
+part 'store_address_status.dart';
+part 'update_address_status.dart';
 
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
   final AddressRepository addressRepository;
