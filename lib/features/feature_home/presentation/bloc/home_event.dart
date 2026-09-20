@@ -7,3 +7,5 @@ class GetCurrentHadithEvent extends HomeEvent {}
 
 class GetBannersEvent extends HomeEvent {}
 
+class GetLatestRequestCustomerEvent  extends HomeEvent{}
+

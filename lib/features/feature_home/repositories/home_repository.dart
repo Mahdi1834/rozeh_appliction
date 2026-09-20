@@ -4,8 +4,7 @@ import 'package:rozeh_project/core/resources/data_state.dart';
 import 'package:rozeh_project/features/feature_home/data/api/home_api_provider.dart';
 import 'package:rozeh_project/features/feature_home/data/model/banners_model.dart';
 import 'package:rozeh_project/features/feature_home/data/model/current_hadith_model.dart';
-
-
+import 'package:rozeh_project/features/feature_home/data/model/latest_requests_customer_model.dart';
 
 class HomeRepository {
   HomeApiProvider apiProvider;
@@ -16,7 +15,8 @@ class HomeRepository {
     try {
       Response response = await apiProvider.callGetCurrentHadith();
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final CurrentHadithModel currentHadithModel = CurrentHadithModel.fromJson(response.data);
+        final CurrentHadithModel currentHadithModel =
+            CurrentHadithModel.fromJson(response.data);
         return DataSuccess(currentHadithModel);
       } else {
         return DataFailed("خطا در دریافت احادیث !!!");
@@ -25,7 +25,6 @@ class HomeRepository {
       return DataFailed(getMessage(e));
     }
   }
-
 
   Future<DataState<BannersModel>> fetchBanners() async {
     try {
@@ -41,8 +40,18 @@ class HomeRepository {
     }
   }
 
-
-
-
-
+  Future<DataState<LatestRequestsCustomerModel>> fetchLastedRequest() async {
+    try {
+      Response response = await apiProvider.callGetLastedRequest();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final LatestRequestsCustomerModel latestRequestsCustomer =
+            LatestRequestsCustomerModel.fromJson(response.data);
+        return DataSuccess(latestRequestsCustomer);
+      } else {
+        return DataFailed("خطا در دریافت اخرین درخواست ها !!!");
+      }
+    } on DioException catch (e) {
+      return DataFailed(getMessage(e));
+    }
+  }
 }
