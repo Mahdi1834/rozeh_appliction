@@ -47,7 +47,15 @@ class AppNavigation {
     debugLabel: 'shellHelp',
   );
 
-  static List<GlobalKey<NavigatorState>>? t;
+  static final t = [
+    _shellNavigatorHome,
+    _shellNavigatorReservation,
+    _shellNavigatorShrine,
+    _shellNavigatorProfile,
+    _shellNavigatorHelp,
+  ];
+
+
 
   // GoRouter configuration
   static final GoRouter router = GoRouter(

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rozeh_project/core/config/app_navigation.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:rozeh_project/core/custom_curved_navigation_bar/src/nav_item.dart';
@@ -14,7 +15,6 @@ import 'package:rozeh_project/features/feature_niyabat/presentation/screen/niyab
 class MainWrapper extends StatefulWidget {
   static const routeName = "/main_wrapper";
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
   final StatefulNavigationShell navigationShell;
 
   MainWrapper({super.key, required this.navigationShell});
@@ -26,35 +26,19 @@ class MainWrapper extends StatefulWidget {
 class _MainWrapperState extends State<MainWrapper> {
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
-  /// چک می‌کنه آیا مسیر فعلی جزو مسیرهایی هست که باید bottom nav داشته باشه
-  // bool _shouldShowBottomNavBar(BuildContext context) {
-  //   final location = GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
-  //
-  //   final lastSegment = location.split('/').last;
-  //
-  //   // قسمت آخر مسیر به همراه اسلش اولش
-  //   final lastSegmentWithSlash = '/$lastSegment';
-  //
-  //   print(location);
-  //   print(lastSegmentWithSlash);
-  //
-  //   const allowedRouteNames = {
-  //     HomeScreen.routePath,
-  //     ReservationScreen.routePath,
-  //     ShrineScreen.routePath,
-  //     ProfileMenuScreen.routePath,
-  //     HelpScreen.routePath,
-  //     // "/${StartDeterminationScreen.routePath}",
-  //     // هر routeName دیگری که میخوای BottomNav داشته باشه اینجا اضافه کن
-  //   };
-  //
-  //   return allowedRouteNames.contains(lastSegmentWithSlash);
-  // }
+  bool get _isOnHome => widget.navigationShell.currentIndex == 0;
+  DateTime? _lastBackPressed;
+
+  // ============================================================
+  // آیا BottomNavigation نمایش داده شود؟
+  // ============================================================
 
   bool _shouldShowBottomNavBar(BuildContext context) {
     final location = GoRouterState.of(context).uri.path;
 
-    debugPrint('BottomNav location: $location');
+    if (kDebugMode) {
+      debugPrint('BottomNav location: $location');
+    }
 
     const allowedRoutes = {
       HomeScreen.routePath,
@@ -67,48 +51,104 @@ class _MainWrapperState extends State<MainWrapper> {
     return allowedRoutes.contains(location);
   }
 
-  void _goBranch(int index) {
-    // if (index == widget.navigationShell.currentIndex) {
-    //   // همان شاخه، کاری نکن
-    //   return;
-    // }
+  // ============================================================
+  // تغییر Branch
+  // ============================================================
 
+  void _goBranch(int index) {
     if (kDebugMode) {
-      print("Navigating to branch $index");
-      print("Current route: ${widget.navigationShell.route}");
+      debugPrint(
+        'Navigating to branch: $index | '
+        'Current branch: '
+        '${widget.navigationShell.currentIndex}',
+      );
     }
 
     widget.navigationShell.goBranch(
       index,
-      initialLocation: false, // فقط وقتی شاخه تغییر کرد استفاده می‌کنیم
+      initialLocation: index == widget.navigationShell.currentIndex,
     );
   }
 
+  // ============================================================
+  // مدیریت کامل Back
+  // ============================================================
+
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
 
-    return WillPopScope(
-      onWillPop: () async {
-        if (widget._key.currentState!.isDrawerOpen) {
-          Navigator.of(context).pop();
-          return false;
-        } else {
+    return BackButtonListener(
+      onBackButtonPressed: () async {
+        final scaffoldState = widget._key.currentState;
+        print(scaffoldState);
+        if (scaffoldState != null && scaffoldState.isDrawerOpen) {
+          scaffoldState.closeDrawer();
+
           return true;
         }
+
+        final currentNavigator =
+            AppNavigation.t[widget.navigationShell.currentIndex].currentState;
+        print(currentNavigator);
+        if (currentNavigator != null && currentNavigator.canPop()) {
+          currentNavigator.pop();
+          return true;
+        }
+
+
+        final rootNavigator =
+            AppNavigation.router.routerDelegate.navigatorKey.currentState;
+        print(rootNavigator);
+        if (rootNavigator != null && rootNavigator.canPop()) {
+          rootNavigator.pop();
+          return true;
+        }
+
+        if (!_isOnHome) {
+          widget.navigationShell.goBranch(0);
+          return true;
+        }
+
+        final now = DateTime.now();
+
+        if (_lastBackPressed == null ||
+            now.difference(_lastBackPressed!) > const Duration(seconds: 2)) {
+          _lastBackPressed = now;
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('برای خروج دوباره دکمه بازگشت را بزنید'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+
+          return true;
+        }
+
+        return false;
       },
+
       child: Scaffold(
         key: widget._key,
+
         resizeToAvoidBottomInset: true,
+
         extendBody: true,
 
+        // ======================================================
+        // Bottom Navigation
+        // ======================================================
         bottomNavigationBar:
             _shouldShowBottomNavBar(context)
                 ? CurvedNavigationBar(
                   key: _bottomNavigationKey,
+
                   index: widget.navigationShell.currentIndex,
+
                   items: [
                     NavItem(svgPath: 'assets/images/Home.svg', title: 'خانه'),
+
                     NavItem(
                       svgPath: 'assets/images/Add.svg',
                       title: 'رزرو روضه',
@@ -116,29 +156,46 @@ class _MainWrapperState extends State<MainWrapper> {
 
                     NavItem(
                       svgPath: 'assets/images/Calendar.svg',
-                      title: ' روضه نیابتی',
+                      title: 'روضه نیابتی',
                     ),
 
                     NavItem(
                       svgPath: 'assets/images/Profile 1.svg',
                       title: 'پروفایل',
                     ),
+
                     NavItem(
                       svgPath: 'assets/images/Info square.svg',
                       title: 'راهنما',
                     ),
                   ],
+
                   color: context.appColors.navigationBackground,
+
                   buttonBackgroundColor: context.appColors.navigationBackground,
+
                   backgroundColor: Colors.transparent,
+
                   animationCurve: Curves.easeInOut,
-                  animationDuration: Duration(milliseconds: 600),
-                  onTap: (index) => _goBranch(index),
+
+                  animationDuration: const Duration(milliseconds: 600),
+
+                  onTap: _goBranch,
+
                   letIndexChange: (index) => true,
                 )
                 : null,
+
+        // ======================================================
+        // Drawer
+        // ======================================================
         drawerEnableOpenDragGesture: false,
+
         drawer: SafeArea(child: buildDrawer(width, context)),
+
+        // ======================================================
+        // Stateful Navigation Shell
+        // ======================================================
         body: Container(
           color: Colors.transparent,
           child: widget.navigationShell,

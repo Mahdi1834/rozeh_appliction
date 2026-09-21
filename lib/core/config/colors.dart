@@ -81,10 +81,12 @@ class ConsColors {
   // ============================================================
 
   /// رنگ اصلی دکمه‌ها
-  static const Color darkPrimary = Color(0xFF680A10);
+  static const Color darkPrimary = Color(0xFFE31B23);
+  // static const Color darkPrimary = Color(0xFF680A10);
 
   /// رنگ انتخاب شده / Active
-  static const Color darkPrimaryActive = Color(0xFFE31B23);
+  // static const Color darkPrimaryActive = Color(0xFFE31B23);
+  static const Color darkPrimaryActive = Color(0xFF680A10);
 
   /// رنگ دوم Primary
   static const Color darkPrimaryLight = Color(0xFF8E1118);

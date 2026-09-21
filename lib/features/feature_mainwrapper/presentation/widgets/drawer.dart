@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/storage/user_session.dart';
+import 'package:rozeh_project/core/widgets/custom_btn.dart';
+import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
+import 'package:rozeh_project/core/widgets/show_fancy_bottom_sheet.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
+import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';
 import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
+import 'package:rozeh_project/features/feature_list_profile/presentation/screen/profile_menu_screen.dart';
 import 'package:rozeh_project/features/feature_login/presentation/screen/login_screen.dart';
 import 'package:rozeh_project/features/feature_mainwrapper/presentation/widgets/item_for_drawer.dart';
-import 'package:rozeh_project/features/feature_profile/presentation/screen/profile_screen.dart';
 import 'package:rozeh_project/locator.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
@@ -68,7 +72,7 @@ Drawer buildDrawer(double width, BuildContext context) {
                   svgPic: "assets/images/User.svg",
                   onTap: () {
 
-                    context.go(ProfileScreen.routePath);
+                    context.go(ProfileMenuScreen.routePath);
                   },
                   title: "پروفایل",
                 ),
@@ -104,11 +108,9 @@ Drawer buildDrawer(double width, BuildContext context) {
                   svgPic: "assets/images/Logout.svg",
                   onTap: () async {
 
-                    UserSession userSession = locator();
-                    await userSession.clearAll();
-                    if (context.mounted) {
-                      context.go(LoginScreen.routePath);
-                    }
+                    Navigator.of(context).pop(); // بستن Drawer
+                    showLogoutBottomSheet(context);
+
                   },
 
                   title: "خروج از حساب",
@@ -119,6 +121,64 @@ Drawer buildDrawer(double width, BuildContext context) {
           ),
         ),
       ],
+    ),
+  );
+}
+
+void showLogoutBottomSheet(BuildContext context) {
+  showFancyBottomSheet(
+    context: context,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TxtTitle(
+            text: "خروج از حساب کاربری",
+            color: context.appColors.textPrimary,
+            size: 16,
+          ),
+
+          const SizedBox(height: 10),
+
+          TxtTitleNotBold(
+            text: "آیا تمایل دارید از حساب کاربری خود خارج شوید؟",
+            color: context.appColors.secondary,
+            size: 14,
+          ),
+
+          const SizedBox(height: 30),
+
+          Row(
+            children: [
+              Expanded(
+                child: CustomBtn(
+                  onPressed: () {
+                    Navigator.pop(context); // فقط بستن BottomSheet
+                  },
+                  title: "انصراف",
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: CustomBtnGradient(
+                  title: "بله، خروج",
+                  onPressed: () async {
+                    Navigator.pop(context); // بستن BottomSheet
+
+                    UserSession userSession = locator();
+                    await userSession.clearAll();
+
+                    context.go(LoginScreen.routePath);
+                  },
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 20),
+        ],
+      ),
     ),
   );
 }

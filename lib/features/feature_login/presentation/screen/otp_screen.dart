@@ -170,7 +170,15 @@ class _OtpScreenState extends State<OtpScreen> {
                           horizontal: 20,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: context.appColors.navigationBackground,
+                          border: BoxBorder.all(color: context.appColors.border),
+                          boxShadow: [
+                            BoxShadow(
+                              color: context.appColors.warning.withValues(alpha: 0.8),
+                              blurRadius: 5.3,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(

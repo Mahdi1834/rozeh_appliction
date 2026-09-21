@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/config/constants.dart';
 import 'package:rozeh_project/core/config/theme/presentation/theme_cubit.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
@@ -14,6 +15,7 @@ import 'package:rozeh_project/features/feature_home/data/model/latest_requests_c
 import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/home_niyabat_item.dart';
 import 'package:rozeh_project/features/feature_home/presentation/widgets/image_slider.dart';
+import 'package:rozeh_project/features/feature_login/presentation/screen/login_screen.dart';
 import 'package:rozeh_project/features/feature_niyabat/data/model/list_niyabat_model.dart';
 import 'package:rozeh_project/features/feature_reservation/data/model/rozeh_request_model.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/widgets/expandable_reservation_card.dart';
@@ -112,7 +114,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: TxtHeader(text: Constants.nameApp),
                                 ),
                               ),
-
+                              SizedBox(
+                                height: 40,
+                                width: 40,
+                              ),
                               CustomBtnIconMenu(
                                 onTap: () {
                                   // TODO: جستجو
@@ -267,11 +272,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           state.latestRequestCustomerStatus
                               as LatestRequestCustomerStatusError;
 
-                      SnackbarHelper.show(
-                        context: context,
-                        message: error.message ?? 'خطا در دریافت اطلاعات',
-                        status: SnackbarStatus.error,
-                      );
+                      if (error.message == "401") {
+                        SnackbarHelper.show(
+                          context: context,
+                          message:
+                          "توکن شما منقضی شده است. دوباره لاگین کنید.",
+                          status: SnackbarStatus.error,
+                        );
+                        context.go(LoginScreen.routePath);
+                      } else {
+                        SnackbarHelper.show(
+                          context: context,
+                          message: error.message ?? 'خطا',
+                          status: SnackbarStatus.error,
+                        );
+                      }
+
                     }
                   },
 

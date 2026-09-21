@@ -71,8 +71,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: width,
 
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: context.appColors.navigationBackground,
                           borderRadius: BorderRadius.circular(10),
+                          border: BoxBorder.all(color: context.appColors.border),
+                          boxShadow: [
+                            BoxShadow(
+                              color: context.appColors.warning.withValues(alpha: 0.8),
+                              blurRadius: 5.3,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,14 +154,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                           context: context,
                                           message:
                                               "شماره تلفن را صحیح وارد کنید",
-                                          status: SnackbarStatus.info,
+                                          status: SnackbarStatus.error,
                                         );
                                       }
                                     } else {
                                       SnackbarHelper.show(
                                         context: context,
                                         message: "شماره تلفن رو وارد کنید",
-                                        status: SnackbarStatus.info,
+                                        status: SnackbarStatus.error,
                                       );
                                     }
                                   },

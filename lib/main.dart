@@ -35,15 +35,11 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => locator<LoginBloc>()),
-
         BlocProvider(create: (_) => locator<HomeBloc>()),
-
         BlocProvider(create: (_) => locator<ProfileBloc>()),
-
         BlocProvider(create: (_) => locator<ReservationBloc>()),
         BlocProvider(create: (_) => locator<AddressBloc>()),
         BlocProvider(create: (_) => locator<NiyabatBloc>()),
-
         BlocProvider(create: (_) => locator<ThemeCubit>()..loadTheme()),
       ],
       child: const MyApp(),

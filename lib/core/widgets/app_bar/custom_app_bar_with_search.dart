@@ -75,10 +75,14 @@ class CustomAppBarWithSearch extends StatelessWidget {
                       imageUrl: "assets/images/menu.svg",
                     ),
                     Expanded(child: Center(child: TxtHeader(text: title))),
-                    CustomBtnIconMenu(
-                      onTap: onTapSearch,
-                      imageUrl: "assets/images/Search.svg",
+                    SizedBox(
+                      height: 40,
+                      width: 40,
                     ),
+                    // CustomBtnIconMenu(
+                    //   onTap: onTapSearch,
+                    //   imageUrl: "assets/images/Search.svg",
+                    // ),
                   ],
                 ),
 

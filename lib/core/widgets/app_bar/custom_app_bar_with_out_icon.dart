@@ -28,7 +28,7 @@ class CustomAppBarWithOutIcon extends StatelessWidget {
           bottomRight: Radius.circular(10),
         ),
         gradient: LinearGradient(
-          colors: [context.appColors.primary, context.appColors.secondary],
+          colors: [context.appColors.appBarBackground, context.appColors.appBarSecondary],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),

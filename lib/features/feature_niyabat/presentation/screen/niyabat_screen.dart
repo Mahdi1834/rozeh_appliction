@@ -304,61 +304,49 @@ class _NiyabatScreenState extends State<NiyabatScreen> {
   // Next page
   // ============================================================
 
-  void _goToNextPage() {
+  Future<void> _goToNextPage() async {
     if (_currentPage >= _titles.length - 1) {
       return;
     }
 
-    _pageController.nextPage(
+    await _pageController.nextPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
-
-    setState(() {
-      _currentPage++;
-    });
   }
 
   // ============================================================
   // Previous page
   // ============================================================
 
-  void _goToPreviousPage() {
+  Future<void> _goToPreviousPage() async {
     if (_currentPage <= 0) {
       return;
     }
 
-    _pageController.previousPage(
+    await _pageController.previousPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
-
-    setState(() {
-      _currentPage--;
-    });
   }
 
   // ============================================================
   // Reset form
   // ============================================================
 
-  void _resetForm() {
+  Future<void> _resetForm() async {
     formKey.currentState?.reset();
 
-    setState(() {
-      selectedIntention = null;
-      selectedIntentionName = null;
+    selectedIntention = null;
+    selectedIntentionName = null;
 
-      selectedTavaslat = null;
-      selectedTavaslatName = null;
+    selectedTavaslat = null;
+    selectedTavaslatName = null;
 
-      titleController.clear();
-      descriptionController.clear();
+    titleController.clear();
+    descriptionController.clear();
 
-      _currentPage = 0;
-    });
-
-    _pageController.animateToPage(
+    await _pageController.animateToPage(
       0,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -443,6 +431,17 @@ class _NiyabatScreenState extends State<NiyabatScreen> {
                               child: PageView(
                                 controller: _pageController,
                                 physics: const NeverScrollableScrollPhysics(),
+
+                                onPageChanged: (index) {
+                                  if (!mounted) {
+                                    return;
+                                  }
+
+                                  setState(() {
+                                    _currentPage = index;
+                                  });
+                                },
+
                                 children: [
                                   buildSingleChildScrollViewLevel1(
                                     context,
