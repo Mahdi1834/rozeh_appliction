@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/config/app_navigation.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
@@ -26,7 +27,6 @@ class MainWrapper extends StatefulWidget {
 class _MainWrapperState extends State<MainWrapper> {
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
-  bool get _isOnHome => widget.navigationShell.currentIndex == 0;
   DateTime? _lastBackPressed;
 
   // ============================================================
@@ -57,11 +57,8 @@ class _MainWrapperState extends State<MainWrapper> {
 
   void _goBranch(int index) {
     if (kDebugMode) {
-      debugPrint(
-        'Navigating to branch: $index | '
-        'Current branch: '
-        '${widget.navigationShell.currentIndex}',
-      );
+      print("Navigating to branch $index");
+      print("Current route: ${widget.navigationShell.route}");
     }
 
     widget.navigationShell.goBranch(
@@ -78,55 +75,93 @@ class _MainWrapperState extends State<MainWrapper> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return BackButtonListener(
-      onBackButtonPressed: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+
+        // ============================================================
+        // 1. اگر Drawer باز است، فقط Drawer بسته شود
+        // ============================================================
         final scaffoldState = widget._key.currentState;
-        print(scaffoldState);
+
         if (scaffoldState != null && scaffoldState.isDrawerOpen) {
           scaffoldState.closeDrawer();
-
-          return true;
+          return;
         }
 
+        // ============================================================
+        // 2. Branch فعلی
+        // ============================================================
+        final currentIndex = widget.navigationShell.currentIndex;
+
+        if (kDebugMode) {
+          debugPrint(
+            'BACK → Current branch: $currentIndex',
+          );
+        }
+
+        // ============================================================
+        // 3. اگر داخل صفحه داخلی Branch هستیم
+        // ============================================================
         final currentNavigator =
-            AppNavigation.t[widget.navigationShell.currentIndex].currentState;
-        print(currentNavigator);
+            AppNavigation.t[currentIndex].currentState;
+
         if (currentNavigator != null && currentNavigator.canPop()) {
+          if (kDebugMode) {
+            debugPrint(
+              'BACK → Pop current branch: $currentIndex',
+            );
+          }
+
           currentNavigator.pop();
-          return true;
+          return;
         }
 
+        // ============================================================
+        // 4. اگر Branch فعلی Home نیست → برو Home
+        // ============================================================
+        if (currentIndex != 0) {
+          if (kDebugMode) {
+            debugPrint(
+              'BACK → Going to Home from branch: $currentIndex',
+            );
+          }
 
-        final rootNavigator =
-            AppNavigation.router.routerDelegate.navigatorKey.currentState;
-        print(rootNavigator);
-        if (rootNavigator != null && rootNavigator.canPop()) {
-          rootNavigator.pop();
-          return true;
+          widget.navigationShell.goBranch(
+            0,
+            initialLocation: false,
+          );
+
+          return;
         }
 
-        if (!_isOnHome) {
-          widget.navigationShell.goBranch(0);
-          return true;
-        }
-
+        // ============================================================
+        // 5. اگر Home هستیم → Back اول
+        // ============================================================
         final now = DateTime.now();
 
         if (_lastBackPressed == null ||
-            now.difference(_lastBackPressed!) > const Duration(seconds: 2)) {
+            now.difference(_lastBackPressed!) >
+                const Duration(seconds: 2)) {
           _lastBackPressed = now;
-
+          print("main");
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('برای خروج دوباره دکمه بازگشت را بزنید'),
+              content: Text(
+                'برای خروج دوباره دکمه بازگشت را بزنید',
+              ),
               duration: Duration(seconds: 2),
             ),
           );
 
-          return true;
+          return;
         }
 
-        return false;
+        // ============================================================
+        // 6. Back دوم → خروج
+        // ============================================================
+        SystemNavigator.pop();
       },
 
       child: Scaffold(
@@ -136,66 +171,60 @@ class _MainWrapperState extends State<MainWrapper> {
 
         extendBody: true,
 
-        // ======================================================
-        // Bottom Navigation
-        // ======================================================
         bottomNavigationBar:
-            _shouldShowBottomNavBar(context)
-                ? CurvedNavigationBar(
-                  key: _bottomNavigationKey,
+        _shouldShowBottomNavBar(context)
+            ? CurvedNavigationBar(
+          key: _bottomNavigationKey,
 
-                  index: widget.navigationShell.currentIndex,
+          index: widget.navigationShell.currentIndex,
 
-                  items: [
-                    NavItem(svgPath: 'assets/images/Home.svg', title: 'خانه'),
+          items: [
+            NavItem(
+              svgPath: 'assets/images/Home.svg',
+              title: 'خانه',
+            ),
+            NavItem(
+              svgPath: 'assets/images/Add.svg',
+              title: 'رزرو روضه',
+            ),
+            NavItem(
+              svgPath: 'assets/images/Calendar.svg',
+              title: 'روضه نیابتی',
+            ),
+            NavItem(
+              svgPath: 'assets/images/Profile 1.svg',
+              title: 'پروفایل',
+            ),
+            NavItem(
+              svgPath: 'assets/images/Info square.svg',
+              title: 'راهنما',
+            ),
+          ],
 
-                    NavItem(
-                      svgPath: 'assets/images/Add.svg',
-                      title: 'رزرو روضه',
-                    ),
+          color: context.appColors.navigationBackground,
 
-                    NavItem(
-                      svgPath: 'assets/images/Calendar.svg',
-                      title: 'روضه نیابتی',
-                    ),
+          buttonBackgroundColor:
+          context.appColors.navigationBackground,
 
-                    NavItem(
-                      svgPath: 'assets/images/Profile 1.svg',
-                      title: 'پروفایل',
-                    ),
+          backgroundColor: Colors.transparent,
 
-                    NavItem(
-                      svgPath: 'assets/images/Info square.svg',
-                      title: 'راهنما',
-                    ),
-                  ],
+          animationCurve: Curves.easeInOut,
 
-                  color: context.appColors.navigationBackground,
+          animationDuration:
+          const Duration(milliseconds: 600),
 
-                  buttonBackgroundColor: context.appColors.navigationBackground,
+          onTap: _goBranch,
 
-                  backgroundColor: Colors.transparent,
+          letIndexChange: (index) => true,
+        )
+            : null,
 
-                  animationCurve: Curves.easeInOut,
-
-                  animationDuration: const Duration(milliseconds: 600),
-
-                  onTap: _goBranch,
-
-                  letIndexChange: (index) => true,
-                )
-                : null,
-
-        // ======================================================
-        // Drawer
-        // ======================================================
         drawerEnableOpenDragGesture: false,
 
-        drawer: SafeArea(child: buildDrawer(width, context)),
+        drawer: SafeArea(
+          child: buildDrawer(width, context),
+        ),
 
-        // ======================================================
-        // Stateful Navigation Shell
-        // ======================================================
         body: Container(
           color: Colors.transparent,
           child: widget.navigationShell,

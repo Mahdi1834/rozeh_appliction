@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rozeh_project/core/config/branch_back_handler.dart';
 import 'package:rozeh_project/features/feature_help/presentation/screen/help_screen.dart';
 import 'package:rozeh_project/features/feature_home/presentation/screen/home_screen.dart';
 import 'package:rozeh_project/features/feature_list_address/data/model/list_address_model.dart';
@@ -55,8 +56,6 @@ class AppNavigation {
     _shellNavigatorHelp,
   ];
 
-
-
   // GoRouter configuration
   static final GoRouter router = GoRouter(
     initialLocation: initial,
@@ -95,8 +94,13 @@ class AppNavigation {
               GoRoute(
                 path: HomeScreen.routePath,
                 name: "Home",
-                builder:
-                    (BuildContext context, GoRouterState state) => HomeScreen(),
+                builder: (BuildContext context, GoRouterState state) {
+                  return BranchBackHandler(
+
+                    isHome: true,
+                    child: const HomeScreen(),
+                  );
+                },
                 routes: [],
               ),
             ],
@@ -109,9 +113,11 @@ class AppNavigation {
               GoRoute(
                 path: ListReservationScreen.routePath,
                 name: ListReservationScreen.routePath,
-                builder:
-                    (BuildContext context, GoRouterState state) =>
-                        const ListReservationScreen(),
+                builder: (BuildContext context, GoRouterState state) {
+                  return BranchBackHandler(
+                    child: const ListReservationScreen(),
+                  );
+                },
                 routes: [
                   GoRoute(
                     path: ReservationScreen.routePath,
@@ -139,9 +145,9 @@ class AppNavigation {
               GoRoute(
                 path: NiyabatListScreen.routePath,
                 name: "Niyabat",
-                builder:
-                    (BuildContext context, GoRouterState state) =>
-                        const NiyabatListScreen(),
+                builder: (BuildContext context, GoRouterState state) {
+                  return BranchBackHandler(child: const NiyabatListScreen());
+                },
                 routes: [
                   GoRoute(
                     path: NiyabatScreen.routePath,
@@ -173,9 +179,9 @@ class AppNavigation {
               GoRoute(
                 path: ProfileMenuScreen.routePath,
                 name: ProfileMenuScreen.routeName,
-                builder:
-                    (BuildContext context, GoRouterState state) =>
-                        ProfileMenuScreen(),
+                builder: (BuildContext context, GoRouterState state) {
+                  return BranchBackHandler(child: ProfileMenuScreen());
+                },
                 routes: [
                   GoRoute(
                     path: ProfileScreen.routePath,
@@ -244,9 +250,11 @@ class AppNavigation {
               GoRoute(
                 path: HelpScreen.routePath,
                 name: "Help",
-                builder:
-                    (BuildContext context, GoRouterState state) =>
-                        const HelpScreen(),
+                builder: (BuildContext context, GoRouterState state) {
+                  return BranchBackHandler(
+                    child: const HelpScreen(),
+                  );
+                },
                 routes: [],
               ),
             ],

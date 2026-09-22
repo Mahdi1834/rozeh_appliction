@@ -52,9 +52,9 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (mounted) {
       if (isLoggedIn) {
-        context.go(HomeScreen.routePath);
+        context.replace(HomeScreen.routePath);
       } else {
-        context.go(LoginScreen.routePath);
+        context.replace(LoginScreen.routePath);
       }
     }
   }
