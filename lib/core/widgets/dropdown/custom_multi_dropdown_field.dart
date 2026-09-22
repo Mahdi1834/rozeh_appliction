@@ -245,7 +245,7 @@ class _CustomMultiSelectDropdownFieldState<T>
           width: double.infinity,
           constraints: const BoxConstraints(maxHeight: 360),
           decoration: BoxDecoration(
-            color: colors.background,
+            color: colors.navigationBackground,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: colors.border),
             boxShadow: [

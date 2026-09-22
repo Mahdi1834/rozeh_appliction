@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/storage/user_session.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_txt_one_icon.dart';
@@ -31,7 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController mobileController = TextEditingController();
   TextEditingController telephoneController = TextEditingController();
 
-
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -39,7 +39,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     setMobile();
     BlocProvider.of<ProfileBloc>(context).add(GetCustomerInfoEvent());
-
   }
 
   Future<void> setMobile() async {
@@ -69,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     (previous, current) =>
                         previous.customerInfoStatus !=
                         current.customerInfoStatus,
-                listener: (context, state) {
+                listener: (context, state) async {
                   // TODO: implement listener
 
                   if (state.customerInfoStatus is CustomerInfoStatusError) {
@@ -88,6 +87,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     CustomerInfoModel customerInfoModel =
                         customerInfoStatusCompleted.customerInfoModel;
+                    UserSession userSession = locator();
+                    await userSession.setIsProfile(true);
                     setState(() {
                       fullNameController.text =
                           customerInfoModel.data?.fullName ?? "";
@@ -96,17 +97,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       nationalCodeController.text =
                           (customerInfoModel.data?.nationalCode ?? "")
                               .toPersianDigit();
-
-
                     });
                   }
                 },
                 child: CustomAppBarBackBtn(
-
                   mainContext: context,
                   title: "پروفایل کاربر",
-
-
                 ),
               ),
               Expanded(
@@ -140,12 +136,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           width: width,
                           height: height,
                           decoration: BoxDecoration(
-
                             color: context.appColors.navigationBackground,
-                            border: BoxBorder.all(color: context.appColors.border),
+                            border: BoxBorder.all(
+                              color: context.appColors.border,
+                            ),
                             boxShadow: [
                               BoxShadow(
-                                color: context.appColors.warning.withValues(alpha: 0.8),
+                                color: context.appColors.warning.withValues(
+                                  alpha: 0.8,
+                                ),
                                 blurRadius: 5.3,
                                 offset: Offset(0, 2),
                               ),
@@ -215,10 +214,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   const SizedBox(height: 10),
                                   CustomTextField(
+                                    mlength: 11,
                                     textInputType: TextInputType.number,
                                     isTextStart: true,
                                     isShowText: false,
                                     readOnly: false,
+                                    isCodeNational: true,
                                     controller: telephoneController,
                                   ),
 
@@ -257,6 +258,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               "پروفایل با موفقیت بروزرسانی شد",
                                           status: SnackbarStatus.success,
                                         );
+                                        context.pop();
                                       }
                                     },
                                     builder: (context, state) {
@@ -271,8 +273,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                                           if (_formKey.currentState!
                                               .validate()) {
-
-
                                             ProfileModelForSend
                                             profileModelForSend =
                                                 ProfileModelForSend(

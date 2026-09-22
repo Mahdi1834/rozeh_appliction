@@ -16,7 +16,7 @@ import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 
 Drawer buildDrawer(double width, BuildContext context) {
   return Drawer(
-    backgroundColor: context.appColors.background,
+    backgroundColor: context.appColors.navigationBackground,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(topLeft: Radius.circular(15)),
     ),
@@ -29,7 +29,10 @@ Drawer buildDrawer(double width, BuildContext context) {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15)),
             gradient: LinearGradient(
-              colors: [context.appColors.appBarBackground, context.appColors.appBarSecondary],
+              colors: [
+                context.appColors.appBarBackground,
+                context.appColors.appBarSecondary,
+              ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -47,7 +50,7 @@ Drawer buildDrawer(double width, BuildContext context) {
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha:0.3),
+                  color: Colors.white.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: IconButton(
@@ -63,7 +66,6 @@ Drawer buildDrawer(double width, BuildContext context) {
         ),
 
         Container(
-
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: SingleChildScrollView(
             child: Column(
@@ -71,18 +73,11 @@ Drawer buildDrawer(double width, BuildContext context) {
                 ItemForDrawer(
                   svgPic: "assets/images/User.svg",
                   onTap: () {
-
                     context.go(ProfileMenuScreen.routePath);
                   },
                   title: "پروفایل",
                 ),
 
-                Divider(color: context.appColors.inputBackground),
-                ItemForDrawer(
-                  svgPic: "assets/images/Settings.svg",
-                  onTap: () {},
-                  title: "تنظیمات",
-                ),
                 Divider(color: context.appColors.inputBackground),
                 ItemForDrawer(
                   svgPic: "assets/images/Info square.svg",
@@ -107,10 +102,8 @@ Drawer buildDrawer(double width, BuildContext context) {
                 ItemForDrawer(
                   svgPic: "assets/images/Logout.svg",
                   onTap: () async {
-
                     Navigator.of(context).pop(); // بستن Drawer
                     showLogoutBottomSheet(context);
-
                   },
 
                   title: "خروج از حساب",

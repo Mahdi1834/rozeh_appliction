@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/config/constants.dart';
 import 'package:rozeh_project/core/config/theme/presentation/theme_cubit.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
@@ -118,28 +119,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 40,
                                 width: 40,
                               ),
-                              CustomBtnIconMenu(
-                                onTap: () {
-                                  // TODO: جستجو
-                                },
-                                imageUrl: "assets/images/Search.svg",
-                              ),
+                              // CustomBtnIconMenu(
+                              //   onTap: () {
+                              //     // TODO: جستجو
+                              //   },
+                              //   imageUrl: "assets/images/Search.svg",
+                              // ),
 
-                              IconButton(
-                                onPressed: () {
-                                  context.read<ThemeCubit>().toggleTheme();
-                                },
-                                tooltip:
-                                    isDark
-                                        ? 'تغییر به حالت روشن'
-                                        : 'تغییر به حالت تاریک',
-                                icon: Icon(
-                                  isDark
-                                      ? Icons.light_mode_rounded
-                                      : Icons.dark_mode_rounded,
-                                  color: Colors.white,
-                                ),
-                              ),
+                              // IconButton(
+                              //   onPressed: () {
+                              //     context.read<ThemeCubit>().toggleTheme();
+                              //   },
+                              //   tooltip:
+                              //       isDark
+                              //           ? 'تغییر به حالت روشن'
+                              //           : 'تغییر به حالت تاریک',
+                              //   icon: Icon(
+                              //     isDark
+                              //         ? Icons.light_mode_rounded
+                              //         : Icons.dark_mode_rounded,
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
                             ],
                           ),
 
@@ -477,7 +478,7 @@ class _HomeScreenState extends State<HomeScreen> {
               border: Border.all(color: theme.warning.withValues(alpha: 0.15)),
             ),
             child: Text(
-              '$count',
+              '$count'.toPersianDigit(),
               style: TextStyle(
                 color: theme.warning,
                 fontSize: 11,

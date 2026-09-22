@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/features/feature_reservation/data/model/rozeh_request_model.dart';
@@ -23,8 +24,6 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
   Widget build(BuildContext context) {
     final theme = context.appColors;
 
-    final rozehTitle = request.rozeh?.title ?? 'مراسم';
-    final date = _formatDate(request.date);
 
     return Container(
       margin: const EdgeInsets.only(top: 10, bottom: 4),
@@ -67,10 +66,7 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
                                 height: 42,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
-                                    colors: [
-                                      theme.warning,
-                                      theme.warning2,
-                                    ],
+                                    colors: [theme.warning, theme.warning2],
                                   ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -87,7 +83,8 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TxtTitle(
-                                      text: 'مراسم ${request.rozeh?.title ?? 'مراسم'}',
+                                      text:
+                                          'مراسم ${request.rozeh?.title ?? 'مراسم'}',
                                       color: theme.textPrimary,
                                     ),
                                     const SizedBox(height: 4),
@@ -122,10 +119,7 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               gradient: LinearGradient(
-                                colors: [
-                                  theme.warning,
-                                  theme.warning2,
-                                ],
+                                colors: [theme.warning, theme.warning2],
                               ),
                             ),
                             child: const Icon(
@@ -138,22 +132,7 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
                       ],
                     ),
 
-                    // const SizedBox(height: 12),
-
-                    // -------------------------
-                    // کاربران
-                    // -------------------------
-                    // _buildUsersPreview(context),
-
                     const SizedBox(height: 8),
-
-                    // -------------------------
-                    // وضعیت
-                    // -------------------------
-                    // Align(
-                    //   alignment: Alignment.center,
-                    //   child: _buildStatus(context),
-                    // ),
                   ],
                 ),
               ),
@@ -172,92 +151,6 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  // ============================================================
-  // Users Preview
-  // ============================================================
-
-  Widget _buildUsersPreview(BuildContext context) {
-    final theme = context.appColors;
-    final users = request.users ?? [];
-
-    if (users.isEmpty) {
-      return _buildInfoRow(
-        context,
-        icon: Icons.person_outline,
-        title: 'مجریان مراسم',
-        value: 'تعیین نشده',
-      );
-    }
-
-    return Row(
-      children: [
-        Icon(Icons.people_outline, size: 20, color: theme.warning),
-
-        const SizedBox(width: 8),
-
-        Expanded(
-          child: Wrap(
-            spacing: 6,
-            runSpacing: 6,
-            children:
-                users.map((user) {
-                  return _buildUserChip(context, user);
-                }).toList(),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildUserChip(BuildContext context, RozehUser user) {
-    final theme = context.appColors;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-      decoration: BoxDecoration(
-        color: theme.warning.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: theme.warning.withValues(alpha: 0.18)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            user.isMaddah == true && user.isSpeaker == true
-                ? Icons.record_voice_over_outlined
-                : user.isMaddah == true
-                ? Icons.music_note_outlined
-                : Icons.mic_none_outlined,
-            size: 15,
-            color: theme.warning,
-          ),
-
-          const SizedBox(width: 5),
-
-          Text(
-            user.fullName ?? 'بدون نام',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: theme.textPrimary,
-            ),
-          ),
-
-          if (user.assignmentLabel != null) ...[
-            const SizedBox(width: 4),
-            Text(
-              '(${user.assignmentLabel})',
-              style: TextStyle(
-                fontSize: 10,
-                color: theme.textPrimary.withValues(alpha: 0.55),
-              ),
-            ),
-          ],
-        ],
       ),
     );
   }
@@ -304,7 +197,11 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
             context,
             icon: Icons.access_time_outlined,
             title: 'ساعت مراسم',
-            value: _formatTimeRange(request.startTime, request.endTime),
+            value:
+                _formatTimeRange(
+                  request.startTime,
+                  request.endTime,
+                ).toPersianDigit(),
           ),
 
           const SizedBox(height: 10),
@@ -314,9 +211,10 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
             icon: Icons.location_on_outlined,
             title: 'آدرس',
             value:
-                request.customerAddress?.address ??
-                request.address ??
-                'آدرس ثبت نشده',
+                (request.customerAddress?.address ??
+                        request.address ??
+                        'آدرس ثبت نشده')
+                    .toPersianDigit(),
           ),
 
           const SizedBox(height: 10),
@@ -540,7 +438,6 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
   // ============================================================
 
   Widget _buildStatus(BuildContext context) {
-    final theme = context.appColors;
 
     final status = _getStatus(request.assignmentStatus);
 
@@ -583,7 +480,6 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
     return toJalaliDate(date);
   }
 
-
   String toJalaliDate(String? gregorianDate) {
     if (gregorianDate == null || gregorianDate.isEmpty) return "";
 
@@ -595,7 +491,8 @@ class _ExpandableReservationCardState extends State<ExpandableReservationCard> {
       final jalali = Jalali.fromDateTime(date);
 
       // برگردوندن به فرمت خوش‌خوان
-      return "${jalali.year}/${jalali.month.toString().padLeft(2, '0')}/${jalali.day.toString().padLeft(2, '0')}";
+      return "${jalali.year}/${jalali.month.toString().padLeft(2, '0')}/${jalali.day.toString().padLeft(2, '0')}"
+          .toPersianDigit();
     } catch (e) {
       return "";
     }

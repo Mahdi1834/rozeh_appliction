@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_txt_one_icon.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
@@ -394,7 +395,7 @@ class _AddressItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              address.title ?? 'بدون عنوان',
+                              (address.title ?? 'بدون عنوان').toPersianDigit(),
                               style: TextStyle(
                                 color: theme.textPrimary,
                                 fontSize: 14,
@@ -456,7 +457,7 @@ class _AddressItem extends StatelessWidget {
                     context,
                     icon: Icons.home_outlined,
                     title: 'آدرس',
-                    value: address.address ?? 'آدرس ثبت نشده',
+                    value: (address.address ?? 'آدرس ثبت نشده').toPersianDigit(),
                   ),
 
                   // ============================================================
@@ -470,7 +471,7 @@ class _AddressItem extends StatelessWidget {
                       context,
                       icon: Icons.markunread_mailbox_outlined,
                       title: 'کد پستی',
-                      value: address.postalCode!,
+                      value: address.postalCode!.toPersianDigit(),
                     ),
                   ],
 

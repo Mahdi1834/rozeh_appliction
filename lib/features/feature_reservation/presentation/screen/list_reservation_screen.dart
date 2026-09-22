@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
+import 'package:rozeh_project/core/storage/user_session.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_search.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
-import 'package:rozeh_project/core/widgets/custom_icon_svg_btn.dart';
 import 'package:rozeh_project/core/widgets/dot_loading_widget.dart';
 import 'package:rozeh_project/core/widgets/snackbar_helper.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
@@ -14,6 +14,7 @@ import 'package:rozeh_project/features/feature_reservation/data/model/rozeh_requ
 import 'package:rozeh_project/features/feature_reservation/presentation/bloc/reservation_bloc.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/screen/reservation_screen.dart';
 import 'package:rozeh_project/features/feature_reservation/presentation/widgets/expandable_reservation_card.dart';
+import 'package:rozeh_project/locator.dart';
 
 class ListReservationScreen extends StatefulWidget {
   static const routePath = "/list_reservation_screen";
@@ -34,12 +35,14 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
 
   final List<RozehRequest> _requests = [];
 
+  late UserSession userSession;
+
   @override
   void initState() {
     super.initState();
 
     _listController = ScrollController()..addListener(_onListScroll);
-
+    userSession = locator();
     // صفحه اول رزروها
     _fetchPage(1);
   }
@@ -241,21 +244,6 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
                                           "کاربر عزیز   \n برای رزرو مجالس و روضه های خانگی خود فرم ثبت درخواست را تکمیل نمایید",
                                       color: context.appColors.textPrimary,
                                     ),
-                                    const SizedBox(height: 20),
-                                    SizedBox(
-                                      width: width * 0.8,
-                                      child: CustomSvgIconBtn(
-                                        title: "رزرو",
-                                        onPressed: () {
-                                          // TODO: رفتن به صفحه رزرو
-                                          context.pushNamed(
-                                            ReservationScreen.routeName,
-                                          );
-                                        },
-                                        svgPicture: "assets/images/Add.svg",
-                                        useGradient: true,
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -279,7 +267,8 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
 
                                 Expanded(
                                   child: ListView.builder(
-                                    physics: const AlwaysScrollableScrollPhysics(),
+                                    physics:
+                                        const AlwaysScrollableScrollPhysics(),
                                     padding: const EdgeInsets.fromLTRB(
                                       10,
                                       8,
@@ -328,21 +317,26 @@ class _ListReservationScreenState extends State<ListReservationScreen> {
                           height: 50,
                           child: CustomBtnGradient(
                             title: " رزرو جدید",
-                            onPressed: ()  {
-                              context.pushNamed(ReservationScreen.routeName);
+                            onPressed: () {
+                              if (userSession.isProfileCompleted()) {
+                                context.pushNamed(ReservationScreen.routeName);
+                              } else {
 
+                                SnackbarHelper.show(
+                                  context: context,
+                                  message:
+                                      "لطفا ابتدا پروفایل کاربری خود را تکمیل کنید",
+                                  status: SnackbarStatus.error,
+                                );
+                              }
                             },
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
               ),
-
-
-
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/features/feature_niyabat/data/model/list_niyabat_model.dart';
 
@@ -61,7 +62,7 @@ class HomeNiyabatItem extends StatelessWidget {
                         children: [
                           Text(
                             calendar.title?.trim().isNotEmpty == true
-                                ? calendar.title!
+                                ? calendar.title!.toPersianDigit()
                                 : 'روضه نیابتی',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,

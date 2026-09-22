@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:neshan_maps_flutter/location_picker.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_txt_one_icon.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
@@ -423,6 +424,7 @@ class _AddressScreenState extends State<AddressScreen> {
           enableDebug: false,
 
           mapConfig: NeshanMapConfig(
+
             showCurrentLocationButton: true,
             initialCenter: initialCenter,
             initialZoom: 15,
@@ -447,7 +449,7 @@ class _AddressScreenState extends State<AddressScreen> {
               // آدرس نشان را قرار بده
               if (addressController.text.trim().isEmpty &&
                   address.trim().isNotEmpty) {
-                addressController.text = address;
+                addressController.text = address.toPersianDigit();
               }
             });
 

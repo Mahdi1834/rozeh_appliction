@@ -14,7 +14,8 @@ class CustomTextField extends StatefulWidget {
     this.readOnly = false,
     this.validator,
     this.suffixIcon,
-    this.isCodeNational = false
+    this.isCodeNational = false,
+    this.mlength = 10
   });
 
   final TextEditingController controller;
@@ -26,6 +27,7 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final Widget? suffixIcon;
   final bool isCodeNational;
+  final int mlength ;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -44,11 +46,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
     final formatters = <TextInputFormatter>[];
 
     if (widget.textInputType == TextInputType.phone) {
-      formatters.add(LengthLimitingTextInputFormatter(10));
+      formatters.add(LengthLimitingTextInputFormatter(widget.mlength));
     }
 
     if(widget.isCodeNational){
-      formatters.add(LengthLimitingTextInputFormatter(10));
+      formatters.add(LengthLimitingTextInputFormatter(widget.mlength));
     }
 
     formatters.add(

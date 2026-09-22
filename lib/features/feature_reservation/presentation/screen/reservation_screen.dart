@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_txt_one_icon.dart';
 import 'package:rozeh_project/core/widgets/card_with_button_in_dip.dart';
@@ -16,6 +17,7 @@ import 'package:rozeh_project/core/widgets/snackbar_helper.dart';
 import 'package:rozeh_project/core/widgets/text_field/custom_textfield.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';
+import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 import 'package:rozeh_project/features/feature_list_address/data/model/list_address_model.dart';
 import 'package:rozeh_project/features/feature_list_address/presentation/bloc/address_bloc.dart';
 import 'package:rozeh_project/features/feature_list_address/presentation/screen/address_screen.dart';
@@ -171,7 +173,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
       final month = picked.month.toString().padLeft(2, '0');
       final day = picked.day.toString().padLeft(2, '0');
 
-      dateController.text = "$year/$month/$day";
+      dateController.text = "$year/$month/$day".toPersianDigit();
     });
   }
 
@@ -180,14 +182,16 @@ class _ReservationScreenState extends State<ReservationScreen> {
   // ============================================================
 
   Future<void> _selectTime(TextEditingController controller) async {
-    int selectedHour = 12;
+    int selectedHour = 3;
     int selectedMinute = 0;
     bool isPm = false;
 
     // اگر قبلاً ساعت انتخاب شده باشد،
     // BottomSheet با همان ساعت باز می‌شود.
     if (controller.text.isNotEmpty) {
-      final parts = controller.text.split(':');
+      // مقدار نمایشی فارسی را فقط برای پردازش به اعداد انگلیسی تبدیل می‌کنیم.
+      final englishTime = controller.text.toEnglishDigit();
+      final parts = englishTime.split(':');
 
       if (parts.length == 2) {
         final hour = int.tryParse(parts[0]);
@@ -227,9 +231,11 @@ class _ReservationScreenState extends State<ReservationScreen> {
     }
 
     setState(() {
+      // فقط نمایش فارسی است.
       controller.text =
-          "${result.hour.toString().padLeft(2, '0')}:"
-          "${result.minute.toString().padLeft(2, '0')}";
+          ("${result.hour.toString().padLeft(2, '0')}:"
+              "${result.minute.toString().padLeft(2, '0')}")
+              .toPersianDigit();
     });
   }
 
@@ -238,7 +244,10 @@ class _ReservationScreenState extends State<ReservationScreen> {
   // ============================================================
 
   int? _timeToMinutes(String value) {
-    final parts = value.split(':');
+    // مقدار داخل Controller برای نمایش فارسی است؛
+    // قبل از پردازش آن را به اعداد انگلیسی تبدیل می‌کنیم.
+    final englishValue = value.toEnglishDigit();
+    final parts = englishValue.split(':');
 
     if (parts.length != 2) {
       return null;
@@ -256,6 +265,10 @@ class _ReservationScreenState extends State<ReservationScreen> {
     }
 
     return hour * 60 + minute;
+  }
+
+  String _timeToApiFormat(String value) {
+    return value.toEnglishDigit();
   }
 
   // ============================================================
@@ -331,9 +344,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
     }
 
     final jalaliDate = Jalali(
-      int.parse(jalaliParts[0]),
-      int.parse(jalaliParts[1]),
-      int.parse(jalaliParts[2]),
+      int.parse(jalaliParts[0].toEnglishDigit()),
+      int.parse(jalaliParts[1].toEnglishDigit()),
+      int.parse(jalaliParts[2].toEnglishDigit()),
     );
 
     final gregorianDate = jalaliDate.toGregorian();
@@ -360,8 +373,8 @@ class _ReservationScreenState extends State<ReservationScreen> {
       addressId: selectedAddressId!,
       date: formattedDate,
       userIds: userIds,
-      startTime: startTimeController.text,
-      endTime: endTimeController.text,
+      startTime: _timeToApiFormat(startTimeController.text),
+      endTime: _timeToApiFormat(endTimeController.text),
       description:
           descriptionController.text.trim().isEmpty
               ? null
@@ -927,6 +940,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 BlocProvider.of<ReservationBloc>(
                   context,
                 ).add(GetRozehRequestEvent(page: "1"));
+                BlocProvider.of<HomeBloc>(
+                  context,
+                ).add(GetLatestRequestCustomerEvent());
 
                 _pageController.nextPage(
                   duration: const Duration(milliseconds: 300),
@@ -1839,7 +1855,7 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
         decoration: BoxDecoration(
-          color: colors.background,
+          color: colors.navigationBackground,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         ),
         child: Column(
@@ -1919,7 +1935,7 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
                                 hours.map((hour) {
                                   return Center(
                                     child: Text(
-                                      hour.toString().padLeft(2, '0'),
+                                      hour.toString().padLeft(2, '0').toPersianDigit(),
                                       style: TextStyle(
                                         color: colors.textPrimary,
                                         fontSize: 20,
@@ -1959,7 +1975,7 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
                                 minutes.map((minute) {
                                   return Center(
                                     child: Text(
-                                      minute.toString().padLeft(2, '0'),
+                                      minute.toString().padLeft(2, '0').toPersianDigit(),
                                       style: TextStyle(
                                         color: colors.textPrimary,
                                         fontSize: 20,
@@ -1989,7 +2005,7 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
                             children: [
                               Center(
                                 child: Text(
-                                  "AM",
+                                  "ق.ظ",
                                   style: TextStyle(
                                     color: colors.textPrimary,
                                     fontSize: 18,
@@ -1999,7 +2015,7 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
                               ),
                               Center(
                                 child: Text(
-                                  "PM",
+                                  "ب.ظ",
                                   style: TextStyle(
                                     color: colors.textPrimary,
                                     fontSize: 18,
@@ -2023,9 +2039,9 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
             // Current selected time
             // ======================================================
             Text(
-              "${selectedHour.toString().padLeft(2, '0')}:"
+              ("${selectedHour.toString().padLeft(2, '0')}:"
               "${selectedMinute.toString().padLeft(2, '0')} "
-              "${isPm ? 'ب.ظ' : 'ق.ظ'}",
+              "${isPm ? 'ب.ظ' : 'ق.ظ'}").toPersianDigit(),
               style: TextStyle(
                 color: context.appColors.textPrimary,
                 fontSize: 15,

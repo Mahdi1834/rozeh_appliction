@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozeh_project/core/config/theme/theme_extensions.dart';
+import 'package:rozeh_project/core/storage/user_session.dart';
 import 'package:rozeh_project/core/widgets/app_bar/custom_app_bar_with_search.dart';
 import 'package:rozeh_project/core/widgets/custom_btn_gradient.dart';
 import 'package:rozeh_project/core/widgets/dot_loading_widget.dart';
@@ -38,13 +39,14 @@ class _NiyabatListScreenState extends State<NiyabatListScreen> {
 
   bool _isLoadingMore = false;
   bool _isRefreshing = false;
+  late UserSession userSession;
 
   @override
   void initState() {
     super.initState();
 
     niyabatBloc = locator<NiyabatBloc>();
-
+    userSession = locator();
     _scrollController.addListener(_onScroll);
 
     _loadFirstPage();
@@ -120,8 +122,6 @@ class _NiyabatListScreenState extends State<NiyabatListScreen> {
 
     _isRefreshing = false;
   }
-
-
 
   // ============================================================
   // Build
@@ -269,8 +269,6 @@ class _NiyabatListScreenState extends State<NiyabatListScreen> {
                             setState(() {});
                           }
                         }
-
-
                       },
 
                       builder: (context, state) {
@@ -374,10 +372,20 @@ class _NiyabatListScreenState extends State<NiyabatListScreen> {
                         child: CustomBtnGradient(
                           title: "ثبت روضه نیابتی جدید",
                           onPressed: () async {
-                            await context.pushNamed(NiyabatScreen.routeName);
+                            if (userSession.isProfileCompleted()) {
+                              await context.pushNamed(NiyabatScreen.routeName);
 
-                            if (mounted) {
-                              _loadFirstPage();
+                              if (mounted) {
+                                _loadFirstPage();
+                              }
+                            } else {
+
+                              SnackbarHelper.show(
+                                context: context,
+                                message:
+                                    "لطفا ابتدا پروفایل کاربری خود را تکمیل کنید",
+                                status: SnackbarStatus.error,
+                              );
                             }
                           },
                         ),
@@ -449,4 +457,3 @@ class _NiyabatListScreenState extends State<NiyabatListScreen> {
     );
   }
 }
-

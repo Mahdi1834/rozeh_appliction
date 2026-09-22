@@ -359,7 +359,7 @@ class MyThemes {
     // Date Picker
     // ==========================================================
     datePickerTheme: DatePickerThemeData(
-      headerBackgroundColor: ConsColors.darkPrimary,
+      headerBackgroundColor: ConsColors.darkPrimaryActive,
       headerForegroundColor: Colors.white,
 
       backgroundColor: ConsColors.darkSurface,
@@ -404,7 +404,7 @@ class MyThemes {
       surfaceTintColor: Colors.transparent,
 
       confirmButtonStyle: const ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(ConsColors.darkPrimaryActive),
+        foregroundColor: WidgetStatePropertyAll(ConsColors.darkPrimary),
       ),
 
       cancelButtonStyle: const ButtonStyle(

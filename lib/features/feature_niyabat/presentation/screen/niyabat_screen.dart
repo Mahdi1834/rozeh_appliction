@@ -14,6 +14,7 @@ import 'package:rozeh_project/core/widgets/snackbar_helper.dart';
 import 'package:rozeh_project/core/widgets/text_field/custom_textfield.dart';
 import 'package:rozeh_project/core/widgets/txt_title.dart';
 import 'package:rozeh_project/core/widgets/txt_title_not_bold.dart';
+import 'package:rozeh_project/features/feature_home/presentation/bloc/home_bloc.dart';
 
 import 'package:rozeh_project/features/feature_niyabat/data/model/intentions_model.dart';
 import 'package:rozeh_project/features/feature_niyabat/data/model/list_niyabat_model.dart';
@@ -774,7 +775,7 @@ class _NiyabatScreenState extends State<NiyabatScreen> {
                   message: "روضه نیابتی با موفقیت ثبت شد 🎉",
                   status: SnackbarStatus.success,
                 );
-
+                BlocProvider.of<HomeBloc>(context).add(GetLatestRequestCustomerEvent());
                 _goToNextPage();
               }
 

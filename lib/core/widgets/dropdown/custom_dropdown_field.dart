@@ -95,7 +95,7 @@ class _CustomDropdownFieldState<T> extends State<CustomDropdownField<T>> {
         maxHeight: 300,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: colors.inputBackground,
+          color: colors.navigationBackground,
         ),
       ),
 
