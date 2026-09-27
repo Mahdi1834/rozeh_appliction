@@ -714,7 +714,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TxtTitle(
-                        text: "رنج سنی",
+                        text: "گروه سنی",
                         color: context.appColors.textPrimary,
                       ),
                       const SizedBox(height: 10),
@@ -837,7 +837,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     const SizedBox(height: 20),
 
                     _buildConfirmRow(
-                      title: "رنج سنی:",
+                      title: "گروه سنی:",
                       value: selectedAgeGroupName ?? "",
                     ),
 
